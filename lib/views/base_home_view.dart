@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zukes/widgets/user_profile_card.dart';
+import 'package:zukes/widgets/monthly_trans.dart';
+
 
 class BaseHomeView extends StatelessWidget {
   const BaseHomeView({Key key}) : super(key: key);
@@ -17,12 +19,7 @@ class BaseHomeView extends StatelessWidget {
             children: [
               Text("Hello from zukes 👋"),
               UserProfileCard(),
-              Card(
-                  child: Container(
-                      color: Colors.teal[50],
-                      height: 300,
-                      width: 1000,
-                      child: Text("📈Zukes Charts go here boys")))
+              MonthlyTransChart(),
             ],
           ),
         ),
