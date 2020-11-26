@@ -4,8 +4,8 @@ A new Flutter project.
 
 
 ## Goals🏃‍♀️
-[] Main Screen Charts
-[] Main Screen Card
-[] Tabs View
+- [ ] Main Screen Charts
+- [ ] User Welcom Screen Card
+- [ ] Tabs View
 
 
