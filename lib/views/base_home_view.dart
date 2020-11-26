@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zukes/widgets/user_profile_card.dart';
 
 class BaseHomeView extends StatelessWidget {
   const BaseHomeView({Key key}) : super(key: key);
@@ -15,16 +16,10 @@ class BaseHomeView extends StatelessWidget {
           child: Column(
             children: [
               Text("Hello from zukes 👋"),
-              Card(
-                child: Container(
-                    color: Colors.teal,
-                    height: 100,
-                    width: 1000,
-                    child: Text("Zukes Card🗿")),
-              ),
+              UserProfileCard(),
               Card(
                   child: Container(
-                      color: Colors.lightBlue,
+                      color: Colors.teal[50],
                       height: 300,
                       width: 1000,
                       child: Text("📈Zukes Charts go here boys")))
@@ -53,7 +48,7 @@ class _BottomNavigationBarBaseState extends State<BottomNavigationBarBase> {
   int _activetab;
   @override
   void initState() {
-    _activetab = 3;
+    _activetab = 1;
     super.initState();
   }
 
@@ -65,7 +60,6 @@ class _BottomNavigationBarBaseState extends State<BottomNavigationBarBase> {
           setState(() {
             _activetab = index;
           });
-          ;
         },
         items: [
           widget.barItem,
