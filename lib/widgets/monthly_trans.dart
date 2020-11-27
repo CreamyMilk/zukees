@@ -39,12 +39,13 @@ class _LegendDefaultState extends State<LegendDefault> {
       .toList();
   String _monthvalue = "January";
   String _yearvalue = "2021";
+  double _temp =56.2;
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: [
-          _getLegendDefaultChart(_monthvalue),
+          _getLegendDefaultChart(_monthvalue,_yearvalue,_temp),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -60,6 +61,7 @@ class _LegendDefaultState extends State<LegendDefault> {
                       onChanged: (String n) {
                         setState(() {
                           _monthvalue = n;
+                          _temp = 100;
                         });
                       }),
                   color: Colors.white),
@@ -88,12 +90,12 @@ class _LegendDefaultState extends State<LegendDefault> {
   }
 
   ///Get the default circular series with legend
-  SfCircularChart _getLegendDefaultChart(String month) {
+  SfCircularChart _getLegendDefaultChart(String month,String year,double rand) {
     return SfCircularChart(
-      title: ChartTitle(text: '$month Earnings'),
+      title: ChartTitle(text: '$month $year Earnings'),
       legend:
           Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-      series: _getLegendDefaultSeries(),
+      series: _getLegendDefaultSeries(rand),
       annotations: [
         CircularChartAnnotation(
             widget: Container(
@@ -106,14 +108,14 @@ class _LegendDefaultState extends State<LegendDefault> {
   }
 
   ///Get the default circular series
-  List<DoughnutSeries<ChartSampleData, String>> _getLegendDefaultSeries() {
+  List<DoughnutSeries<ChartSampleData, String>> _getLegendDefaultSeries(double temp) {
     final List<ChartSampleData> chartData = <ChartSampleData>[
       ChartSampleData(x: 'Large Hydro', y: 12.7, pointColor: Colors.black),
       ChartSampleData(x: 'Small Hydro', y: 1.3),
       ChartSampleData(x: 'Wind Power', y: 10),
       ChartSampleData(x: 'Solar Power', y: 8),
       ChartSampleData(x: 'Biomass', y: 2.6),
-      ChartSampleData(x: 'Coal', y: 56.2),
+      ChartSampleData(x: 'Coal', y: temp),
       ChartSampleData(x: 'Nuclear', y: 1.9),
       ChartSampleData(x: 'Gas', y: 7),
       ChartSampleData(x: 'Diesel', y: 0.2)
