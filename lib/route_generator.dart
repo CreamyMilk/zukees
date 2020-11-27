@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zukes/views/base_home_view.dart';
+import 'package:zukes/views/tabs_control.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -10,7 +10,7 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (ctx) => BaseHomeView());
+        return MaterialPageRoute(builder: (ctx) => BaseTabView());
       default:
         return _errorRoute();
     }
