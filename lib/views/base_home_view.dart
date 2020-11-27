@@ -14,13 +14,15 @@ class BaseHomeView extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBarBase(barItem: barItem),
       body: SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              Text("Hello from zukes 👋"),
-              UserProfileCard(),
-              MonthlyTransChart(),
-            ],
+        child: SingleChildScrollView(
+                  child: Container(
+            child: Column(
+              children: [
+                Text("Hello from zukes 👋"),
+                UserProfileCard(),
+                LegendDefault(),
+              ],
+            ),
           ),
         ),
       ),
