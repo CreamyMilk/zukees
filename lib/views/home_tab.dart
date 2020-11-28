@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zukes/widgets/user_profile_card.dart';
-import 'package:zukes/widgets/monthly_trans.dart';
+import 'package:zukes/widgets/graph_trans.dart';
 
 class HomeTab extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class HomeTab extends StatelessWidget {
               children: [
                 Text("Hello from zukes 👋"),
                 UserProfileCard(),
-                LegendDefault(),
+                CoolGraph(),
               ],
             ),
           ),

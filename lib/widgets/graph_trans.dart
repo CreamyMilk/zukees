@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 /// Renders the doughnut chart with legend
-class LegendDefault extends StatefulWidget {
+class CoolGraph extends StatefulWidget {
   /// Creates the doughnut chart with legend
-  //const LegendDefault(Key key) : super(key: key);
+  //const CoolGraph(Key key) : super(key: key);
 
   @override
-  _LegendDefaultState createState() => _LegendDefaultState();
+  _CoolGraphState createState() => _CoolGraphState();
 }
 
-class _LegendDefaultState extends State<LegendDefault> {
-  _LegendDefaultState();
+class _CoolGraphState extends State<CoolGraph> {
+  _CoolGraphState();
   static const _months = <String>[
     'January',
     'Febuary',
@@ -45,7 +45,7 @@ class _LegendDefaultState extends State<LegendDefault> {
     return Card(
       child: Column(
         children: [
-          _getLegendDefaultChart(_monthvalue,_yearvalue,_temp),
+          _getCoolGraphChart(_monthvalue,_yearvalue,_temp),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -90,12 +90,12 @@ class _LegendDefaultState extends State<LegendDefault> {
   }
 
   ///Get the default circular series with legend
-  SfCircularChart _getLegendDefaultChart(String month,String year,double rand) {
+  SfCircularChart _getCoolGraphChart(String month,String year,double rand) {
     return SfCircularChart(
       title: ChartTitle(text: '$month $year Earnings'),
       legend:
           Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-      series: _getLegendDefaultSeries(rand),
+      series: _getCoolGraphSeries(rand),
       annotations: [
         CircularChartAnnotation(
             widget: Container(
@@ -108,7 +108,7 @@ class _LegendDefaultState extends State<LegendDefault> {
   }
 
   ///Get the default circular series
-  List<DoughnutSeries<ChartSampleData, String>> _getLegendDefaultSeries(double temp) {
+  List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(double temp) {
     final List<ChartSampleData> chartData = <ChartSampleData>[
       ChartSampleData(x: 'Large Hydro', y: 12.7, pointColor: Colors.black),
       ChartSampleData(x: 'Small Hydro', y: 1.3),
