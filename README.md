@@ -7,5 +7,4 @@ A new Flutter project.
 - [ ] Main Screen Charts
 - [ ] User Welcom Screen Card
 - [ ] Tabs View
-
-
+- [ ] Firebase Support for Charts
