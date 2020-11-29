@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zukes/views/home_tab.dart';
+import 'package:zukes/views/manage_tab.dart';
 import 'package:zukes/views/service_tab.dart';
 
 class BaseTabView extends StatefulWidget {
@@ -10,9 +11,8 @@ class BaseTabView extends StatefulWidget {
 class _BaseTabViewState extends State<BaseTabView> {
   final _tabs = [
     HomeTab(),
+    ManageTab(),                      
     ServiceTab(),
-    //Center(child: Text("9")),
-    Center(child: Text("3")),
     Center(child: Text("4")),
     Center(child: Text("5")),
   ];

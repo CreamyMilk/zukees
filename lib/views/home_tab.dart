@@ -5,6 +5,7 @@ import 'package:zukes/widgets/graph_trans.dart';
 class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
         child: SingleChildScrollView(
                   child: Container(

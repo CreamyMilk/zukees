@@ -30,3 +30,17 @@ class RouteGenerator {
   }
 
 }
+class BaseRoute extends StatelessWidget {
+  const BaseRoute({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final MediaQueryData d = MediaQuery.of(context);
+    print("SCALEFACTOR >>>>${d.textScaleFactor}");
+    return MediaQuery(
+      data: d.copyWith(
+        textScaleFactor:d.textScaleFactor.clamp(1.0,1.3),
+      ),
+      child: BaseTabView());
+  }
+}
