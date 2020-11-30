@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-class ServiceTab extends StatelessWidget {
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+class ShoppingTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,24 +27,31 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
     return Container(
       height:500,width:500,
           child: GridView.count(
+            padding:EdgeInsets.all(8.0),
+            mainAxisSpacing:6,
+            crossAxisSpacing: 6,
                   crossAxisCount: 2,
-                  children:[ Itemtile(),],
+                  children:[ Itemtile(prodname:"Featured Products\n\n",imageUrl:"https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp"),
+                  Itemtile(prodname:"Cement \n\n",imageUrl:"https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp")],
       ),
     );
   }
 }
 
 class Itemtile extends StatelessWidget {
-  const Itemtile({
-    Key key,
-  }) : super(key: key);
-
+  Itemtile({this.prodname,this.imageUrl});
+  final String prodname;
+  final String imageUrl;
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-          footer:Card(child: Text("Apply for 🤖 Automated KRA File Taxingsdfsdfsdfsdf\n\n")),
-          child:Image.asset("assets/kraicon.png"),
-
-        );
+    return  GridTile(
+            footer:InkWell(
+      onTap:(){
+        print(prodname);
+      },
+          child: Container(color:Colors.white,child: Text(prodname))),
+            child:InkWell(onTap:(){print(prodname);},child: BlurHash(hash:"""LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",image:imageUrl)),
+          );
+    
   }
 }

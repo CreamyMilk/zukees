@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zukes/views/home_tab.dart';
 import 'package:zukes/views/manage_tab.dart';
 import 'package:zukes/views/service_tab.dart';
+import 'package:zukes/views/shop_tab.dart';
 
 class BaseTabView extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _BaseTabViewState extends State<BaseTabView> {
     HomeTab(),
     ManageTab(),                      
     ServiceTab(),
-    Center(child: Text("4")),
+   ShoppingTab(),
     Center(child: Text("5")),
   ];
   int _activetab;

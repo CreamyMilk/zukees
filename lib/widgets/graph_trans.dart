@@ -61,7 +61,7 @@ class _CoolGraphState extends State<CoolGraph> {
                       onChanged: (String n) {
                         setState(() {
                           _monthvalue = n;
-                          _temp = 100;
+                          _temp = 90;
                         });
                       }),
                   color: Colors.white),
@@ -110,15 +110,11 @@ class _CoolGraphState extends State<CoolGraph> {
   ///Get the default circular series
   List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(double temp) {
     final List<ChartSampleData> chartData = <ChartSampleData>[
-      ChartSampleData(x: 'Large Hydro', y: 12.7, pointColor: Colors.black),
-      ChartSampleData(x: 'Small Hydro', y: 1.3),
-      ChartSampleData(x: 'Wind Power', y: 10),
-      ChartSampleData(x: 'Solar Power', y: 8),
-      ChartSampleData(x: 'Biomass', y: 2.6),
-      ChartSampleData(x: 'Coal', y: temp),
-      ChartSampleData(x: 'Nuclear', y: 1.9),
-      ChartSampleData(x: 'Gas', y: 7),
-      ChartSampleData(x: 'Diesel', y: 0.2)
+          ChartSampleData(x: 'Paid ', y: temp,pointColor: Colors.green),
+      ChartSampleData(x: 'Due', y: 100-temp, pointColor: Colors.red),
+
+  
+
     ];
     return <DoughnutSeries<ChartSampleData, String>>[
       DoughnutSeries<ChartSampleData, String>(
@@ -126,6 +122,7 @@ class _CoolGraphState extends State<CoolGraph> {
           strokeColor: Colors.red,
           xValueMapper: (ChartSampleData data, _) => data.x,
           yValueMapper: (ChartSampleData data, _) => data.y,
+          pointColorMapper: (ChartSampleData data, _) => data.pointColor,
           startAngle: 90,
           endAngle: 90,
           dataLabelSettings: DataLabelSettings(

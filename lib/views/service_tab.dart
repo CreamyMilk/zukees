@@ -75,12 +75,12 @@ class _KraGridState extends State<KraGrid> {
           child: GridView.count(
                   crossAxisCount: 2,
                   children:[ GridTile(
-          footer:Card(child: Text("Apply for 🤖 Automated KRA File Taxingsdfsdfsdfsdf\n\n")),
+          footer:Container(color:Colors.white,child: Text("Apply for 🤖 Automated KRA File Taxingsdfsdfsdfsdf\n")),
           child:Image.asset("assets/kraicon.png")
 
           
         ), GridTile(
-          footer:Card(child: Text("Apply for 🤖 Random Service KRA File Taxingsdfsdfsdfsdf\n\n")),
+          footer:Card(child: Text("Apply for 🤖 Random Service KRA File Taxingsdfsdfsdfsdf\n")),
           child:Image.asset("assets/kraicon.png")
           
         ),
