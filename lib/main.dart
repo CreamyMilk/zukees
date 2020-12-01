@@ -8,7 +8,6 @@ import 'package:zukes/route_generator.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MyApp());
 }
 

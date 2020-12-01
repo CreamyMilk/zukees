@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http:
   hive:
   hive_flutter:
   charts_flutter: ^0.9.0

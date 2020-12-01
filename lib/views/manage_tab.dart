@@ -12,7 +12,7 @@ class _ManageTabState extends State<ManageTab> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
-              child: Column(
+        child: Column(
           children: [
             PropertyManageCard(),
             EmployeeManageCard(),
@@ -24,8 +24,6 @@ class _ManageTabState extends State<ManageTab> {
   }
 }
 
-
-
 class PropertyManageCard extends StatelessWidget {
   const PropertyManageCard({
     Key key,
@@ -36,23 +34,34 @@ class PropertyManageCard extends StatelessWidget {
     return Card(
       child: Container(
         width: 500,
-        height:180,
+        height: 180,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Manage Property 🏘",style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .copyWith(color: Colors.black),),
+            Text(
+              "Manage Property 🏘",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: Colors.black),
+            ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Text("312\nTotal Tenants",textAlign: TextAlign.center,style:TextStyle(fontSize:18),
-                    ),
-              Text("26\nVaccant Houses",textAlign: TextAlign.center,style:TextStyle(fontSize:18)),
+              Text(
+                "312\nTotal Tenants",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
+              Text("26\nVaccant Houses",
+                  textAlign: TextAlign.center, style: TextStyle(fontSize: 18)),
             ]),
             MaterialButton(
-                onPressed: () {},
-                child: Text("View All Tenants",style:TextStyle(color:Colors.white)),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed('/alltenants', arguments: "brach number ");
+                },
+                child: Text("View All Tenants",
+                    style: TextStyle(color: Colors.white)),
                 color: Colors.lightBlue[400]),
           ],
         ),
@@ -72,10 +81,11 @@ class EmployeeManageCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Manage Employees👷‍♂️",style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .copyWith(color: Colors.black)),
+          Text("Manage Employees👷‍♂️",
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1
+                  .copyWith(color: Colors.black)),
           Container(
             height: 250,
             child: ListView.builder(
@@ -122,7 +132,6 @@ class EmployeeManageCard extends StatelessWidget {
   }
 }
 
-
 class ContactAuctioner extends StatelessWidget {
   const ContactAuctioner({Key key}) : super(key: key);
 
@@ -167,7 +176,6 @@ class ContactAuctioner extends StatelessWidget {
                 onPressed: () {},
                 child: const Text('📞 Contact Auctioner'),
               ),
-
             ],
           ),
         ]));

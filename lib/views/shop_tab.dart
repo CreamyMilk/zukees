@@ -22,6 +22,7 @@ class ItemCategoryGrid extends StatefulWidget {
 }
 
 class _ItemCategoryGridState extends State<ItemCategoryGrid> {
+  List<dynamic> allcategories = [];
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -13,6 +13,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (ctx) => BaseTabView());
+      case '/alltenants':
+        return MaterialPageRoute(builder: (ctx) => BaseTabView());
       default:
         return _errorRoute();
     }
