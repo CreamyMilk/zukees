@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zukes/views/tabs_control.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -30,9 +32,21 @@ class RouteGenerator {
   }
 
 }
-class BaseRoute extends StatelessWidget {
+class BaseRoute extends StatefulWidget {
   const BaseRoute({Key key}) : super(key: key);
 
+
+  @override
+  _BaseRouteState createState() => _BaseRouteState();
+}
+
+class _BaseRouteState extends State<BaseRoute> {
+  @override
+  void initState() {
+    // TODO: implement initState
+      Firebase.initializeApp();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final MediaQueryData d = MediaQuery.of(context);

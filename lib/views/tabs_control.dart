@@ -3,7 +3,7 @@ import 'package:zukes/views/home_tab.dart';
 import 'package:zukes/views/manage_tab.dart';
 import 'package:zukes/views/service_tab.dart';
 import 'package:zukes/views/shop_tab.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 class BaseTabView extends StatefulWidget {
   @override
   _BaseTabViewState createState() => _BaseTabViewState();
@@ -20,6 +20,7 @@ class _BaseTabViewState extends State<BaseTabView> {
   int _activetab;
   @override
   void initState() {
+      Firebase.initializeApp();
     _activetab = 0;
     super.initState();
   }

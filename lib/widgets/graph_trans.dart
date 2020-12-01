@@ -1,6 +1,10 @@
+import 'dart:math';
+
 /// Package import
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -15,6 +19,7 @@ class CoolGraph extends StatefulWidget {
 
 class _CoolGraphState extends State<CoolGraph> {
   _CoolGraphState();
+
   static const _months = <String>[
     'January',
     'Febuary',
@@ -37,15 +42,46 @@ class _CoolGraphState extends State<CoolGraph> {
         ),
       )
       .toList();
-  String _monthvalue = "January";
-  String _yearvalue = "2021";
+
+
+  String _monthvalue = DateFormat('MMMM').format(DateTime.now());
+  String _yearvalue = DateFormat('y').format(DateTime.now());
   double _temp =56.2;
+  @override
+  void initState() {
+    // TODO: implement initState
+      Firebase.initializeApp();
+       _monthvalue = DateFormat('MMMM').format(DateTime.now());
+        _yearvalue = DateFormat('y').format(DateTime.now());
+         _temp =1;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: [
-          _getCoolGraphChart(_monthvalue,_yearvalue,_temp),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('building8').where("year",isEqualTo:_yearvalue).where("month",isEqualTo:_monthvalue).snapshots(),
+            builder: (context, snapshot) {
+               if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (snapshot.hasError) {
+              return Center(child: Text(snapshot.error.toString()));
+            }
+
+            QuerySnapshot querySnapshot = snapshot.data;
+            print(querySnapshot.docs[0].data());
+     
+
+            var _da = querySnapshot.docs[0].data();
+            print(_da);
+
+            return _getCoolGraphChart(_da["month"],_da["year"],_da["paymentData"]["paid"].toDouble(),_da["paymentData"]["due"].toDouble());
+            }
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -90,16 +126,21 @@ class _CoolGraphState extends State<CoolGraph> {
   }
 
   ///Get the default circular series with legend
-  SfCircularChart _getCoolGraphChart(String month,String year,double rand) {
+  SfCircularChart _getCoolGraphChart(String month,String year,double paid,double due) {
+    double total = paid;
+    double paidtemp = (paid/(paid+due))*100;
+    double mod = pow(10.0, 4); 
+    double paidpercentage = ((paidtemp * mod).round().toDouble() / mod);
+    print("Perc $paidpercentage");
     return SfCircularChart(
       title: ChartTitle(text: '$month $year Earnings'),
       legend:
           Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
-      series: _getCoolGraphSeries(rand),
+      series: _getCoolGraphSeries(paidpercentage),
       annotations: [
         CircularChartAnnotation(
             widget: Container(
-                child: Text('Total\n9,643,434,343\nKSH',
+                child: Text('Total\n$total\nKSH',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 10))))
       ],
@@ -108,10 +149,10 @@ class _CoolGraphState extends State<CoolGraph> {
   }
 
   ///Get the default circular series
-  List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(double temp) {
+  List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(double paidperc) {
     final List<ChartSampleData> chartData = <ChartSampleData>[
-          ChartSampleData(x: 'Paid ', y: temp,pointColor: Colors.green),
-      ChartSampleData(x: 'Due', y: 100-temp, pointColor: Colors.red),
+          ChartSampleData(x: 'Paid ', y: paidperc,pointColor: Colors.green),
+      ChartSampleData(x: 'Due', y: 100-paidperc, pointColor: Colors.red),
 
   
 
