@@ -58,7 +58,7 @@ class PropertyManageCard extends StatelessWidget {
             MaterialButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushNamed('/alltenants', arguments: "brach number ");
+                      .pushNamed('/alltenants', arguments: "8");
                 },
                 child: Text("View All Tenants",
                     style: TextStyle(color: Colors.white)),

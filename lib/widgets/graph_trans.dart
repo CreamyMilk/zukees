@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -43,45 +44,50 @@ class _CoolGraphState extends State<CoolGraph> {
       )
       .toList();
 
-
   String _monthvalue = DateFormat('MMMM').format(DateTime.now());
   String _yearvalue = DateFormat('y').format(DateTime.now());
-  double _temp =56.2;
+  // double _temp =56.2;
   @override
   void initState() {
-    // TODO: implement initState
-      Firebase.initializeApp();
-       _monthvalue = DateFormat('MMMM').format(DateTime.now());
-        _yearvalue = DateFormat('y').format(DateTime.now());
-         _temp =1;
+    Firebase.initializeApp();
+    _monthvalue = DateFormat('MMMM').format(DateTime.now());
+    _yearvalue = DateFormat('y').format(DateTime.now());
+
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Column(
         children: [
           StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('building8').where("year",isEqualTo:_yearvalue).where("month",isEqualTo:_monthvalue).snapshots(),
-            builder: (context, snapshot) {
-               if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
+              stream: FirebaseFirestore.instance
+                  .collection('building8')
+                  .where("year", isEqualTo: _yearvalue)
+                  .where("month", isEqualTo: _monthvalue)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-            if (snapshot.hasError) {
-              return Center(child: Text(snapshot.error.toString()));
-            }
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
 
-            QuerySnapshot querySnapshot = snapshot.data;
-            print(querySnapshot.docs[0].data());
-     
+                QuerySnapshot querySnapshot = snapshot.data;
+                print(querySnapshot.docs[0].data());
 
-            var _da = querySnapshot.docs[0].data();
-            print(_da);
+                var _da = querySnapshot.docs[0].data();
+                print(_da);
 
-            return _getCoolGraphChart(_da["month"],_da["year"],_da["paymentData"]["paid"].toDouble(),_da["paymentData"]["due"].toDouble());
-            }
-          ),
+                return _getCoolGraphChart(
+                    _da["month"],
+                    _da["year"],
+                    _da["paymentData"]["paid"].toDouble(),
+                    _da["paymentData"]["due"].toDouble());
+              }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -92,44 +98,44 @@ class _CoolGraphState extends State<CoolGraph> {
                   ),
                   child: DropdownButton<String>(
                       value: _monthvalue,
-                      underline:const SizedBox(height:1),
+                      underline: const SizedBox(height: 1),
                       items: _dropDownMonth,
                       onChanged: (String n) {
                         setState(() {
                           _monthvalue = n;
-                          _temp = 90;
+                          // _temp = 90;
                         });
                       }),
                   color: Colors.white),
               MaterialButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(50.0),
-                ),
-                child: DropdownButton<String>(
-                    value: _yearvalue,
-                    items: _dropDownYear,
-                    underline:const SizedBox(height:1),
-                    onChanged: (String n) {
-                      setState(() {
-                        _yearvalue = n;
-                      });
-                    }),
-                    color: Colors.white
-              ),
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  child: DropdownButton<String>(
+                      value: _yearvalue,
+                      items: _dropDownYear,
+                      underline: const SizedBox(height: 1),
+                      onChanged: (String n) {
+                        setState(() {
+                          _yearvalue = n;
+                        });
+                      }),
+                  color: Colors.white),
             ],
           ),
-          SizedBox(height:10),
+          SizedBox(height: 10),
         ],
       ),
     );
   }
 
   ///Get the default circular series with legend
-  SfCircularChart _getCoolGraphChart(String month,String year,double paid,double due) {
+  SfCircularChart _getCoolGraphChart(
+      String month, String year, double paid, double due) {
     double total = paid;
-    double paidtemp = (paid/(paid+due))*100;
-    double mod = pow(10.0, 4); 
+    double paidtemp = (paid / (paid + due)) * 100;
+    double mod = pow(10.0, 4);
     double paidpercentage = ((paidtemp * mod).round().toDouble() / mod);
     print("Perc $paidpercentage");
     return SfCircularChart(
@@ -149,13 +155,11 @@ class _CoolGraphState extends State<CoolGraph> {
   }
 
   ///Get the default circular series
-  List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(double paidperc) {
+  List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(
+      double paidperc) {
     final List<ChartSampleData> chartData = <ChartSampleData>[
-          ChartSampleData(x: 'Paid ', y: paidperc,pointColor: Colors.green),
-      ChartSampleData(x: 'Due', y: 100-paidperc, pointColor: Colors.red),
-
-  
-
+      ChartSampleData(x: 'Paid ', y: paidperc, pointColor: Colors.green),
+      ChartSampleData(x: 'Due', y: 100 - paidperc, pointColor: Colors.red),
     ];
     return <DoughnutSeries<ChartSampleData, String>>[
       DoughnutSeries<ChartSampleData, String>(

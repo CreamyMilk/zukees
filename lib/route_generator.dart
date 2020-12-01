@@ -2,19 +2,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zukes/views/tabs_control.dart';
-
+import 'package:zukes/pages/all_tenants.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
-    //final args = settings.arguments;
+    final args = settings.arguments;
 
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (ctx) => BaseTabView());
       case '/alltenants':
-        return MaterialPageRoute(builder: (ctx) => BaseTabView());
+        return MaterialPageRoute(builder: (ctx) => AllTenatsTable(branch:args));
       default:
         return _errorRoute();
     }
@@ -45,7 +45,7 @@ class BaseRoute extends StatefulWidget {
 class _BaseRouteState extends State<BaseRoute> {
   @override
   void initState() {
-    // TODO: implement initState
+
       Firebase.initializeApp();
     super.initState();
   }

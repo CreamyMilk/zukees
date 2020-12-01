@@ -1,72 +1,70 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:zukes/models/tenantData.dart';
 
 class AllTenatsTable extends StatefulWidget {
-  const AllTenatsTable({Key key}) : super(key: key);
-
+  final String branch;
+  const AllTenatsTable({Key key,@required this.branch}) : super(key: key);
   @override
   _AllTenatsTableState createState() => _AllTenatsTableState();
 }
 
 class _AllTenatsTableState extends State<AllTenatsTable> {
-Future getTrans(branchId) async {
-  TenantData data;
-  print('Branch $branchId');
-    try{
-    final response = await http.post(
-      ("https://land.i-crib.co.ke/" + "tenants"),
-      headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-      },
-      body: jsonEncode(
-        {
-          'branchId': branchId,
-  
+  Future _getTrans(String branchId) async {
+    TenantData data;
+    print('Branch $branchId');
+    try {
+      final response = await http.post(
+        ("https://land.i-crib.co.ke/" + "tenants"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
         },
-      ),
-    );
-    var myjson = json.decode(response.body);
-    data = TenantData.fromJson(myjson);
-    print(data);
- 
-  }catch(SocketException){
-  
-showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-        title: Text("No Network connection."),
-  //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
-    ));
- 
-}
-   
-}
+        body: jsonEncode(
+          {
+            'branchId': branchId,
+          },
+        ),
+      );
+      var myjson = json.decode(response.body);
+      data = TenantData.fromJson(myjson);
+      print(data);
+    } catch (SocketException) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("No Network connection."),
+                //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
+              ));
+    }
+  }
+
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: FutureBuilder(
-        future: null,
-        builder: (context, snapshot) {
-          return PaginatedDataTable(
-            header: const Text('All Tenants'),
-            rowsPerPage: _rowsPerPage,
-            availableRowsPerPage: const <int>[5, 10, 20],
-            onRowsPerPageChanged: (int value) {
-              setState(() {
-                _rowsPerPage = value;
-              });
-            },
-            columns: kTableColumns,
-            source: DessertDataSource(),
-          );
-        }
-      ),
+          future: _getTrans(widget.branch),
+          builder: (context, snapshot) {
+            if (snapshot.data == null){
+             return PaginatedDataTable(
+               header: const Text('All Tenants'),
+              rowsPerPage: _rowsPerPage,
+              availableRowsPerPage: const <int>[5, 10, 20],
+              onRowsPerPageChanged: (int value) {
+                setState(() {
+                  _rowsPerPage = value;
+                });
+              },
+              columns: snapshot.data(),
+              source: DessertDataSource(),
+            );
+            }else{
+              return Center(child: CircularProgressIndicator());
+            }
+          }),
     );
   }
 }
@@ -75,7 +73,7 @@ showDialog(
 const kTableColumns = <DataColumn>[
   DataColumn(
     label: Text('Number'),
-    tooltip: 'Number ogf tenant in list.',
+    tooltip: 'Number of tenant in list.',
     numeric: true,
   ),
   DataColumn(
@@ -84,8 +82,7 @@ const kTableColumns = <DataColumn>[
   ),
   DataColumn(
     label: Text('House No'),
-     tooltip: 'Tenants House Number.',
- 
+    tooltip: 'Tenants House Number.',
   ),
   DataColumn(
     label: Text('Rent'),
@@ -96,9 +93,7 @@ const kTableColumns = <DataColumn>[
     label: Text('Payment Status'),
     numeric: true,
   ),
-
 ];
-
 
 ////// Data class.
 class Dessert {
