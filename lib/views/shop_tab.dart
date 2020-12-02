@@ -20,7 +20,7 @@ class ItemCategoryGrid extends StatefulWidget {
   @override
   _ItemCategoryGridState createState() => _ItemCategoryGridState();
 }
-
+ 
 class _ItemCategoryGridState extends State<ItemCategoryGrid> {
   List<dynamic> allcategories = [];
   @override

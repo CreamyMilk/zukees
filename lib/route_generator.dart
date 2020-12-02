@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zukes/pages/all_tens.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,8 +14,10 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (ctx) => BaseTabView());
-      case '/alltenants':
+      case '/alltens':
         return MaterialPageRoute(builder: (ctx) => AllTenatsTable(branch:args));
+      case '/alltensu':
+        return MaterialPageRoute(builder: (ctx) => DataTableExample());
       default:
         return _errorRoute();
     }

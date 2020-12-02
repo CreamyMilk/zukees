@@ -20,7 +20,8 @@ class CoolGraph extends StatefulWidget {
 
 class _CoolGraphState extends State<CoolGraph> {
   _CoolGraphState();
-
+  Query query =
+        FirebaseFirestore.instance.collection('building8');
   static const _months = <String>[
     'January',
     'Febuary',
@@ -77,10 +78,16 @@ class _CoolGraphState extends State<CoolGraph> {
                 }
 
                 QuerySnapshot querySnapshot = snapshot.data;
-                print(querySnapshot.docs[0].data());
+                //final children = <Widget>[];
+                print("length ${querySnapshot.docs.length}");
+                for (var i = 0; i < querySnapshot.docs.length; i++) {
+                  print(i);
+                  print( querySnapshot.docs[i].data());
+                }
+                //print(querySnapshot.docs[0].data().keys);
 
                 var _da = querySnapshot.docs[0].data();
-                print(_da);
+                //print(_da);
 
                 return _getCoolGraphChart(
                     _da["month"],
