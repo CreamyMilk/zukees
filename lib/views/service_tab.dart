@@ -77,18 +77,21 @@ class _KraGridState extends State<KraGrid> {
         crossAxisCount: 2,
         children: [
           ServiceTile(
+            route:"/kraform",
             description: "Apply for 🤖 Automated KRA tax filing.\n",
             imageURL:
                 "https://sokodirectory.com/wp-content/uploads/2015/10/kenya-revenue-authority.png",
             status: true,
           ),
           ServiceTile(
+            route:"/kraform",
             description: "Apply for an 💷insuarnce policy for your property.",
             imageURL:
                 "https://cdn.logojoy.com/wp-content/uploads/2018/07/30124946/insuranceb.png",
             status: false,
           ),
           ServiceTile(
+            route:"/kraform",
             description: "Apply for a 🏡Property advertising policy for your property.",
             imageURL:
                 "https://images-platform.99static.com/eWZkBuTHmSjfhUu2JQbP6zmIPAc=/0x0:1500x1500/500x500/top/smart/99designs-contests-attachments/105/105938/attachment_105938209",
@@ -104,9 +107,11 @@ class ServiceTile extends StatelessWidget {
   final String imageURL;
   final String description;
   final bool status;
+  final String route;
 
   const ServiceTile({
     Key key,
+    @required this.route,
     @required this.imageURL,
     @required this.description,
     @required this.status,
@@ -114,20 +119,25 @@ class ServiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Stack(
-      children: [
-        GridTile(
-            footer: Container(color: Colors.white, child: Text(description)),
-            child:
-                Container(color: Colors.white, child: Image.network(imageURL))),
-        ButtonBar(
-          alignment: MainAxisAlignment.end,
-          children: [
-            status ? Text("Active ✅") : Text("Not Active ⏳"),
-          ],
-        )
-      ],
-    ));
+    return InkWell(
+          onTap:(){
+            Navigator.of(context).pushNamed(route);
+          },
+          child: Card(
+          child: Stack(
+        children: [
+          GridTile(
+              footer: Container(color: Colors.white, child: Text(description)),
+              child:
+                  Container(color: Colors.white, child: Image.network(imageURL))),
+          ButtonBar(
+            alignment: MainAxisAlignment.end,
+            children: [
+              status ? Text("Active ✅") : Text("Not Active ⏳"),
+            ],
+          )
+        ],
+      )),
+    );
   }
 }

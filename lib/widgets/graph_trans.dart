@@ -70,7 +70,11 @@ class _CoolGraphState extends State<CoolGraph> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return _getCoolGraphChart(
+                    "",
+                   "",
+                   1,
+                    1);
                 }
 
                 if (snapshot.hasError) {

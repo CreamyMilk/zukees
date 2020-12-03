@@ -18,7 +18,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
     print('Branch $branchId');
     try {
       final response = await http.post(
-        ("http://kkk.i-crib.co.ke/" + "acc"),
+        ("http://land.i-crib.co.ke/" + "alltenants"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -36,7 +36,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text("No Network connection."),
+                title: Text("Network Error."),
                 //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
               ));
     }

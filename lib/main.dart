@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.black,
-        accentColor: Colors.black38,
+        accentColor: Colors.white,
       ),
       darkTheme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
               fontSizeDelta: 1.0,
             ),
         primaryColor: Colors.black,
-        accentColor: Colors.black38,
+         accentColor: Colors.white,
       ),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: '/',
