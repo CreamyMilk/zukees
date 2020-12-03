@@ -31,6 +31,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
       );
       var myjson = json.decode(response.body);
       data = TenantData.fromJson(myjson);
+      print(data);
       print(response.body);
     } catch (SocketException) {
       showDialog(
