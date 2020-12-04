@@ -22,16 +22,16 @@ class _CoolGraphState extends State<CoolGraph> {
   _CoolGraphState();
   Query query = FirebaseFirestore.instance.collection('building8');
   List<String> _months = [""];
-  static const _years = <String>["2018", "2019", "2020", "2021"];
+  // static const _years = <String>["2018", "2019", "2020", "2021"];
 
-  final List<DropdownMenuItem<String>> _dropDownYear = _years
-      .map(
-        (String v) => DropdownMenuItem<String>(
-          value: v,
-          child: Text(v),
-        ),
-      )
-      .toList();
+  // final List<DropdownMenuItem<String>> _dropDownYear = _years
+  //     .map(
+  //       (String v) => DropdownMenuItem<String>(
+  //         value: v,
+  //         child: Text(v),
+  //       ),
+  //     )
+  //     .toList();
 
   String _monthvalue;
   String _yearvalue = DateFormat('y').format(DateTime.now());

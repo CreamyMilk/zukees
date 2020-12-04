@@ -22,33 +22,48 @@ class ItemCategoryGrid extends StatefulWidget {
 }
  
 class _ItemCategoryGridState extends State<ItemCategoryGrid> {
-  List<dynamic> allcategories = [];
+  List<dynamic> allcategories = [Itemtile(prodname:"Feature d Products\n\n",imageUrl:"https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp"),
+                  Itemtile(prodname:"Cement \n\n",imageUrl:"https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp")];
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:500,width:500,
-          child: GridView.count(
-            padding:EdgeInsets.all(8.0),
-            mainAxisSpacing:6,
-            crossAxisSpacing: 6,
-                  crossAxisCount: 2,
-                  children:[ Itemtile(prodname:"Featured Products\n\n",imageUrl:"https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp"),
-                  Itemtile(prodname:"Cement \n\n",imageUrl:"https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp")],
-      ),
+      height:MediaQuery.of(context).size.height,width:500,
+          child: FutureBuilder(
+            future:null,
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+              return GridView.builder(
+                gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2) ,
+                padding:EdgeInsets.all(8.0),
+                itemCount: 6,//snapshot.data.length ,
+                itemBuilder:(context,index){
+                  return  Itemtile(prodname:"Cement \n\n",imageUrl:"https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp");               }
+                // mainAxisSpacing:6,
+                // crossAxisSpacing: 6,
+                //       crossAxisCount: 2,
+                      //children:[ ],
+      );
+            }else{
+              return CircularProgressIndicator();
+            }
+            }
+          ),
     );
   }
 }
 
 class Itemtile extends StatelessWidget {
-  Itemtile({this.prodname,this.imageUrl});
+  Itemtile({this.prodname,this.imageUrl,this.productID});
   final String prodname;
   final String imageUrl;
+  final String productID;
   @override
   Widget build(BuildContext context) {
     return  GridTile(
             footer:InkWell(
       onTap:(){
         print(prodname);
+        Navigator.of(context).pushNamed('/products',arguments:productID);
       },
           child: Container(color:Colors.white,child: Text(prodname))),
             child:InkWell(onTap:(){print(prodname);},child: BlurHash(hash:"""LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",image:imageUrl)),
