@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zukes/pages/all_tens.dart';
 import 'package:zukes/pages/kraForm.dart';
+import 'package:zukes/pages/list_products.dart';
+import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +23,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (ctx) => DataTableExample());
       case '/kraform':
         return MaterialPageRoute(builder: (ctx) => BaseForm());
-      default:
+              case '/products':
+        return MaterialPageRoute(builder: (ctx) => ListProducts(category: args,));
+                      case '/product':
+        return MaterialPageRoute(builder: (ctx) => ProductPage(productID: args,));
+              default:
         return _errorRoute();
     }
   }

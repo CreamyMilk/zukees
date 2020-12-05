@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-
-
 class ProductPage extends StatefulWidget {
-  ProductPage({Key key, this.productID, this.productName, this.amount, this.imageURL}) : super(key: key);
+  ProductPage(
+      {Key key,
+      @required this.productID,
+      this.productName,
+      this.amount,
+      this.imageURL})
+      : super(key: key);
   final String productID;
   final String productName;
   final String amount;
-  final String  imageURL;
+  final String imageURL;
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -16,8 +20,12 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: Text("Prods"),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          child: Text("Prods"),
+        ),
+      ),
     );
   }
 }
