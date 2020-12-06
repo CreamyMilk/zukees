@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:zukes/models/r_paymetnResponse.dart';
+import 'package:zukes/widgets/payment_bottomSheet.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage(
@@ -29,7 +34,8 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Shop LOGO IS HERE"), backgroundColor: Colors.yellow),
+        actions:[IconButton(icon:Icon(Icons.card_travel), onPressed: () {  },),],
+          title: Center(child: Text("ICRIB \nSTORE",style:TextStyle(color: Color(0xff1a1a49)))), backgroundColor: Color(0xfffecf0a)),
       bottomNavigationBar: Card(
         child: Container(
             decoration: BoxDecoration(),
@@ -40,13 +46,18 @@ class _ProductPageState extends State<ProductPage> {
                     padding: EdgeInsets.only(left: 8.0, right: 8.0),
                     width: 90,
                     height: 50,
-                    color: Colors.yellow,
-                    child: Row(
-                      children: [
-                        Text("Search"),
-                        Spacer(),
-                        Icon(Icons.search),
-                      ],
+                    color: Color(0xfffecf0a),
+                    child: InkWell(
+                      onTap: (){
+                         settingModalBottomSheet(context,"3"); 
+                      },
+                                          child: Row(
+                        children: [
+                          Text("Buy Now"),
+                          Spacer(),
+                          Icon(Icons.assignment_turned_in),
+                        ],
+                      ),
                     )),
                 Spacer(),
                 Container(
@@ -55,7 +66,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 50,
                     child: Row(
                       children: [
-                        Text("KSH 0"),
+                        Text("KSH 0",style:TextStyle(fontSize:24)),
                         Spacer(),
                         Icon(Icons.card_travel),
                       ],
@@ -101,5 +112,65 @@ class _ProductPageState extends State<ProductPage> {
         ),
       ),
     );
+  }
+}
+void settingModalBottomSheet(context, amountDue) {
+  showModalBottomSheet(
+    isScrollControlled: true,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+    ),
+    context: context,
+    builder: (BuildContext context) {
+      return PaymentBottomSheet();
+    },
+  );
+}
+
+Future sendPayment(mobile, amountDue,accName ,ctx) async {
+
+  //final FirebaseMessaging _fcm = FirebaseMessaging();
+  //v2 work with paymentapi responses
+PaymentResponse data;
+  try {
+   
+    final response = await http.post(
+      ("https://googlesecureotp.herokuapp.com/" + "payment"),
+      headers: {
+        "Accept": "application/json",
+        "content-type": "application/json",
+      },
+      body: jsonEncode(
+        //ensure that the user has bothe the socketID and the USER ID
+        {
+          "phonenumber": mobile,
+          "amount": amountDue,
+          "userID": accName??"Error",
+          "socketID": "mee",
+          "notifToken": "productToken"
+        },
+      ),
+    );
+    print("$accName");
+    var myjson = json.decode(response.body);
+    print("productToken");
+    data = PaymentResponse.fromJson(myjson);
+    print(data.paymentCode);
+    print(data.description);
+  } catch (SocketException) {
+    print("msEE HAUNA WIFI");
+      showDialog(
+    //Text(message['notification']['title']
+    context: ctx,
+    builder: (ctx) => AlertDialog(
+        title: Text("dfdf"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("It seems that you are offline"),
+          ],
+        )),
+  );
   }
 }

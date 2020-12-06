@@ -67,7 +67,9 @@ class _BaseRouteState extends State<BaseRoute> {
     print("SCALEFACTOR >>>>${d.textScaleFactor}");
     return MediaQuery(
       data: d.copyWith(
-        textScaleFactor:d.textScaleFactor.clamp(1.0,1.3),
+        //textScaleFactor:d.textScaleFactor.clamp(2,10),
+        devicePixelRatio: 1.0, 
+        textScaleFactor: 1
       ),
       child: BaseTabView());
   }

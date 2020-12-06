@@ -55,7 +55,7 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
                   itemCount: 16, //snapshot.data.length ,
                   itemBuilder: (context, index) {
                     return Itemtile(
-                        prodname: "Cement \n\n",
+                        prodname: "Cement  >",
                         imageUrl:
                             "https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp", productID: "900",);
                   }
@@ -82,7 +82,7 @@ class Itemtile extends StatelessWidget {
             print(prodname);
             Navigator.of(context).pushNamed('/products', arguments: productID);
           },
-          child: Container(color: Colors.red, child: Text(prodname))),
+          child: Container(color: Color(0xffff2f2f2), child: Center(child: Text(prodname,style: TextStyle(fontSize: 20,fontWeight:FontWeight.w500),)))),
       child: InkWell(
           onTap: () {
             print(prodname);

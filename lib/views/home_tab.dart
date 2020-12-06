@@ -5,19 +5,19 @@ import 'package:zukes/widgets/graph_trans.dart';
 class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+ //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
-        child: SingleChildScrollView(
-                  child: Container(
-            child: Column(
-              children: [
-                Text("Hello from zukes 👋"),
-                UserProfileCard(),
-                CoolGraph(),
-              ],
-            ),
-          ),
+    child: SingleChildScrollView(
+              child: Container(
+        child: Column(
+          children: [
+            Text("Hello from zukes 👋"),
+            UserProfileCard(),
+            CoolGraph(),
+          ],
         ),
-      );
+      ),
+    ),
+        );
   }
 }
