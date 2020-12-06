@@ -78,7 +78,7 @@ class _KraGridState extends State<KraGrid> {
         children: [
           ServiceTile(
             route:"/kraform",
-            description: "Apply for 🤖 Automated KRA tax filing.\n",
+            description: "Apply for Automated KRA tax filing.\n",
             imageURL:
                 "https://sokodirectory.com/wp-content/uploads/2015/10/kenya-revenue-authority.png",
             status: true,
