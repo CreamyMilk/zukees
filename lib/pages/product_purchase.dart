@@ -42,28 +42,31 @@ class _ProductPageState extends State<ProductPage> {
             height: 50,
             child: Row(
               children: [
-                Container(
-                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                    width: 90,
-                    height: 50,
-                    color: Color(0xfffecf0a),
-                    child: InkWell(
-                      onTap: (){
-                         settingModalBottomSheet(context,"3"); 
-                      },
-                                          child: Row(
-                        children: [
-                          Text("Buy Now"),
-                          Spacer(),
-                          Icon(Icons.assignment_turned_in),
-                        ],
-                      ),
-                    )),
+                Hero(
+                  tag:'button1',
+                                  child: Container(
+                      padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                      width: 90,
+                      height: 50,
+                      color: Color(0xfffecf0a),
+                      child: InkWell(
+                        onTap: (){
+                           settingModalBottomSheet(context,"3"); 
+                        },
+                                            child: Row(
+                          children: [
+                            Text("Buy Now"),
+                            Spacer(),
+                            Icon(Icons.assignment_turned_in),
+                          ],
+                        ),
+                      )),
+                ),
                 Spacer(),
                 Container(
                     padding: EdgeInsets.only(left: 8.0, right: 8.0),
                     width: 90,
-                    height: 50,
+                    height: 100,
                     child: Row(
                       children: [
                         Text("KSH 0",style:TextStyle(fontSize:24)),

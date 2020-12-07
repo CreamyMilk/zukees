@@ -63,6 +63,7 @@ class ListProducts extends StatelessWidget {
                               itemCount: 16, //snapshot.data.length ,
                               itemBuilder: (context, index) {
                                 return ProductListingItem(
+                                  heros:index,
                                   prodname: "Cement \n\n",
                                   imageUrl:
                                      "https://dms-products.twiga.tech/product_items_PRODUCTION/14ae20ef-4dd0-4650-baec-266432910c791592550391.462305.jpg",
@@ -87,11 +88,12 @@ class ListProducts extends StatelessWidget {
 
 class ProductListingItem extends StatelessWidget {
   const ProductListingItem(
-      {Key key, this.prodname, this.imageUrl, this.productID})
+      {Key key, this.prodname, this.imageUrl, this.productID,this.heros})
       : super(key: key);
   final String prodname;
   final String imageUrl;
   final String productID;
+  final int heros;
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +104,12 @@ class ProductListingItem extends StatelessWidget {
                   Spacer(),
                   Text("Weetabix",style:TextStyle(fontWeight:FontWeight.bold)),
                   Text("24(9090) - 1 Carton"),
-          MaterialButton(color:Color(0xff1a1a49),onPressed:(){
-            Navigator.of(context).pushNamed("/product",arguments:prodname );
-          },child: Text("Buy Now",style:TextStyle(fontSize:14.4,fontFamily:'Poppins',color:Colors.white)),),SizedBox(height:5)]),
+          Hero(
+            tag:"button$heros",
+                      child: MaterialButton(color:Color(0xff1a1a49),onPressed:(){
+              Navigator.of(context).pushNamed("/product",arguments:prodname );
+            },child: Text("Buy Now",style:TextStyle(fontSize:14.4,fontFamily:'Poppins',color:Colors.white)),),
+          ),SizedBox(height:5)]),
     );
   }
 }
