@@ -36,6 +36,7 @@ class _OtpReceiverState extends State<OtpReceiver> {
     }
     if (!mounted) return;
     setState(() => _receivedCode = receivedCode);
+    print(_receivedCode);
   }
   @override
   void dispose() {

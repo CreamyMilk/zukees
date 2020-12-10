@@ -386,7 +386,7 @@ class _PopupFormState extends State<PopupForm> {
                           controller: _mytextcontroller,
                           showCursor: true,
                           autofocus: true,
-                          maxLength:10,
+                          maxLength:13,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
@@ -497,7 +497,7 @@ Future getOTP(mobile,context) async {
     data = OtpResponse.fromJson(myjson);
     print(data.description);
   
-    Navigator.of(context).pushNamed('/otprec', arguments: mobile);
+    Navigator.of(context).pushNamed('/verify', arguments: mobile);
   }catch(SocketException){
   
 showDialog(

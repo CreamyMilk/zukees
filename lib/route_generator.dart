@@ -8,6 +8,7 @@ import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
+import 'package:zukes/pages/otp_receiver.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class RouteGenerator {
@@ -18,6 +19,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (ctx) => LoginOTP());
+      case '/verify':
+        return MaterialPageRoute(builder: (ctx) => OtpReceiver(phonenumber:args));
       case '/home':
         return MaterialPageRoute(builder: (ctx) => BaseTabView());
       case '/alltens':
