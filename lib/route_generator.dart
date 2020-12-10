@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:zukes/pages/all_tens.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
+import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
@@ -16,6 +17,8 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
+        return MaterialPageRoute(builder: (ctx) => LoginOTP());
+      case '/home':
         return MaterialPageRoute(builder: (ctx) => BaseTabView());
       case '/alltens':
         return MaterialPageRoute(builder: (ctx) => AllTenatsTable(branch:args));
