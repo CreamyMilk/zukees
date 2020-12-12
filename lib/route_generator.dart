@@ -2,9 +2,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zukes/pages/all_tens.dart';
+import 'package:zukes/pages/hover_login.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
-import 'package:zukes/pages/login_page.dart';
+//import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
@@ -18,7 +19,7 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (ctx) => LoginOTP());
+        return MaterialPageRoute(builder: (ctx) => HoverLogin());
       case '/verify':
         return MaterialPageRoute(builder: (ctx) => OtpReceiver(phonenumber:args));
       case '/home':
