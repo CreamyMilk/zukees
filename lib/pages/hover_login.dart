@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:zukes/providers/counter.dart';
 
 class HoverLogin extends StatefulWidget {
   HoverLogin({Key key}) : super(key: key);
@@ -8,25 +10,26 @@ class HoverLogin extends StatefulWidget {
 }
 
 class _HoverLoginState extends State<HoverLogin> {
-  double h;
   bool isLoggedIn;
   FocusNode secFocusNode;
   @override
   void initState() {
-    h = 0.0;
     secFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final hstore = Provider.of<Counter>(context);
+    double h = hstore.value;
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: () {
+        hstore.increment();
         // print(MediaQuery.of(context).viewInsets.bottom);
         // setState(() {
         //   h = 0.5;
         // });
-        Navigator.of(context).pushNamed('/home');
+        //Navigator.of(context).pushNamed('/home');
       }),
       body: SingleChildScrollView(
         child: Column(
@@ -43,10 +46,8 @@ class _HoverLoginState extends State<HoverLogin> {
                     size: 150,
                   ),
                   onPressed: () {
+                    hstore.decrement();
                     print(h);
-                    setState(() {
-                      h = 0.1;
-                    });
                   },
                 )),
             AnimatedContainer(

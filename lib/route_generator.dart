@@ -1,12 +1,13 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zukes/pages/all_tens.dart';
 import 'package:zukes/pages/hover_login.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
 //import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
+import 'package:zukes/providers/counter.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 import 'package:zukes/pages/otp_receiver.dart';
@@ -19,22 +20,32 @@ class RouteGenerator {
 
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (ctx) => HoverLogin());
+        return MaterialPageRoute(
+            builder: (ctx) => ChangeNotifierProvider<Counter>(
+                create: (context) => Counter(), child: HoverLogin()));
       case '/verify':
-        return MaterialPageRoute(builder: (ctx) => OtpReceiver(phonenumber:args));
+        return MaterialPageRoute(
+            builder: (ctx) => OtpReceiver(phonenumber: args));
       case '/home':
         return MaterialPageRoute(builder: (ctx) => BaseTabView());
       case '/alltens':
-        return MaterialPageRoute(builder: (ctx) => AllTenatsTable(branch:args));
+        return MaterialPageRoute(
+            builder: (ctx) => AllTenatsTable(branch: args));
       case '/alltensu':
         return MaterialPageRoute(builder: (ctx) => DataTableExample());
       case '/kraform':
         return MaterialPageRoute(builder: (ctx) => BaseForm());
-              case '/products':
-        return MaterialPageRoute(builder: (ctx) => ListProducts(category: args,));
-                      case '/product':
-        return MaterialPageRoute(builder: (ctx) => ProductPage(productID: args,));
-              default:
+      case '/products':
+        return MaterialPageRoute(
+            builder: (ctx) => ListProducts(
+                  category: args,
+                ));
+      case '/product':
+        return MaterialPageRoute(
+            builder: (ctx) => ProductPage(
+                  productID: args,
+                ));
+      default:
         return _errorRoute();
     }
   }
@@ -51,11 +62,10 @@ class RouteGenerator {
       );
     });
   }
-
 }
+
 class BaseRoute extends StatefulWidget {
   const BaseRoute({Key key}) : super(key: key);
-
 
   @override
   _BaseRouteState createState() => _BaseRouteState();
@@ -64,20 +74,19 @@ class BaseRoute extends StatefulWidget {
 class _BaseRouteState extends State<BaseRoute> {
   @override
   void initState() {
-
-      Firebase.initializeApp();
+    Firebase.initializeApp();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final MediaQueryData d = MediaQuery.of(context);
     print("SCALEFACTOR >>>>${d.textScaleFactor}");
     return MediaQuery(
-      data: d.copyWith(
-        //textScaleFactor:d.textScaleFactor.clamp(2,10),
-        devicePixelRatio: 1.0, 
-        textScaleFactor: 1
-      ),
-      child: BaseTabView());
+        data: d.copyWith(
+            //textScaleFactor:d.textScaleFactor.clamp(2,10),
+            devicePixelRatio: 1.0,
+            textScaleFactor: 1),
+        child: BaseTabView());
   }
 }
