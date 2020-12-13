@@ -27,6 +27,7 @@ dependencies:
   hive:
   hive_flutter:
   provider:
+  flushbar:
   syncfusion_flutter_charts:
   flutter_blurhash: ^0.5.0
   cloud_firestore: ^0.14.3+1

@@ -41,7 +41,8 @@ class _BaseTabViewState extends State<BaseTabView> {
         activeIcon: Icon(Icons.spa, color: Colors.blue));
     var krainItem = BottomNavigationBarItem(
         label: "Services",
-        icon: Icon(Icons.healing, color: Colors.black),
+        icon:
+            Hero(tag: "heal", child: Icon(Icons.healing, color: Colors.black)),
         activeIcon: Icon(Icons.healing, color: Colors.blue));
     var shopItem = BottomNavigationBarItem(
         label: "Hardware",
