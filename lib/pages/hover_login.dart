@@ -209,7 +209,9 @@ Future sendComplain(phone, password, context) async {
     var myjson = json.decode(response.body);
 
     print(myjson);
-    Flushbar()..show(context);
+    Flushbar(
+      message: myjson,
+    )..show(context);
   } catch (SocketException) {
     showDialog(
       //Text(message['notification']['title']
