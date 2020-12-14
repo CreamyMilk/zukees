@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AllTenatsTable extends StatefulWidget {
   final String branch;
@@ -14,7 +15,6 @@ class AllTenatsTable extends StatefulWidget {
 
 class _AllTenatsTableState extends State<AllTenatsTable> {
   Future _getTrans(String branchId) async {
- 
     print('Branch $branchId');
     try {
       final response = await http.get(
@@ -40,7 +40,6 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                 title: Text("Network Error."),
                 //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
               ));
-              
     }
   }
 
@@ -53,12 +52,11 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
           children: [
             SingleChildScrollView(
               child: Container(
-                height: 786,
                 child: FutureBuilder(
                     future: _getTrans(widget.branch),
                     builder: (context, snapshot) {
                       if (snapshot.data != null) {
-                        return TwigList(apiData:snapshot.data);
+                        return TwigList(apiData: snapshot.data);
                       } else {
                         return Center(child: CircularProgressIndicator());
                       }
@@ -84,19 +82,19 @@ class TwigList extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-      
         Container(
-          height: 770,
+          height: MediaQuery.of(context).size.height * 0.89,
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                  padding: EdgeInsets.only(left:12.0),
-                  height: 64,
+                  padding: EdgeInsets.only(left: 12.0),
+                  height: 65,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(height:4),
+                      SizedBox(height: 4),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -116,13 +114,14 @@ class TwigList extends StatelessWidget {
                                   Text(" House No.",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text(" ${apiData[index]["unit_no"]}", textAlign: TextAlign.left),
+                                  Text(" ${apiData[index]["unit_no"]}",
+                                      textAlign: TextAlign.left),
                                 ],
                               ),
                             ],
                           ),
                           Column(
-                              mainAxisSize: MainAxisSize.min,
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -135,11 +134,16 @@ class TwigList extends StatelessWidget {
                                       TextStyle(fontWeight: FontWeight.bold)),
                               Text(" ${apiData[index]["month_name"]} ",
                                   style: TextStyle(
-                                      backgroundColor:apiData[index]["month_name"] == DateFormat('MMMM').format(DateTime.now())? Colors.lightGreen[200]:Colors.red[200])),
+                                      backgroundColor: apiData[index]
+                                                  ["month_name"] ==
+                                              DateFormat('MMMM')
+                                                  .format(DateTime.now())
+                                          ? Colors.lightGreen[200]
+                                          : Colors.red[200])),
                             ],
                           ),
                           Column(
-                              mainAxisSize: MainAxisSize.min,
+                            mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -147,8 +151,13 @@ class TwigList extends StatelessWidget {
                             ],
                           ),
                           PopupMenuButton<String>(
-                            onSelected: (o) {
-                              print(" ${apiData[index]["r_contact"]} ");
+                            onSelected: (o) async {
+                              final url = "tel:${apiData[index]["r_contact"]}";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
                             },
                             itemBuilder: (BuildContext context) {
                               return {'Contact'}.map((String choice) {
@@ -161,8 +170,8 @@ class TwigList extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height:4),
-                      Divider(height:1),
+                      SizedBox(height: 4),
+                      Divider(height: 1),
                     ],
                   ));
             },

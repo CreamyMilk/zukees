@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:zukes/widgets/getNewAPIdata.dart';
 
 class ServiceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: SingleChildScrollView(
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        KraCardSample(),
-        KraGrid(),
-      ]),
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: RefreshIndicator(
+          onRefresh: getLatestTrans,
+          child: ListView(children: [
+            KraCardSample(),
+            KraGrid(),
+          ]),
+        ),
+      ),
     ));
   }
 }
@@ -31,7 +38,7 @@ class KraCardSample extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top:150.0,
+                  top: 150.0,
                   left: 16.0,
                   right: 16.0,
                   child: FittedBox(
@@ -77,22 +84,23 @@ class _KraGridState extends State<KraGrid> {
         crossAxisCount: 2,
         children: [
           ServiceTile(
-            route:"/kraform",
+            route: "/kraform",
             description: "Apply for Automated KRA tax filing.\n",
             imageURL:
                 "https://sokodirectory.com/wp-content/uploads/2015/10/kenya-revenue-authority.png",
             status: true,
           ),
           ServiceTile(
-            route:"/kraform",
+            route: "/kraform",
             description: "Apply for an 💷insuarnce policy for your property.",
             imageURL:
                 "https://cdn.logojoy.com/wp-content/uploads/2018/07/30124946/insuranceb.png",
             status: false,
           ),
           ServiceTile(
-            route:"/kraform",
-            description: "Apply for a 🏡Property advertising policy for your property.",
+            route: "/kraform",
+            description:
+                "Apply for a 🏡Property advertising policy for your property.",
             imageURL:
                 "https://images-platform.99static.com/eWZkBuTHmSjfhUu2JQbP6zmIPAc=/0x0:1500x1500/500x500/top/smart/99designs-contests-attachments/105/105938/attachment_105938209",
             status: false,
@@ -120,16 +128,16 @@ class ServiceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-          onTap:(){
-            Navigator.of(context).pushNamed(route);
-          },
-          child: Card(
+      onTap: () {
+        Navigator.of(context).pushNamed(route);
+      },
+      child: Card(
           child: Stack(
         children: [
           GridTile(
               footer: Container(color: Colors.white, child: Text(description)),
-              child:
-                  Container(color: Colors.white, child: Image.network(imageURL))),
+              child: Container(
+                  color: Colors.white, child: Image.network(imageURL))),
           ButtonBar(
             alignment: MainAxisAlignment.end,
             children: [

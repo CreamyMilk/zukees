@@ -9,10 +9,11 @@ class HomeTab extends StatelessWidget {
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
       child: SingleChildScrollView(
-        child: Container(
-          child: RefreshIndicator(
-            onRefresh: getLatestTrans,
-            child: Column(
+        child: RefreshIndicator(
+          onRefresh: getLatestTrans,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView(
               children: [
                 Text("Hello from zukes 👋"),
                 UserProfileCard(),

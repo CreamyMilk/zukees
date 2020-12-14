@@ -1,5 +1,5 @@
 Future<void> getLatestTrans() async {
-  Future.delayed(Duration(seconds: 3));
+  await Future.delayed(Duration(seconds: 5));
   // PaymentUpdateModel data;
   // String transaction;
   // var userBox = Hive.box('user');

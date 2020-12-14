@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:zukes/widgets/getNewAPIdata.dart';
 
 class ManageTab extends StatefulWidget {
   ManageTab({Key key}) : super(key: key);
@@ -14,15 +15,21 @@ class _ManageTabState extends State<ManageTab> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            //PropertyManageCard(),
-            Text("Hello from managment👋\n\n"),
-            NewPropertCard(),
-            EmployeeManageCard(),
-            //CoolListTile(),
-            ContactAuctioner(),
-          ],
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: RefreshIndicator(
+            onRefresh: getLatestTrans,
+            child: ListView(
+              children: [
+                //PropertyManageCard(),
+                Text("Hello from managment👋\n\n"),
+                NewPropertCard(),
+                EmployeeManageCard(),
+                //CoolListTile(),
+                ContactAuctioner(),
+              ],
+            ),
+          ),
         ),
       ),
     );

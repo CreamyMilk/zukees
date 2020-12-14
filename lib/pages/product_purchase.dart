@@ -34,8 +34,16 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions:[IconButton(icon:Icon(Icons.card_travel), onPressed: () {  },),],
-          title: Center(child: Text("ICRIB \nSTORE",style:TextStyle(color: Color(0xff1a1a49)))), backgroundColor: Color(0xfffecf0a)),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.card_travel),
+              onPressed: () {},
+            ),
+          ],
+          title: Center(
+              child: Text("ICRIB \nSTORE",
+                  style: TextStyle(color: Color(0xff1a1a49)))),
+          backgroundColor: Color(0xfffecf0a)),
       bottomNavigationBar: Card(
         child: Container(
             decoration: BoxDecoration(),
@@ -43,17 +51,17 @@ class _ProductPageState extends State<ProductPage> {
             child: Row(
               children: [
                 Hero(
-                  tag:'button1',
-                                  child: Container(
+                  tag: 'button1',
+                  child: Container(
                       padding: EdgeInsets.only(left: 8.0, right: 8.0),
                       width: 90,
                       height: 50,
                       color: Color(0xfffecf0a),
                       child: InkWell(
-                        onTap: (){
-                           settingModalBottomSheet(context,"3"); 
+                        onTap: () {
+                          settingModalBottomSheet(context, "3");
                         },
-                                            child: Row(
+                        child: Row(
                           children: [
                             Text("Buy Now"),
                             Spacer(),
@@ -65,11 +73,11 @@ class _ProductPageState extends State<ProductPage> {
                 Spacer(),
                 Container(
                     padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                    width: 90,
+                    width: 120,
                     height: 100,
                     child: Row(
                       children: [
-                        Text("KSH 0",style:TextStyle(fontSize:24)),
+                        Text("KSH 0", style: TextStyle(fontSize: 24)),
                         Spacer(),
                         Icon(Icons.card_travel),
                       ],
@@ -117,6 +125,7 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
+
 void settingModalBottomSheet(context, amountDue) {
   showModalBottomSheet(
     isScrollControlled: true,
@@ -131,13 +140,11 @@ void settingModalBottomSheet(context, amountDue) {
   );
 }
 
-Future sendPayment(mobile, amountDue,accName ,ctx) async {
-
+Future sendPayment(mobile, amountDue, accName, ctx) async {
   //final FirebaseMessaging _fcm = FirebaseMessaging();
   //v2 work with paymentapi responses
-PaymentResponse data;
+  PaymentResponse data;
   try {
-   
     final response = await http.post(
       ("https://googlesecureotp.herokuapp.com/" + "payment"),
       headers: {
@@ -149,7 +156,7 @@ PaymentResponse data;
         {
           "phonenumber": mobile,
           "amount": amountDue,
-          "userID": accName??"Error",
+          "userID": accName ?? "Error",
           "socketID": "mee",
           "notifToken": "productToken"
         },
@@ -163,17 +170,17 @@ PaymentResponse data;
     print(data.description);
   } catch (SocketException) {
     print("msEE HAUNA WIFI");
-      showDialog(
-    //Text(message['notification']['title']
-    context: ctx,
-    builder: (ctx) => AlertDialog(
-        title: Text("dfdf"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("It seems that you are offline"),
-          ],
-        )),
-  );
+    showDialog(
+      //Text(message['notification']['title']
+      context: ctx,
+      builder: (ctx) => AlertDialog(
+          title: Text("dfdf"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("It seems that you are offline"),
+            ],
+          )),
+    );
   }
 }

@@ -241,7 +241,7 @@ Future successfulLogin(response, context) async {
   prefs.setString("user_token", "0").then((bool success) {
     if (success) {
       print("Token Stored Successfully");
-      //Navigator.of(context).pushNamed('/home');
+      Navigator.of(context).pushNamed('/home');
     } else {
       //Show that storage
     }

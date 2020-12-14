@@ -10,12 +10,12 @@ class PaymentBottomSheet extends StatefulWidget {
 }
 
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
-  //Box<dynamic> userHiveBox; 
+  //Box<dynamic> userHiveBox;
   final TextEditingController _testcontroller = TextEditingController();
-  String mobile;
-  String amountDue;
+  String mobile = "2542542";
+  String amountDue = "23";
   String visualAmount;
-  String accountName;
+  String accountName = "prod1";
   @override
   void initState() {
     // userHiveBox = Hive.box('user');
@@ -23,9 +23,11 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     // mobile = userHiveBox.get('mobile',defaultValue: "");
     // amountDue = temp["rentDue"].toString();
     // accountName=temp["account"];
-        amountDue = "4";
-    accountName="prod1";
-    visualAmount = amountDue.replaceAllMapped(new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+    amountDue = "4";
+    accountName = "prod1";
+    visualAmount = amountDue.replaceAllMapped(
+        new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+    //visualAmount = amountDue;
     super.initState();
   }
 
@@ -45,7 +47,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 children: [
                   Icon(Icons.arrow_downward),
                   Text(
-                    "Rent Payment",
+                    "Product Checkout",
                     style: TextStyle(fontWeight: FontWeight.w300, fontSize: 20),
                   ),
                   SizedBox()
@@ -68,10 +70,11 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "$visualAmount",
+                          "89898",
                           style: TextStyle(
                             fontWeight: FontWeight.w100,
-                            fontSize: 20,),
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ],
@@ -145,7 +148,6 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                   isDense: true,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.contacts),
-
                     onPressed: () async {
                       // final PhoneContact contact =
                       //     await FlutterContactPicker.pickPhoneContact();
@@ -167,23 +169,23 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                      child: MaterialButton(
-                      height: 45,
-                      minWidth: MediaQuery.of(context).size.width * .95,
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        await _sendPayment(mobile, amountDue,accountName, context);
-                      },
-                      color: Colors.black,
-                      child: Text(
-                        "Pay $amountDue",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      autofocus: true,
+                  child: MaterialButton(
+                    height: 45,
+                    minWidth: MediaQuery.of(context).size.width * .95,
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      await _sendPayment(
+                          mobile, amountDue, accountName, context);
+                    },
+                    color: Colors.black,
+                    child: Text(
+                      "Pay 1",
+                      style: TextStyle(color: Colors.white),
                     ),
+                    autofocus: true,
                   ),
                 ),
-            
+              ),
             ],
           ),
         ),
@@ -192,7 +194,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   }
 }
 
-String convertTo07(String f){
+String convertTo07(String f) {
   String no;
   String pl;
   String t5;
@@ -201,18 +203,18 @@ String convertTo07(String f){
   t5 = pl.replaceAll(new RegExp(r"2547"), "07");
   return t5;
 }
+
 String validatePassword(String value) {
   if (!(value.length > 9) && value.isNotEmpty) {
-    if(value[0] != "0"){
-       return "Mobile number should be in the format 07xx";
+    if (value[0] != "0") {
+      return "Mobile number should be in the format 07xx";
     }
-   return null;
+    return null;
   }
   return null;
 }
 
-Future _sendPayment(mobile, amountDue,accName ,ctx) async {
-
+Future _sendPayment(mobile, amountDue, accName, ctx) async {
   //final FirebaseMessaging _fcm = FirebaseMessaging();
   //v2 work with paymentapi responses
   PaymentResponse data;
@@ -230,7 +232,7 @@ Future _sendPayment(mobile, amountDue,accName ,ctx) async {
         {
           "phonenumber": mobile,
           "amount": amountDue,
-          "userID": accName??"Error",
+          "userID": accName ?? "Error",
           "socketID": "mee",
           "notifToken": "productToken"
         },
@@ -244,26 +246,26 @@ Future _sendPayment(mobile, amountDue,accName ,ctx) async {
     print(data.description);
   } catch (SocketException) {
     print("msEE HAUNA WIFI");
-      showDialog(
-    //Text(message['notification']['title']
-    context: ctx,
-    builder: (ctx) => AlertDialog(
-        title: Text("error"),
-        // AspectRatio(
-        //         aspectRatio: 1.5,
-        //         child: FlareActor(
-        //           'assets/fail.flr',
-        //           alignment: Alignment.center,
-        //           fit: BoxFit.contain,
-        //           animation: 'Failure',
-        //         ),
-        //       ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("It seems that you are offline"),
-          ],
-        )),
-  );
+    showDialog(
+      //Text(message['notification']['title']
+      context: ctx,
+      builder: (ctx) => AlertDialog(
+          title: Text("error"),
+          // AspectRatio(
+          //         aspectRatio: 1.5,
+          //         child: FlareActor(
+          //           'assets/fail.flr',
+          //           alignment: Alignment.center,
+          //           fit: BoxFit.contain,
+          //           animation: 'Failure',
+          //         ),
+          //       ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("It seems that you are offline"),
+            ],
+          )),
+    );
   }
 }
