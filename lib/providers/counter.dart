@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class Counter extends ChangeNotifier {
   double value = 0.0;
+  bool loading = false;
 
   void increment() {
     if (value < 1.0) {
@@ -15,6 +16,11 @@ class Counter extends ChangeNotifier {
       value += 0.4;
       notifyListeners();
     }
+  }
+
+  void loginState() {
+    loading = !loading;
+    notifyListeners();
   }
 
   void decrement() {

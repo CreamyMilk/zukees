@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zukes/widgets/getNewAPIdata.dart';
 import 'package:zukes/widgets/user_profile_card.dart';
 import 'package:zukes/widgets/graph_trans.dart';
 
@@ -9,12 +10,15 @@ class HomeTab extends StatelessWidget {
     return SafeArea(
       child: SingleChildScrollView(
         child: Container(
-          child: Column(
-            children: [
-              Text("Hello from zukes 👋"),
-              UserProfileCard(),
-              CoolGraph(firestoreKey: "building8"),
-            ],
+          child: RefreshIndicator(
+            onRefresh: getLatestTrans,
+            child: Column(
+              children: [
+                Text("Hello from zukes 👋"),
+                UserProfileCard(),
+                CoolGraph(firestoreKey: "building8"),
+              ],
+            ),
           ),
         ),
       ),

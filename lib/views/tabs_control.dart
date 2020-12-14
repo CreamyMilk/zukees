@@ -64,11 +64,7 @@ class _BaseTabViewState extends State<BaseTabView> {
             });
           },
           items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
-      body: RefreshIndicator(onRefresh: getNewData, child: _tabs[_activetab]),
+      body: _tabs[_activetab],
     );
   }
-}
-
-Future getNewData() {
-  return Future.delayed(Duration(seconds: 5));
 }

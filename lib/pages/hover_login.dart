@@ -22,7 +22,6 @@ class _HoverLoginState extends State<HoverLogin> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final typeController = TextEditingController();
   final descController = TextEditingController();
-  bool _loading;
   void validateForm() {
     if (formkey.currentState.validate()) {
       var ty = typeController.text;
@@ -33,8 +32,6 @@ class _HoverLoginState extends State<HoverLogin> {
 
   @override
   void initState() {
-    _loading = false;
-
     super.initState();
   }
 
@@ -44,6 +41,7 @@ class _HoverLoginState extends State<HoverLogin> {
 
     getStartUpPage(context);
     double h = hstore.value;
+    bool loading = hstore.loading;
     return Scaffold(
       // floatingActionButton: FloatingActionButton(onPressed: () {
       //   hstore.increment();
@@ -89,17 +87,6 @@ class _HoverLoginState extends State<HoverLogin> {
                               ),
                             ),
                     ),
-                    // IconButton(
-                    //   icon: Icon(
-                    //     Icons.healing,
-                    //     color: Colors.white,
-                    //     size: 150,
-                    //   ),
-                    //   onPressed: () {
-                    //     hstore.decrement();
-                    //     print(h);
-                    //   },
-                    // ),
                   ],
                 )),
             AnimatedContainer(
@@ -167,9 +154,7 @@ class _HoverLoginState extends State<HoverLogin> {
                           color: Colors.grey,
                           onPressed: () {
                             //Navigator.of(context).pushNamed('/home');
-                            setState(() {
-                              _loading = false;
-                            });
+                            hstore.loginState();
                           },
                           child: Text("Cancel"),
                         ),
@@ -177,17 +162,15 @@ class _HoverLoginState extends State<HoverLogin> {
                         Hero(
                           tag: 'report',
                           child: MaterialButton(
-                            color: !_loading ? Colors.deepOrange : Colors.black,
+                            color: !loading ? Colors.deepOrange : Colors.black,
                             onPressed: () {
                               validateForm();
-                              setState(() {
-                                if (formkey.currentState.validate()) {
-                                  _loading = true;
-                                }
-                              });
+                              if (formkey.currentState.validate()) {
+                                hstore.loginState();
+                              }
                             },
                             child: Text(
-                              !_loading ? "Sign In" : "Loading...",
+                              !loading ? "Sign In" : "Loading...",
                               style: TextStyle(color: Colors.white),
                             ),
                           ),
@@ -268,8 +251,6 @@ Future successfulLogin(response, context) async {
 Future cacheUserData(apidata) async {
   final userHiveBox = Hive.box('user');
   print("AAPI$apidata");
-  //var newtrans = apidata["transaction"];
-  //userHiveBox.put("transaction", jsonEncode(newtrans));
   userHiveBox.put("fire_store", apidata["fire_store"]);
   userHiveBox.put("name", apidata["name"]);
   userHiveBox.put("tenants", apidata["total_tenants"]["total"]);
@@ -283,8 +264,6 @@ Future getStartUpPage(BuildContext context) async {
   final hstore = Provider.of<Counter>(context);
   final prefs = await SharedPreferences.getInstance();
   final userToken = prefs.getString('user_token') ?? "";
-  //final userTrans = prefs.getString('user_transactions') ?? "no";
-  //_cacheUserDetails(userTrans);
   print("UserToken ilikuwa $userToken");
   Future.delayed(Duration(seconds: 3), () {
     userToken == "0"
