@@ -4,7 +4,9 @@ A new Flutter project.
 
 
 ## Goals🏃‍♀️
-- [ ] Main Screen Charts
-- [ ] User Welcom Screen Card
-- [ ] Tabs View
-- [ ] Firebase Support for Charts
+- [x] Main Screen Charts
+- [x] User Welcom Screen Card
+- [x] Tabs View
+- [x] Firebase Support for Charts
+- [ ] Login Page
+- [ ] Cache User details 
