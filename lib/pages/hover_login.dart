@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +34,7 @@ class _HoverLoginState extends State<HoverLogin> {
   @override
   void initState() {
     _loading = false;
-    getStartUpPage(context);
+
     super.initState();
   }
 
@@ -41,23 +42,24 @@ class _HoverLoginState extends State<HoverLogin> {
   Widget build(BuildContext context) {
     final hstore = Provider.of<Counter>(context);
 
+    getStartUpPage(context);
     double h = hstore.value;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        hstore.increment();
-        // print(MediaQuery.of(context).viewInsets.bottom);
-        // setState(() {
-        //   h = 0.5;
-        // });
-        //Navigator.of(context).pushNamed('/home');
-      }),
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   hstore.increment();
+      //   // print(MediaQuery.of(context).viewInsets.bottom);
+      //   // setState(() {
+      //   //   h = 0.5;
+      //   // });
+      //   //Navigator.of(context).pushNamed('/home');
+      // }),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AnimatedContainer(
-                duration: Duration(seconds: 3),
+                duration: Duration(seconds: 2),
                 color: Colors.black,
                 height: MediaQuery.of(context).size.height * (1 - h),
                 width: MediaQuery.of(context).size.width,
@@ -137,7 +139,6 @@ class _HoverLoginState extends State<HoverLogin> {
                               maxLines: 1,
                             ),
                             SizedBox(height: 30),
-                            SizedBox(height: 20),
                             TextFormField(
                               focusNode: fnTwo,
                               validator: (value) {
@@ -158,14 +159,17 @@ class _HoverLoginState extends State<HoverLogin> {
                           ],
                         )),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Row(
                       children: [
                         OutlineButton(
                           color: Colors.grey,
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/home');
+                            //Navigator.of(context).pushNamed('/home');
+                            setState(() {
+                              _loading = false;
+                            });
                           },
                           child: Text("Cancel"),
                         ),
@@ -215,11 +219,17 @@ Future sendLogin(phone, password, context) async {
       ),
     );
     var myjson = json.decode(response.body);
-
-    print(myjson);
-    Flushbar(
-      message: myjson,
-    )..show(context);
+    if (myjson["response-code"] == 1) {
+      successfulLogin(myjson, context);
+    } else {
+      Flushbar(
+        duration: Duration(seconds: 2),
+        messageText: Text(
+          "${myjson["description"]}",
+          style: TextStyle(color: Colors.white),
+        ),
+      )..show(context);
+    }
   } catch (SocketException) {
     showDialog(
       //Text(message['notification']['title']
@@ -242,16 +252,42 @@ Future sendLogin(phone, password, context) async {
   }
 }
 
+Future successfulLogin(response, context) async {
+  final prefs = await SharedPreferences.getInstance();
+  cacheUserData(response);
+  prefs.setString("user_token", "0").then((bool success) {
+    if (success) {
+      Navigator.of(context).pushNamed('/home');
+    } else {
+      //Show that storage
+    }
+  });
+}
+
+Future cacheUserData(apidata) async {
+  final userHiveBox = Hive.box('user');
+  print("AAPI$apidata");
+  //var newtrans = apidata["transaction"];
+  //userHiveBox.put("transaction", jsonEncode(newtrans));
+  userHiveBox.put("fire_store", apidata["fire_store"]);
+  userHiveBox.put("name", apidata["name"]);
+  userHiveBox.put("tenants", apidata["total_tenants"]["total"]);
+  userHiveBox.put("vaccant", apidata["vaccant_houses"]["total"]);
+  //userHiveBox.putAll(apidata);
+  print("Inserting login info");
+}
+
 Future getStartUpPage(BuildContext context) async {
+  print("Reading Shared Prefs");
   final hstore = Provider.of<Counter>(context);
   final prefs = await SharedPreferences.getInstance();
   final userToken = prefs.getString('user_token') ?? "";
   //final userTrans = prefs.getString('user_transactions') ?? "no";
   //_cacheUserDetails(userTrans);
   print("UserToken ilikuwa $userToken");
-  Future.delayed(Duration(seconds: 6), () {
+  Future.delayed(Duration(seconds: 3), () {
     userToken == "0"
         ? Navigator.of(context).pushNamed('/home')
-        : hstore.increment();
+        : hstore.showlogs();
   });
 }

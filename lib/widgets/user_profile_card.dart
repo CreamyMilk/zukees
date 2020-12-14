@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class UserProfileCard extends StatelessWidget {
   const UserProfileCard({Key key}) : super(key: key);
@@ -25,13 +27,17 @@ class UserProfileCard extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      'George Hz',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(color: Colors.white),
-                    ),
+                    child: ValueListenableBuilder(
+                        valueListenable: Hive.box('user').listenable(),
+                        builder: (BuildContext context, box, Widget child) {
+                          return Text(
+                            box.get("name"),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5
+                                .copyWith(color: Colors.white),
+                          );
+                        }),
                   ),
                 )
               ],
@@ -44,10 +50,10 @@ class UserProfileCard extends StatelessWidget {
                 onPressed: () {},
                 child: const Text('STATS'),
               ),
-              FlatButton(
-                onPressed: () {},
-                child: const Text('EXPLORE'),
-              ),
+              // FlatButton(
+              //   onPressed: () {},
+              //   child: const Text('EXPLORE'),
+              // ),
             ],
           ),
         ]));

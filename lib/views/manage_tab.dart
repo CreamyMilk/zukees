@@ -1,4 +1,6 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class ManageTab extends StatefulWidget {
   ManageTab({Key key}) : super(key: key);
@@ -39,9 +41,14 @@ class NewPropertCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  DataTile(
-                    label: "Total Tenants",
-                    value: 300,
+                  ValueListenableBuilder(
+                    valueListenable: Hive.box('user').listenable(),
+                    builder: (BuildContext context, box, Widget child) {
+                      return DataTile(
+                        label: "Total Tenants",
+                        value: box.get("tenants"),
+                      );
+                    },
                   ),
                   Container(
                     height: 60.0,
@@ -49,7 +56,12 @@ class NewPropertCard extends StatelessWidget {
                     color: Colors.blueGrey,
                     margin: const EdgeInsets.only(left: 10.0, right: 10.0),
                   ),
-                  DataTile(label: "Vaccant Houses", value: 12)
+                  ValueListenableBuilder(
+                      valueListenable: Hive.box('user').listenable(),
+                      builder: (BuildContext context, box, Widget child) {
+                        return DataTile(
+                            label: "Vaccant Houses", value: box.get("vaccant"));
+                      })
                 ],
               ),
               SizedBox(height: 20),
@@ -120,7 +132,7 @@ class EmployeeManageCard extends StatelessWidget {
               itemCount: 3,
               itemBuilder: (BuildContext context, int index) {
                 return ExpansionTile(
-                  title: Text("Good Worker $index"),
+                  title: Text("Worker $index"),
                   subtitle: Text("🧹🧹🧹"),
                   trailing: Text("Ksh.9703"),
                   children: [

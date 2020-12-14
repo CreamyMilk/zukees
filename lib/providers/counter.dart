@@ -10,6 +10,13 @@ class Counter extends ChangeNotifier {
     }
   }
 
+  void showlogs() {
+    if (value != 0.4) {
+      value += 0.4;
+      notifyListeners();
+    }
+  }
+
   void decrement() {
     if (value > 0.0) {
       value -= 0.5;
