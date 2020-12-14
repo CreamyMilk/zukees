@@ -4,6 +4,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zukes/providers/counter.dart';
 
 class HoverLogin extends StatefulWidget {
@@ -15,7 +16,8 @@ class HoverLogin extends StatefulWidget {
 
 class _HoverLoginState extends State<HoverLogin> {
   bool isLoggedIn;
-  FocusNode secFocusNode;
+  final FocusNode fnOne = FocusNode();
+  final FocusNode fnTwo = FocusNode();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final typeController = TextEditingController();
   final descController = TextEditingController();
@@ -24,14 +26,14 @@ class _HoverLoginState extends State<HoverLogin> {
     if (formkey.currentState.validate()) {
       var ty = typeController.text;
       var ds = descController.text;
-      sendComplain(ty, ds, context);
+      sendLogin(ty, ds, context);
     }
   }
 
   @override
   void initState() {
-    secFocusNode = FocusNode();
     _loading = false;
+    getStartUpPage(context);
     super.initState();
   }
 
@@ -113,6 +115,11 @@ class _HoverLoginState extends State<HoverLogin> {
                         child: Column(
                           children: [
                             TextFormField(
+                              onFieldSubmitted: (term) {
+                                fnOne.unfocus();
+                                FocusScope.of(context).requestFocus(fnTwo);
+                              },
+                              focusNode: fnOne,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Required";
@@ -132,6 +139,7 @@ class _HoverLoginState extends State<HoverLogin> {
                             SizedBox(height: 30),
                             SizedBox(height: 20),
                             TextFormField(
+                              focusNode: fnTwo,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Required";
@@ -194,7 +202,7 @@ class _HoverLoginState extends State<HoverLogin> {
   }
 }
 
-Future sendComplain(phone, password, context) async {
+Future sendLogin(phone, password, context) async {
   try {
     final response = await http.post(
       ("http://land.i-crib.co.ke/" + "verify"),
@@ -232,4 +240,18 @@ Future sendComplain(phone, password, context) async {
       ),
     );
   }
+}
+
+Future getStartUpPage(BuildContext context) async {
+  final hstore = Provider.of<Counter>(context);
+  final prefs = await SharedPreferences.getInstance();
+  final userToken = prefs.getString('user_token') ?? "";
+  //final userTrans = prefs.getString('user_transactions') ?? "no";
+  //_cacheUserDetails(userTrans);
+  print("UserToken ilikuwa $userToken");
+  Future.delayed(Duration(seconds: 6), () {
+    userToken == "0"
+        ? Navigator.of(context).pushNamed('/home')
+        : hstore.increment();
+  });
 }
