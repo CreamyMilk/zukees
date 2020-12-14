@@ -11,8 +11,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 /// Renders the doughnut chart with legend
 class CoolGraph extends StatefulWidget {
-  /// Creates the doughnut chart with legend
-  //const CoolGraph(Key key) : super(key: key);
+  final String firestoreKey;
+  CoolGraph({Key key, @required this.firestoreKey}) : super(key: key);
 
   @override
   _CoolGraphState createState() => _CoolGraphState();
@@ -20,7 +20,8 @@ class CoolGraph extends StatefulWidget {
 
 class _CoolGraphState extends State<CoolGraph> {
   _CoolGraphState();
-  Query query = FirebaseFirestore.instance.collection('building8');
+
+  Query query;
   List<String> _months = [""];
   // static const _years = <String>["2018", "2019", "2020", "2021"];
 
@@ -34,7 +35,7 @@ class _CoolGraphState extends State<CoolGraph> {
   //     .toList();
 
   String _monthvalue;
-  String _yearvalue = DateFormat('y').format(DateTime.now());
+  String _yearvalue;
 
   // double _temp =56.2;
   @override
@@ -42,6 +43,7 @@ class _CoolGraphState extends State<CoolGraph> {
     Firebase.initializeApp();
     _monthvalue = DateFormat('MMMM').format(DateTime.now());
     _yearvalue = DateFormat('y').format(DateTime.now());
+    query = FirebaseFirestore.instance.collection(widget.firestoreKey);
 
     //final children = <Widget>[];
 
@@ -56,7 +58,7 @@ class _CoolGraphState extends State<CoolGraph> {
         children: [
           StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection('building8')
+                  .collection(widget.firestoreKey)
                   .where("year", isEqualTo: _yearvalue)
                   .where("month", isEqualTo: _monthvalue)
                   .snapshots(),
@@ -99,7 +101,7 @@ class _CoolGraphState extends State<CoolGraph> {
                   ),
                   child: FutureBuilder<QuerySnapshot>(
                       future: FirebaseFirestore.instance
-                          .collection('building8')
+                          .collection(widget.firestoreKey)
                           .where("year", isEqualTo: _yearvalue)
                           .get(),
                       builder: (context, snapshot) {
@@ -107,11 +109,10 @@ class _CoolGraphState extends State<CoolGraph> {
                         List tt = [];
                         if (snapshot.hasData) {
                           if (snapshot.data.docs.length >= 1) {
-                            
                             if ((tt.indexWhere((m) => m == _monthvalue)) ==
                                 -1) {
                               print("Final loop");
-                            
+
                               temp.add(
                                 DropdownMenuItem<String>(
                                   value: _monthvalue,
@@ -122,13 +123,15 @@ class _CoolGraphState extends State<CoolGraph> {
                                 print("MMMMMMM ---->${doc["month"]}");
                                 //_months.add(doc["month"]);
                                 tt.add(doc["month"]);
-                                _monthvalue !=doc["month"]?temp.add(
-                                  DropdownMenuItem<String>(
-                                    value: doc["month"],
-                                    child: Text(doc["month"]),
-                                  ),
-                                // ignore: unnecessary_statements
-                                ):null;
+                                _monthvalue != doc["month"]
+                                    ? temp.add(
+                                        DropdownMenuItem<String>(
+                                          value: doc["month"],
+                                          child: Text(doc["month"]),
+                                        ),
+                                        // ignore: unnecessary_statements
+                                      )
+                                    : Text("");
                               });
                             } else {
                               snapshot.data.docs.forEach((doc) {
@@ -181,7 +184,7 @@ class _CoolGraphState extends State<CoolGraph> {
                   ),
                   child: FutureBuilder<QuerySnapshot>(
                       future: FirebaseFirestore.instance
-                          .collection('building8')
+                          .collection(widget.firestoreKey)
                           .get(),
                       builder: (context, snapshot) {
                         List<dynamic> tempApi = [];

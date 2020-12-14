@@ -13,7 +13,7 @@ class HomeTab extends StatelessWidget {
             children: [
               Text("Hello from zukes 👋"),
               UserProfileCard(),
-              CoolGraph(),
+              CoolGraph(firestoreKey: "building8"),
             ],
           ),
         ),
