@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:zukes/views/home_tab.dart';
 import 'package:zukes/views/manage_tab.dart';
 import 'package:zukes/views/service_tab.dart';
+import 'package:zukes/views/settings_tab.dart';
 import 'package:zukes/views/shop_tab.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,7 +18,7 @@ class _BaseTabViewState extends State<BaseTabView> {
     ManageTab(),
     ServiceTab(),
     ShoppingTab(),
-    Center(child: Text("5")),
+    SettingsTab(),
   ];
   int _activetab;
   @override
@@ -59,9 +60,9 @@ class _BaseTabViewState extends State<BaseTabView> {
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
-        statusBarColor: Colors.white,
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(

@@ -15,6 +15,9 @@ class HomeTab extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: ListView(
               children: [
+                SizedBox(
+                  height: 10,
+                ),
                 Text("Hello from zukes 👋"),
                 UserProfileCard(),
                 CoolGraph(firestoreKey: "building8"),
