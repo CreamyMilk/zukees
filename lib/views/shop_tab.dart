@@ -6,20 +6,18 @@ class ShoppingTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        maintainBottomViewPadding: true,
         child: SingleChildScrollView(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(
-              "Featured Categories",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4
-                  .copyWith(color: Colors.purple),
-            ),
-            RefreshIndicator(
-                onRefresh: getLatestTrans, child: ItemCategoryGrid()),
-          ]),
-        ));
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Text(
+          "Featured Categories",
+          style: Theme.of(context)
+              .textTheme
+              .headline4
+              .copyWith(color: Colors.purple),
+        ),
+        RefreshIndicator(onRefresh: getLatestTrans, child: ItemCategoryGrid()),
+      ]),
+    ));
   }
 }
 
@@ -46,7 +44,7 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height * 0.85,
       width: 500,
       child: FutureBuilder(
           future: null,

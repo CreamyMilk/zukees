@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:zukes/views/home_tab.dart';
 import 'package:zukes/views/manage_tab.dart';
 import 'package:zukes/views/service_tab.dart';
@@ -21,8 +22,8 @@ class _BaseTabViewState extends State<BaseTabView> {
   int _activetab;
   @override
   void initState() {
-    Firebase.initializeApp();
     _activetab = 0;
+    Firebase.initializeApp();
     super.initState();
   }
 
@@ -38,7 +39,10 @@ class _BaseTabViewState extends State<BaseTabView> {
     var serviceItem = BottomNavigationBarItem(
         label: "Manage",
         icon: Icon(Icons.spa, color: Colors.black),
-        activeIcon: Icon(Icons.spa, color: Colors.blue));
+        activeIcon: Icon(
+          Icons.spa,
+          color: Colors.blue,
+        ));
     var krainItem = BottomNavigationBarItem(
         label: "Services",
         icon:
@@ -53,18 +57,29 @@ class _BaseTabViewState extends State<BaseTabView> {
         icon: Icon(Icons.contact_phone, color: Colors.black),
         activeIcon: Icon(Icons.contact_phone, color: Colors.blue));
 
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.blue,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _activetab,
-          onTap: (index) {
-            setState(() {
-              _activetab = index;
-            });
-          },
-          items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
-      body: _tabs[_activetab],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        statusBarColor: Colors.white,
+      ),
+      child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+            selectedFontSize: 12,
+            unselectedFontSize: 10,
+            iconSize: 20,
+            backgroundColor: Colors.white,
+            selectedItemColor: Colors.blue,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _activetab,
+            onTap: (index) {
+              setState(() {
+                _activetab = index;
+              });
+            },
+            items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
+        body: _tabs[_activetab],
+      ),
     );
   }
 }

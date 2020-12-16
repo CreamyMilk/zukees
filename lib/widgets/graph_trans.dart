@@ -2,7 +2,6 @@ import 'dart:math';
 
 /// Package import
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
@@ -40,7 +39,7 @@ class _CoolGraphState extends State<CoolGraph> {
   // double _temp =56.2;
   @override
   void initState() {
-    Firebase.initializeApp();
+//    Firebase.initializeApp();
     _monthvalue = DateFormat('MMMM').format(DateTime.now());
     _yearvalue = DateFormat('y').format(DateTime.now());
     query = FirebaseFirestore.instance.collection(widget.firestoreKey);

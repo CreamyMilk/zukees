@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zukes/pages/all_tens.dart';
 import 'package:zukes/pages/hover_login.dart';
@@ -8,10 +9,10 @@ import 'package:zukes/pages/list_products.dart';
 //import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/providers/counter.dart';
+import 'package:zukes/providers/kra_fromProvide.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 import 'package:zukes/pages/otp_receiver.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,7 +23,12 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(
             builder: (ctx) => ChangeNotifierProvider<Counter>(
-                create: (context) => Counter(), child: HoverLogin()));
+                create: (context) => Counter(),
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: SystemUiOverlayStyle(
+                        statusBarColor: Colors.black,
+                        systemNavigationBarColor: Colors.black),
+                    child: HoverLogin())));
       case '/verify':
         return MaterialPageRoute(
             builder: (ctx) => OtpReceiver(phonenumber: args));
@@ -34,7 +40,9 @@ class RouteGenerator {
       case '/alltensu':
         return MaterialPageRoute(builder: (ctx) => DataTableExample());
       case '/kraform':
-        return MaterialPageRoute(builder: (ctx) => BaseForm());
+        return MaterialPageRoute(
+            builder: (ctx) => ChangeNotifierProvider<KraFormProvider>(
+                create: (context) => KraFormProvider(), child: BaseForm()));
       case '/products':
         return MaterialPageRoute(
             builder: (ctx) => ListProducts(
@@ -74,7 +82,6 @@ class BaseRoute extends StatefulWidget {
 class _BaseRouteState extends State<BaseRoute> {
   @override
   void initState() {
-    Firebase.initializeApp();
     super.initState();
   }
 

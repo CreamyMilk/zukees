@@ -9,48 +9,38 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zukes/providers/counter.dart';
 
 class HoverLogin extends StatefulWidget {
-  HoverLogin({Key key}) : super(key: key);
-
   @override
   _HoverLoginState createState() => _HoverLoginState();
 }
 
 class _HoverLoginState extends State<HoverLogin> {
-  bool isLoggedIn;
-  final FocusNode fnOne = FocusNode();
-  final FocusNode fnTwo = FocusNode();
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  final typeController = TextEditingController();
-  final descController = TextEditingController();
-  void validateForm() {
-    if (formkey.currentState.validate()) {
-      var ty = typeController.text;
-      var ds = descController.text;
-      sendLogin(ty, ds, context);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
   }
 
+  //  // final hstore = Provider.of<Counter>(context);
   @override
   Widget build(BuildContext context) {
-    final hstore = Provider.of<Counter>(context);
+    final FocusNode fnOne = FocusNode();
+    final FocusNode fnTwo = FocusNode();
+    final _formkey = FormState();
+    final typeController = TextEditingController();
+    final descController = TextEditingController();
 
-    getStartUpPage(context);
+    void validateForm() {
+      if (_formkey.validate()) {
+        var ty = typeController.text;
+        var ds = descController.text;
+        sendLogin(ty, ds, context);
+      }
+    }
+
+    final hstore = Provider.of<Counter>(context);
+    getStartUpPage(hstore,context);
     double h = hstore.value;
     bool loading = hstore.loading;
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(onPressed: () {
-      //   hstore.increment();
-      //   // print(MediaQuery.of(context).viewInsets.bottom);
-      //   // setState(() {
-      //   //   h = 0.5;
-      //   // });
-      //   //Navigator.of(context).pushNamed('/home');
-      // }),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -100,51 +90,50 @@ class _HoverLoginState extends State<HoverLogin> {
                   children: [
                     SizedBox(height: 40),
                     Form(
-                        key: formkey,
                         child: Column(
-                          children: [
-                            TextFormField(
-                              onFieldSubmitted: (term) {
-                                fnOne.unfocus();
-                                FocusScope.of(context).requestFocus(fnTwo);
-                              },
-                              focusNode: fnOne,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Required";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              controller: typeController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                //hintText: 'Kindly enter a category',
-                                //helperText: 'PhoneNumber +254xxx',
-                                labelText: 'PhoneNumber',
-                              ),
-                              maxLines: 1,
-                            ),
-                            SizedBox(height: 30),
-                            TextFormField(
-                              focusNode: fnTwo,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Required";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              controller: descController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Pin Sent to your number',
-                                labelText: 'Password',
-                              ),
-                              maxLines: 1,
-                            ),
-                          ],
-                        )),
+                      children: [
+                        TextFormField(
+                          onFieldSubmitted: (term) {
+                            fnOne.unfocus();
+                            FocusScope.of(context).requestFocus(fnTwo);
+                          },
+                          focusNode: fnOne,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: typeController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            //hintText: 'Kindly enter a category',
+                            //helperText: 'PhoneNumber +254xxx',
+                            labelText: 'PhoneNumber',
+                          ),
+                          maxLines: 1,
+                        ),
+                        SizedBox(height: 30),
+                        TextFormField(
+                          focusNode: fnTwo,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: descController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Pin Sent to your number',
+                            labelText: 'Password',
+                          ),
+                          maxLines: 1,
+                        ),
+                      ],
+                    )),
                     SizedBox(
                       height: 20,
                     ),
@@ -163,12 +152,16 @@ class _HoverLoginState extends State<HoverLogin> {
                           tag: 'report',
                           child: MaterialButton(
                             color: !loading ? Colors.deepOrange : Colors.black,
-                            onPressed: () {
-                              validateForm();
-                              if (formkey.currentState.validate()) {
-                                hstore.loginState();
-                              }
-                            },
+                            onPressed: !loading
+                                ? () {
+                                    validateForm();
+                                    if (_formkey.validate()) {
+                                      hstore.loginState();
+                                    }
+                                  }
+                                : () {
+                                    print("Button seems to be offline");
+                                  },
                             child: Text(
                               !loading ? "Sign In" : "Loading...",
                               style: TextStyle(color: Colors.white),
@@ -241,7 +234,7 @@ Future successfulLogin(response, context) async {
   prefs.setString("user_token", "0").then((bool success) {
     if (success) {
       print("Token Stored Successfully");
-      Navigator.of(context).pushNamed('/home');
+      Navigator.of(null).pushNamed('/');
     } else {
       //Show that storage
     }
@@ -259,15 +252,12 @@ Future cacheUserData(apidata) async {
   print("Inserting login info");
 }
 
-Future getStartUpPage(BuildContext context) async {
+Future getStartUpPage(hstore,ctx) async {
   print("Reading Shared Prefs");
-  final hstore = Provider.of<Counter>(context);
   final prefs = await SharedPreferences.getInstance();
   final userToken = prefs.getString('user_token') ?? "";
   print("UserToken ilikuwa $userToken");
-  Future.delayed(Duration(seconds: 3), () {
-    userToken == "0"
-        ? Navigator.of(context).pushNamed('/home')
-        : hstore.showlogs();
-  });
+  userToken == "0"
+      ? Navigator.of(ctx).pushReplacementNamed('/home')
+      : hstore.showlogs();
 }

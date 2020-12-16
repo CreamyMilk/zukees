@@ -9,6 +9,7 @@ void main() async {
   await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox('user');
+
   runApp(MyApp());
 }
 
