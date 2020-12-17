@@ -24,12 +24,12 @@ class _HoverLoginState extends State<HoverLogin> {
   Widget build(BuildContext context) {
     final FocusNode fnOne = FocusNode();
     final FocusNode fnTwo = FocusNode();
-    final _formkey = FormState();
+    GlobalKey<FormState> _formkey = GlobalKey<FormState>();
     final typeController = TextEditingController();
     final descController = TextEditingController();
 
     void validateForm() {
-      if (_formkey.validate()) {
+      if (_formkey.currentState.validate()) {
         var ty = typeController.text;
         var ds = descController.text;
         sendLogin(ty, ds, context);
@@ -37,7 +37,7 @@ class _HoverLoginState extends State<HoverLogin> {
     }
 
     final hstore = Provider.of<Counter>(context);
-    getStartUpPage(hstore,context);
+    getStartUpPage(hstore, context);
     double h = hstore.value;
     bool loading = hstore.loading;
     return Scaffold(
@@ -90,50 +90,51 @@ class _HoverLoginState extends State<HoverLogin> {
                   children: [
                     SizedBox(height: 40),
                     Form(
+                        key: _formkey,
                         child: Column(
-                      children: [
-                        TextFormField(
-                          onFieldSubmitted: (term) {
-                            fnOne.unfocus();
-                            FocusScope.of(context).requestFocus(fnTwo);
-                          },
-                          focusNode: fnOne,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Required";
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: typeController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            //hintText: 'Kindly enter a category',
-                            //helperText: 'PhoneNumber +254xxx',
-                            labelText: 'PhoneNumber',
-                          ),
-                          maxLines: 1,
-                        ),
-                        SizedBox(height: 30),
-                        TextFormField(
-                          focusNode: fnTwo,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return "Required";
-                            } else {
-                              return null;
-                            }
-                          },
-                          controller: descController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Pin Sent to your number',
-                            labelText: 'Password',
-                          ),
-                          maxLines: 1,
-                        ),
-                      ],
-                    )),
+                          children: [
+                            TextFormField(
+                              onFieldSubmitted: (term) {
+                                fnOne.unfocus();
+                                FocusScope.of(context).requestFocus(fnTwo);
+                              },
+                              focusNode: fnOne,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Required";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: typeController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                //hintText: 'Kindly enter a category',
+                                //helperText: 'PhoneNumber +254xxx',
+                                labelText: 'PhoneNumber',
+                              ),
+                              maxLines: 1,
+                            ),
+                            SizedBox(height: 30),
+                            TextFormField(
+                              focusNode: fnTwo,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Required";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: descController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Pin Sent to your number',
+                                labelText: 'Password',
+                              ),
+                              maxLines: 1,
+                            ),
+                          ],
+                        )),
                     SizedBox(
                       height: 20,
                     ),
@@ -155,7 +156,7 @@ class _HoverLoginState extends State<HoverLogin> {
                             onPressed: !loading
                                 ? () {
                                     validateForm();
-                                    if (_formkey.validate()) {
+                                    if (_formkey.currentState.validate()) {
                                       hstore.loginState();
                                     }
                                   }
@@ -252,7 +253,7 @@ Future cacheUserData(apidata) async {
   print("Inserting login info");
 }
 
-Future getStartUpPage(hstore,ctx) async {
+Future getStartUpPage(hstore, ctx) async {
   print("Reading Shared Prefs");
   final prefs = await SharedPreferences.getInstance();
   final userToken = prefs.getString('user_token') ?? "";
