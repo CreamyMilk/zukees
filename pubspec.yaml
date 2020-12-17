@@ -32,8 +32,10 @@ dependencies:
   flutter_blurhash: ^0.5.0
   cloud_firestore: ^0.14.3+1
   otp_text_field: ^1.0.1
+  cached_network_image: ^2.4.1
   url_launcher:
   sms_consent:
+  # numeric_keyboard: ^1.0.0
   firebase_core:
   shared_preferences:
   # The following adds the Cupertino Icons font to your application.

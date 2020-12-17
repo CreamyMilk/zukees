@@ -8,13 +8,18 @@ class SettingsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
-      child: SingleChildScrollView(
         child: RefreshIndicator(
-          onRefresh: getLatestTrans,
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: ListView(
-              children: [
+      onRefresh: getLatestTrans,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text("Terms and Conditions"),
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
                 Text("jk1@gmail.com👋"),
                 Text("Jothan Kinyua"),
                 SizedBox(height: 10),
@@ -30,8 +35,8 @@ class SettingsTab extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ],
       ),
-    );
+    ));
   }
 }

@@ -42,7 +42,12 @@ class RouteGenerator {
       case '/kraform':
         return MaterialPageRoute(
             builder: (ctx) => ChangeNotifierProvider<KraFormProvider>(
-                create: (context) => KraFormProvider(), child: BaseForm()));
+                create: (context) => KraFormProvider(),
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: SystemUiOverlayStyle(
+                        statusBarColor: Colors.teal[400],
+                        systemNavigationBarColor: Colors.white),
+                    child: BaseForm())));
       case '/products':
         return MaterialPageRoute(
             builder: (ctx) => ListProducts(

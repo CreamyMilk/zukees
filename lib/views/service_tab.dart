@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 
@@ -32,10 +33,16 @@ class KraCardSample extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Positioned.fill(
-                  child: Image.network(
-                    'https://sokodirectory.com/wp-content/uploads/2015/10/kenya-revenue-authority.png',
-                    fit: BoxFit.cover,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        "https://sokodirectory.com/wp-content/uploads/2015/10/kenya-revenue-authority.png",
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
+                  //Image.network(
+                  //   'https://sokodirectory.com/wp-content/uploads/2015/10/kenya-revenue-authority.png',
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 Positioned(
                   top: 150.0,
@@ -135,9 +142,16 @@ class ServiceTile extends StatelessWidget {
           child: Stack(
         children: [
           GridTile(
-              footer: Container(color: Colors.white, child: Text(description)),
-              child: Container(
-                  color: Colors.white, child: Image.network(imageURL))),
+            footer: Container(color: Colors.white, child: Text(description)),
+            child: Container(
+              color: Colors.white,
+              child: CachedNetworkImage(
+                imageUrl: imageURL,
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            ),
+          ),
           ButtonBar(
             alignment: MainAxisAlignment.end,
             children: [
