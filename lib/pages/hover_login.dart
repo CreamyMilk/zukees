@@ -19,23 +19,22 @@ class _HoverLoginState extends State<HoverLogin> {
     super.initState();
   }
 
-  //  // final hstore = Provider.of<Counter>(context);
+  final FocusNode fnOne = FocusNode();
+  final FocusNode fnTwo = FocusNode();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final typeController = TextEditingController();
+  final descController = TextEditingController();
+
+  void validateForm() {
+    if (_formkey.currentState.validate()) {
+      var ty = typeController.text;
+      var ds = descController.text;
+      sendLogin(ty, ds, context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final FocusNode fnOne = FocusNode();
-    final FocusNode fnTwo = FocusNode();
-    GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-    final typeController = TextEditingController();
-    final descController = TextEditingController();
-
-    void validateForm() {
-      if (_formkey.currentState.validate()) {
-        var ty = typeController.text;
-        var ds = descController.text;
-        sendLogin(ty, ds, context);
-      }
-    }
-
     final hstore = Provider.of<Counter>(context);
     getStartUpPage(hstore, context);
     double h = hstore.value;
