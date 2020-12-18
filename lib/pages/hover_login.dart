@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -46,8 +47,8 @@ class _HoverLoginState extends State<HoverLogin> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AnimatedContainer(
-                duration: Duration(seconds: 2),
-                color: Colors.black,
+                duration: Duration(seconds: 3),
+                color: Colors.white,
                 height: MediaQuery.of(context).size.height * (1 - h),
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -58,8 +59,8 @@ class _HoverLoginState extends State<HoverLogin> {
                       tag: "heal",
                       child: Icon(
                         Icons.healing,
-                        color: Colors.white,
-                        size: 150,
+                        color: Colors.black,
+                        size: 100,
                       ),
                     ),
                     SizedBox(height: 5),
@@ -246,8 +247,10 @@ Future cacheUserData(apidata) async {
   print("AAPI$apidata");
   userHiveBox.put("fire_store", apidata["fire_store"]);
   userHiveBox.put("name", apidata["name"]);
+  userHiveBox.put("timeu", DateFormat("hh:mm a").format(DateTime.now()));
   userHiveBox.put("tenants", apidata["total_tenants"]["total"]);
   userHiveBox.put("vaccant", apidata["vaccant_houses"]["total"]);
+
   //userHiveBox.putAll(apidata);
   print("Inserting login info");
 }

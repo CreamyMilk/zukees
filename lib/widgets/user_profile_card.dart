@@ -21,7 +21,7 @@ class UserProfileCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 100.0,
+                  top: 130.0,
                   left: 16.0,
                   right: 16.0,
                   child: FittedBox(

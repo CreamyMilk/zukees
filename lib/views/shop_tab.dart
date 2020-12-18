@@ -15,7 +15,7 @@ class ShoppingTab extends StatelessWidget {
           "Featured Categories",
           style: Theme.of(context)
               .textTheme
-              .headline4
+              .headline5
               .copyWith(color: Colors.purple),
         ),
         RefreshIndicator(onRefresh: getLatestTrans, child: ItemCategoryGrid()),
@@ -35,13 +35,13 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
       prodname: "Featured Products\n\n",
       imageUrl:
           "https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp",
-      categoryID: "9000",
+      categoryID: 9000,
     ),
     Itemtile(
       prodname: "Cement \n\n",
       imageUrl:
           "https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp",
-      categoryID: "5000",
+      categoryID: 5000,
     )
   ];
   @override
@@ -53,6 +53,7 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
           future: getAllCategories(context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+		print("${snapshot.data}");
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisSpacing: 6,
@@ -87,7 +88,7 @@ class Itemtile extends StatelessWidget {
       @required this.categoryID});
   final String prodname;
   final String imageUrl;
-  final String categoryID;
+  final int categoryID;
   @override
   Widget build(BuildContext context) {
     return GridTile(

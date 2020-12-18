@@ -22,9 +22,14 @@ class MyApp extends StatelessWidget {
       title: appTitle,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        textTheme: Theme.of(context).textTheme.apply(
+              fontSizeFactor: 0.75,
+              fontSizeDelta: 1.0,
+            ),
+
+        //primarySwatch: Colors.blue,
         primaryColor: Colors.black,
-        accentColor: Colors.blue,
+        accentColor: Colors.amber,
       ),
       darkTheme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(
@@ -32,7 +37,7 @@ class MyApp extends StatelessWidget {
               fontSizeDelta: 1.0,
             ),
         primaryColor: Colors.black,
-        accentColor: Colors.white,
+        accentColor: Colors.amber,
       ),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: '/',

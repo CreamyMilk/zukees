@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 
 class ServiceTab extends StatelessWidget {
@@ -52,7 +53,7 @@ class KraCardSample extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Auctioner sample Card',
+                      'Partner Image Card',
                       style: Theme.of(context)
                           .textTheme
                           .headline5
@@ -67,7 +68,14 @@ class KraCardSample extends StatelessWidget {
             alignment: MainAxisAlignment.end,
             children: <Widget>[
               FlatButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final url = "tel:0709090909";
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
                 child: const Text('📞 Contact Sales Department'),
               ),
             ],

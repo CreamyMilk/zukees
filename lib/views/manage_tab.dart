@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 
 class ManageTab extends StatefulWidget {
@@ -72,7 +73,11 @@ class NewPropertCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20),
-              Text("As at 02:51 PM"),
+              ValueListenableBuilder(
+                  valueListenable: Hive.box('user').listenable(),
+                  builder: (BuildContext context, box, Widget child) {
+                    return Text("As at ${box.get("timeu")}");
+                  }),
               MaterialButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed('/alltens', arguments: "8");
@@ -148,7 +153,7 @@ class EmployeeManageCard extends StatelessWidget {
                       columns: [
                         DataColumn(label: Text('RollNo')),
                         DataColumn(label: Text('Name')),
-                        DataColumn(label: Text('Class')),
+                        DataColumn(label: Text('Completed Jobs')),
                       ],
                       rows: [
                         DataRow(cells: [
@@ -220,7 +225,14 @@ class ContactAuctioner extends StatelessWidget {
             alignment: MainAxisAlignment.end,
             children: <Widget>[
               FlatButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final url = "tel:auction";
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
                 child: const Text('📞 Contact Auctioner'),
               ),
             ],

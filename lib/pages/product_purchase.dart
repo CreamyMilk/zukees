@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:zukes/models/r_paymetnResponse.dart';
@@ -66,7 +67,7 @@ class _ProductPageState extends State<ProductPage> {
       appBar: AppBar(
           actions: [
             IconButton(
-              icon: Icon(Icons.card_travel),
+              icon: Icon(Icons.card_travel, color: Color(0xff1a1a49)),
               onPressed: () {},
             ),
           ],
@@ -80,24 +81,29 @@ class _ProductPageState extends State<ProductPage> {
             child: Row(
               children: [
                 Hero(
-                  tag: 'button1',
-                  child: Container(
-                      padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                      width: 90,
-                      height: 50,
-                      color: Color(0xfffecf0a),
-                      child: InkWell(
-                        onTap: () {
-                          settingModalBottomSheet(context, "3");
-                        },
-                        child: Row(
-                          children: [
-                            Text("Buy Now"),
-                            Spacer(),
-                            Icon(Icons.assignment_turned_in),
-                          ],
-                        ),
-                      )),
+                  tag: 'button $prodID',
+                  child: InkWell(
+                    onTap: () {
+                      print("meme");
+                    },
+                    child: Container(
+                        padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                        width: 90,
+                        height: 50,
+                        color: Color(0xfffecf0a),
+                        child: InkWell(
+                          onTap: () {
+                            settingModalBottomSheet(context, "3");
+                          },
+                          child: Row(
+                            children: [
+                              Text("Buy Now"),
+                              Spacer(),
+                              Icon(Icons.assignment_turned_in),
+                            ],
+                          ),
+                        )),
+                  ),
                 ),
                 Spacer(),
                 Container(
@@ -121,38 +127,48 @@ class _ProductPageState extends State<ProductPage> {
             child: FutureBuilder(
                 future: _getProductDetails(prodID),
                 builder: (context, snapshot) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(snapshot.data["product_name"],
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Text(snapshot.data["product_packtype"]),
-                      Text("Ksh.${snapshot.data["amount"]}"),
-                      SizedBox(height: 20),
-                      Center(
-                        child: Image.network(
-                          snapshot.data["product_image_large"],
-                          width: 300,
-                          height: 300,
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(snapshot.data["product_name"],
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 10),
+                        Text(snapshot.data["product_packtype"]),
+                        SizedBox(height: 5),
+                        Text("Ksh.${snapshot.data["amount"]}"),
+                        SizedBox(height: 20),
+                        Center(
+                          child: CachedNetworkImage(
+                            height: 300,
+                            width: 300,
+                            imageUrl: snapshot.data["product_image_large"],
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text("Choose Quanity"),
-                      Slider(
-                        value: slide,
-                        divisions: snapshot.data["amount"],
-                        max: snapshot.data["stock"],
-                        onChanged: (double value) {
-                          setState(() {
-                            slide = value;
-                          });
-                          //print(value);
-                        },
-                      ),
-                    ],
-                  );
+                        SizedBox(height: 20),
+                        Text("Choose Quanity"),
+                        Slider(
+                          value: slide,
+                          divisions: 5,
+                          onChanged: (double value) {
+                            setState(() {
+                              slide = value;
+                            });
+                            //print(value);
+                          },
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Container(
+                      color: Colors.white,
+                    );
+                  }
                 }),
           ),
         ),

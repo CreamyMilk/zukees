@@ -10,10 +10,7 @@ class ListProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Confirm abount ints and strings
-
     Future _getProducts(int category) async {
-      print('Fetching  $category products');
       try {
         final response = await http.post(
           ("https://store.i-crib.co.ke/products"),
@@ -29,7 +26,8 @@ class ListProducts extends StatelessWidget {
         );
         var myjson = json.decode(response.body);
         print("Categoreis api returned $myjson");
-        //print(response.body);
+        print(response.body);
+
         return myjson;
       } catch (SocketException) {
         showDialog(
@@ -54,17 +52,17 @@ class ListProducts extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 4,
                         crossAxisCount: 2,
-                        childAspectRatio: 0.8,
+                        childAspectRatio: 0.7,
                         crossAxisSpacing: 8),
                     padding: EdgeInsets.all(8.0),
-                    itemCount: 16, //snapshot.data.length ,
+                    itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return ProductListingItem(
-                        heros: snapshot.data["product_id"],
-                        prodname: snapshot.data["product_name"],
-                        imageUrl: snapshot.data["product_image"],
-                        productID: snapshot.data["product_id"],
-                        packingType: snapshot.data["product_packtype"],
+                        heros: snapshot.data[index]["product_id"],
+                        prodname: snapshot.data[index]["product_name"],
+                        imageUrl: snapshot.data[index]["product_image"],
+                        productID: snapshot.data[index]["product_id"],
+                        packingType: snapshot.data[index]["product_packtype"],
                       );
                     });
               } else {
@@ -83,15 +81,15 @@ class ListProducts extends StatelessWidget {
 class ProductListingItem extends StatelessWidget {
   const ProductListingItem(
       {Key key,
-      this.prodname,
-      this.packingType,
-      this.imageUrl,
-      this.productID,
-      this.heros})
+      @required this.prodname,
+      @required this.packingType,
+      @required this.imageUrl,
+      @required this.productID,
+      @required this.heros})
       : super(key: key);
   final String prodname;
   final String imageUrl;
-  final String productID;
+  final int productID;
   final String packingType;
   final int heros;
 
@@ -100,7 +98,7 @@ class ProductListingItem extends StatelessWidget {
     return Card(
       child: Column(children: [
         Container(
-            height: 150,
+            height: MediaQuery.of(context).size.height * 0.175,
             color: Colors.transparent,
             child: BlurHash(
                 color: Colors.transparent,
@@ -110,9 +108,9 @@ class ProductListingItem extends StatelessWidget {
         Text(prodname, style: TextStyle(fontWeight: FontWeight.bold)),
         Text(packingType),
         Hero(
-          tag: "button$heros",
+          tag: "button $productID",
           child: MaterialButton(
-            color: Color(0xff1a1a49),
+            color: Colors.red,
             onPressed: () {
               Navigator.of(context).pushNamed("/product", arguments: productID);
             },

@@ -349,7 +349,7 @@ class IDForm extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: Colors.grey)),
         SizedBox(height: 30),
         Container(
-          padding: EdgeInsets.only(left: 100, right: 100),
+          padding: EdgeInsets.only(left: 60, right: 60),
           child: OTPTextField(
             keyboardType: TextInputType.text,
             length: 11,

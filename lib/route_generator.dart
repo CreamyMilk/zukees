@@ -26,8 +26,8 @@ class RouteGenerator {
                 create: (context) => Counter(),
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
-                        statusBarColor: Colors.black,
-                        systemNavigationBarColor: Colors.black),
+                        statusBarColor: Colors.white,
+                        systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
       case '/verify':
         return MaterialPageRoute(

@@ -52,6 +52,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
           children: [
             SingleChildScrollView(
               child: Container(
+height:MediaQuery.of(context).size.height*0.85,
                 child: FutureBuilder(
                     future: _getTrans(widget.branch),
                     builder: (context, snapshot) {
@@ -83,13 +84,13 @@ class TwigList extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.89,
+          height: MediaQuery.of(context).size.height * 0.85,
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                   padding: EdgeInsets.only(left: 12.0),
-                  height: 65,
+          height: MediaQuery.of(context).size.height * 0.11,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

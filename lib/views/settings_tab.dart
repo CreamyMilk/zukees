@@ -12,14 +12,16 @@ String getAppversion() {
     String buildNumber = packageInfo.buildNumber;
     rs = packageName + "/ v:" + version + "/ b:" + buildNumber;
   });
-
+  print("-------------<$rs");
   return rs;
 }
 
 class SettingsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _version = getAppversion();
+    String _version = "sdsdsd";
+
+    getAppversion();
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
         child: RefreshIndicator(
@@ -29,7 +31,7 @@ class SettingsTab extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 150,
             title: Text(
-              "Terms and Conditions",
+              "Contacts Page",
               style: TextStyle(color: Colors.black),
             ),
             backgroundColor: Colors.white,
@@ -40,21 +42,15 @@ class SettingsTab extends StatelessWidget {
               [
                 Text("jk1@gmail.com👋"),
                 Text("Jothan Kinyua"),
-                SizedBox(height: 10),
-                Card(
-                  child: Row(children: [
-                    Expanded(
-                        flex: 10,
-                        child: Text(
-                          "Get a daily quite\n of all expnses",
-                          style: TextStyle(fontSize: 30),
-                        )),
-                    Expanded(flex: 1, child: Icon(Icons.present_to_all))
-                  ]),
-                ),
-                Spacer(),
+                SizedBox(height: 400),
                 OutlineButton(
-                    onPressed: null,
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.red[50],
+                    highlightedBorderColor: Colors.red[50],
+                    focusColor: Colors.red[50],
+                    onPressed: () {
+                      print("Signing out");
+                    },
                     child: Text(
                       "Sign Out",
                       style: TextStyle(color: Colors.red),
