@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 
@@ -32,13 +35,13 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
       prodname: "Featured Products\n\n",
       imageUrl:
           "https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp",
-      productID: "9000",
+      categoryID: "9000",
     ),
     Itemtile(
       prodname: "Cement \n\n",
       imageUrl:
           "https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp",
-      productID: "5000",
+      categoryID: "5000",
     )
   ];
   @override
@@ -47,7 +50,7 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
       height: MediaQuery.of(context).size.height * 0.85,
       width: 500,
       child: FutureBuilder(
-          future: null,
+          future: getAllCategories(context),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return GridView.builder(
@@ -56,17 +59,19 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 6),
                   padding: EdgeInsets.all(8.0),
-                  itemCount: 16, //snapshot.data.length ,
+                  itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     return Itemtile(
-                      prodname: "Cement  >",
-                      imageUrl:
-                          "https://shop.twiga.ke/static/f5457552125a73157ed63cd2e498031b/8ea22/1c70ab84-5d59-455b-9c64-fc9ebc4c0f421589493611.211105.webp",
-                      productID: "900",
+                      prodname: snapshot.data[index]["category_name"],
+                      imageUrl: snapshot.data[index]["category_image"],
+                      categoryID: snapshot.data[index]["category_id"],
                     );
                   });
             } else {
-              return CircularProgressIndicator();
+              //Make UI to act as place holder first
+              return CircularProgressIndicator(
+                backgroundColor: Colors.black,
+              );
             }
           }),
     );
@@ -77,17 +82,17 @@ class Itemtile extends StatelessWidget {
   Itemtile(
       {@required this.prodname,
       @required this.imageUrl,
-      @required this.productID});
+      @required this.categoryID});
   final String prodname;
   final String imageUrl;
-  final String productID;
+  final String categoryID;
   @override
   Widget build(BuildContext context) {
     return GridTile(
       footer: InkWell(
           onTap: () {
             print(prodname);
-            Navigator.of(context).pushNamed('/products', arguments: productID);
+            Navigator.of(context).pushNamed('/products', arguments: categoryID);
           },
           child: Container(
               color: Color(0xffff2f2f2),
@@ -105,5 +110,22 @@ class Itemtile extends StatelessWidget {
               hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
               image: imageUrl)),
     );
+  }
+}
+
+Future getAllCategories(BuildContext ctx) async {
+  try {
+    final response = await http.get(
+      ("http://store.i-crib.co.ke/" + "categories"),
+      headers: {
+        "Accept": "application/json",
+        "content-type": "application/json",
+      },
+    );
+    var myjson = json.decode(response.body);
+    print(myjson);
+    return myjson;
+  } catch (SocketException) {
+    print("Could not fetch data");
   }
 }

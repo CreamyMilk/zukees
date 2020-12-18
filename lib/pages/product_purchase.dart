@@ -13,9 +13,9 @@ class ProductPage extends StatefulWidget {
       this.amount,
       this.imageURL})
       : super(key: key);
-  final String productID;
+  final int productID;
   final String productName;
-  final String amount;
+  final double amount;
   final String imageURL;
 
   @override
@@ -23,15 +23,45 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  double slide = 0;
+  double slide = 1;
   @override
   void initState() {
     super.initState();
-    slide = 0;
+    slide = 1;
   }
 
   @override
   Widget build(BuildContext context) {
+    int prodID = widget.productID;
+    Future _getProductDetails(int pID) async {
+      print('Getting details for product >  $pID');
+      try {
+        final response = await http.post(
+          ("https://store.i-crib.co.ke/productdetails"),
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json",
+          },
+          body: jsonEncode(
+            {
+              'product_id': pID,
+            },
+          ),
+        );
+        var myjson = json.decode(response.body);
+        print("Product in detail api returned $myjson");
+        //print(response.body);
+        return myjson;
+      } catch (SocketException) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Network Error."),
+                  //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
+                ));
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
           actions: [
@@ -46,7 +76,6 @@ class _ProductPageState extends State<ProductPage> {
           backgroundColor: Color(0xfffecf0a)),
       bottomNavigationBar: Card(
         child: Container(
-            decoration: BoxDecoration(),
             height: 50,
             child: Row(
               children: [
@@ -89,36 +118,42 @@ class _ProductPageState extends State<ProductPage> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Bamburi Cement",
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
-                Text("1kg x 20 Packets"),
-                Text("KSH 2138/Bale"),
-                SizedBox(height: 20),
-                Center(
-                  child: Image.network(
-                    "https://shop.twiga.ke/static/758a50c7e869e88ff7eb52f10026a422/8ea22/0e9f0f9f-2773-4f95-b03d-7fc977a87093.webp",
-                    width: 300,
-                    height: 300,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Text("Enter Quanity in Bales"),
-                Slider(
-                  value: slide,
-                  onChanged: (double value) {
-                    setState(() {
-                      slide = value;
-                    });
-                    //print(value);
-                  },
-                ),
-              ],
-            ),
+            child: FutureBuilder(
+                future: _getProductDetails(prodID),
+                builder: (context, snapshot) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(snapshot.data["product_name"],
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Text(snapshot.data["product_packtype"]),
+                      Text("Ksh.${snapshot.data["amount"]}"),
+                      SizedBox(height: 20),
+                      Center(
+                        child: Image.network(
+                          snapshot.data["product_image_large"],
+                          width: 300,
+                          height: 300,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Text("Choose Quanity"),
+                      Slider(
+                        value: slide,
+                        divisions: snapshot.data["amount"],
+                        max: snapshot.data["stock"],
+                        onChanged: (double value) {
+                          setState(() {
+                            slide = value;
+                          });
+                          //print(value);
+                        },
+                      ),
+                    ],
+                  );
+                }),
           ),
         ),
       ),
@@ -174,13 +209,14 @@ Future sendPayment(mobile, amountDue, accName, ctx) async {
       //Text(message['notification']['title']
       context: ctx,
       builder: (ctx) => AlertDialog(
-          title: Text("dfdf"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("It seems that you are offline"),
-            ],
-          )),
+        title: Text("dfdf"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("It seems that you are offline"),
+          ],
+        ),
+      ),
     );
   }
 }

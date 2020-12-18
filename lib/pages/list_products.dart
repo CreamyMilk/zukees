@@ -6,22 +6,24 @@ import 'package:http/http.dart' as http;
 
 class ListProducts extends StatelessWidget {
   const ListProducts({Key key, @required this.category}) : super(key: key);
-  final String category;
+  final int category;
 
   @override
   Widget build(BuildContext context) {
-    Future _getProducts(String category) async {
+    //Confirm abount ints and strings
+
+    Future _getProducts(int category) async {
       print('Fetching  $category products');
       try {
         final response = await http.post(
-          ("https://kkk.i-crib.co.ke/a"),
+          ("https://store.i-crib.co.ke/products"),
           headers: {
             "Accept": "application/json",
             "content-type": "application/json",
           },
           body: jsonEncode(
             {
-              'category': category,
+              'category_id': category,
             },
           ),
         );
@@ -40,77 +42,87 @@ class ListProducts extends StatelessWidget {
     }
 
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: FutureBuilder(
             future: _getProducts(category),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: 500,
-                  child: FutureBuilder(
-                      future: null,
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisSpacing: 4,
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 0.8,
-                                      crossAxisSpacing: 8),
-                              padding: EdgeInsets.all(8.0),
-                              itemCount: 16, //snapshot.data.length ,
-                              itemBuilder: (context, index) {
-                                return ProductListingItem(
-                                  heros:index,
-                                  prodname: "Cement \n\n",
-                                  imageUrl:
-                                     "https://dms-products.twiga.tech/product_items_PRODUCTION/14ae20ef-4dd0-4650-baec-266432910c791592550391.462305.jpg",
-                                  productID: "900",
-                                );
-                              });
-                        } else {
-                          return CircularProgressIndicator();
-                        }
-                      }),
-                );
+              if (!snapshot.hasData) {
+                return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisSpacing: 4,
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.8,
+                        crossAxisSpacing: 8),
+                    padding: EdgeInsets.all(8.0),
+                    itemCount: 16, //snapshot.data.length ,
+                    itemBuilder: (context, index) {
+                      return ProductListingItem(
+                        heros: snapshot.data["product_id"],
+                        prodname: snapshot.data["product_name"],
+                        imageUrl: snapshot.data["product_image"],
+                        productID: snapshot.data["product_id"],
+                        packingType: snapshot.data["product_packtype"],
+                      );
+                    });
               } else {
-                return Container(
-                  child: Text("No API data fetched yet"),
+                return CircularProgressIndicator(
+                  backgroundColor: Colors.black,
                 );
               }
             }),
       ),
-    );
+    ));
   }
 }
 
 class ProductListingItem extends StatelessWidget {
   const ProductListingItem(
-      {Key key, this.prodname, this.imageUrl, this.productID,this.heros})
+      {Key key,
+      this.prodname,
+      this.packingType,
+      this.imageUrl,
+      this.productID,
+      this.heros})
       : super(key: key);
   final String prodname;
   final String imageUrl;
   final String productID;
+  final String packingType;
   final int heros;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(children:[ Container(height:150,color:Colors.transparent,child:BlurHash(
-        color:Colors.transparent,
-                  hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""", image: imageUrl)          ),
-                  Spacer(),
-                  Text("Weetabix",style:TextStyle(fontWeight:FontWeight.bold)),
-                  Text("24(9090) - 1 Carton"),
-          Hero(
-            tag:"button$heros",
-                      child: MaterialButton(color:Color(0xff1a1a49),onPressed:(){
-              Navigator.of(context).pushNamed("/product",arguments:prodname );
-            },child: Text("Buy Now",style:TextStyle(fontSize:14.4,fontFamily:'Poppins',color:Colors.white)),),
-          ),SizedBox(height:5)]),
+      child: Column(children: [
+        Container(
+            height: 150,
+            color: Colors.transparent,
+            child: BlurHash(
+                color: Colors.transparent,
+                hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
+                image: imageUrl)),
+        Spacer(),
+        Text(prodname, style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(packingType),
+        Hero(
+          tag: "button$heros",
+          child: MaterialButton(
+            color: Color(0xff1a1a49),
+            onPressed: () {
+              Navigator.of(context).pushNamed("/product", arguments: productID);
+            },
+            child: Text("Buy Now",
+                style: TextStyle(
+                    fontSize: 14.4,
+                    fontFamily: 'Poppins',
+                    color: Colors.white)),
+          ),
+        ),
+        SizedBox(height: 5)
+      ]),
     );
   }
 }
-
