@@ -49,7 +49,7 @@ class ListProducts extends StatelessWidget {
         child: FutureBuilder(
             future: _getProducts(category),
             builder: (context, snapshot) {
-              if (!snapshot.hasData) {
+              if (snapshot.hasData) {
                 return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 4,
@@ -68,8 +68,10 @@ class ListProducts extends StatelessWidget {
                       );
                     });
               } else {
-                return CircularProgressIndicator(
-                  backgroundColor: Colors.black,
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.black,
+                  ),
                 );
               }
             }),
