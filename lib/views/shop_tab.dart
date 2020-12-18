@@ -48,11 +48,11 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.85,
-      width: 500,
+      width: MediaQuery.of(context).size.width,
       child: FutureBuilder(
           future: getAllCategories(context),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.hasData) {
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisSpacing: 6,
@@ -69,8 +69,10 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
                   });
             } else {
               //Make UI to act as place holder first
-              return CircularProgressIndicator(
-                backgroundColor: Colors.black,
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.black,
+                ),
               );
             }
           }),
@@ -123,7 +125,7 @@ Future getAllCategories(BuildContext ctx) async {
       },
     );
     var myjson = json.decode(response.body);
-    print(myjson);
+    //print(myjson);
     return myjson;
   } catch (SocketException) {
     print("Could not fetch data");
