@@ -23,7 +23,7 @@ class PaymentBottomSheet extends StatefulWidget {
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   Box<dynamic> userHiveBox;
   final TextEditingController _testcontroller = TextEditingController();
-  String mobile = "2542542";
+  String mobile = "";
   String visualAmount;
 
   @override
@@ -81,7 +81,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "89898",
+                          "$visualAmount",
                           style: TextStyle(
                             fontWeight: FontWeight.w100,
                             fontSize: 20,
@@ -162,7 +162,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     onPressed: () async {
                       // final PhoneContact contact =
                       //     await FlutterContactPicker.pickPhoneContact();
-                      final contact = "254797687878";
+                      final contact = "";
                       setState(() {
                         //_testcontroller.text =convertTo07(contact.phoneNumber.number);
                         mobile = convertTo07(contact);
@@ -190,7 +190,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     },
                     color: Colors.black,
                     child: Text(
-                      "Pay 1",
+                      "Pay $visualAmount",
                       style: TextStyle(color: Colors.white),
                     ),
                     autofocus: true,
@@ -249,12 +249,10 @@ Future _sendPayment(mobile, amountDue, accName, ctx) async {
         },
       ),
     );
-    print("$accName");
     var myjson = json.decode(response.body);
     print("productToken");
     data = PaymentResponse.fromJson(myjson);
-    print(data.paymentCode);
-    print(data.description);
+    print(data);
   } catch (SocketException) {
     print("msEE HAUNA WIFI");
     showDialog(

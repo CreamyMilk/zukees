@@ -5,6 +5,8 @@ import 'package:zukes/views/manage_tab.dart';
 import 'package:zukes/views/service_tab.dart';
 import 'package:zukes/views/settings_tab.dart';
 import 'package:zukes/views/shop_tab.dart';
+import 'package:animations/animations.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 class BaseTabView extends StatefulWidget {
@@ -21,9 +23,13 @@ class _BaseTabViewState extends State<BaseTabView> {
     SettingsTab(),
   ];
   int _activetab;
+  bool _reverse;
+  SharedAxisTransitionType _transitionType =
+      SharedAxisTransitionType.horizontal;
   @override
   void initState() {
     _activetab = 0;
+    _reverse = false;
     Firebase.initializeApp();
     super.initState();
   }
@@ -74,12 +80,35 @@ class _BaseTabViewState extends State<BaseTabView> {
             type: BottomNavigationBarType.fixed,
             currentIndex: _activetab,
             onTap: (index) {
-              setState(() {
-                _activetab = index;
-              });
+              if (index < _activetab) {
+                setState(() {
+                  _reverse = false;
+                  _activetab = index;
+                });
+              } else {
+                setState(() {
+                  _reverse = true;
+                  _activetab = index;
+                });
+              }
             },
             items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
-        body: _tabs[_activetab],
+        body: PageTransitionSwitcher(
+            duration: const Duration(milliseconds: 600),
+            reverse: _reverse,
+            transitionBuilder: (
+              Widget child,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return SharedAxisTransition(
+                child: child,
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: _transitionType,
+              );
+            },
+            child: _tabs[_activetab]),
       ),
     );
   }
