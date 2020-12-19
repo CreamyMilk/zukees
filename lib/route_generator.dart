@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zukes/pages/all_tens.dart';
-import 'package:zukes/pages/hover_login.dart';
+import 'package:zukes/pages/login/hover_login.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
+import 'package:zukes/pages/login/number_page.dart';
 //import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
+import 'package:zukes/providers/login_data.dart';
+import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/views/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 import 'package:zukes/pages/otp_receiver.dart';
@@ -29,6 +32,15 @@ class RouteGenerator {
                         statusBarColor: Colors.white,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
+      case '/t':
+        return MaterialPageRoute(
+            builder: (ctx) => ChangeNotifierProvider<LoginData>(
+                create: (context) => LoginData(),
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: SystemUiOverlayStyle(
+                        statusBarColor: Colors.white,
+                        systemNavigationBarColor: Colors.white),
+                    child: LoginForm())));
       case '/verify':
         return MaterialPageRoute(
             builder: (ctx) => OtpReceiver(phonenumber: args));
@@ -55,9 +67,15 @@ class RouteGenerator {
                 ));
       case '/product':
         return MaterialPageRoute(
-            builder: (ctx) => ProductPage(
-                  productID: args,
-                ));
+            builder: (ctx) => ChangeNotifierProvider<PurchaseData>(
+                create: (context) => PurchaseData(),
+                child: AnnotatedRegion<SystemUiOverlayStyle>(
+                    value: SystemUiOverlayStyle(
+                        statusBarColor: Colors.white,
+                        systemNavigationBarColor: Colors.white),
+                    child: ProductPage(
+                      productID: args,
+                    ))));
       default:
         return _errorRoute();
     }

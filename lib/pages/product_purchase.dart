@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:zukes/models/r_paymetnResponse.dart';
+import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/widgets/payment_bottomSheet.dart';
 
 class ProductPage extends StatefulWidget {
@@ -11,7 +14,7 @@ class ProductPage extends StatefulWidget {
       {Key key,
       @required this.productID,
       this.productName,
-      this.amount,
+       this.amount,
       this.imageURL})
       : super(key: key);
   final int productID;
@@ -24,16 +27,16 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  double slide = 1;
   @override
   void initState() {
     super.initState();
-    slide = 1;
   }
 
   @override
   Widget build(BuildContext context) {
+    final costStore = Provider.of<PurchaseData>(context);
     int prodID = widget.productID;
+    String pName = widget.productName;
     Future _getProductDetails(int pID) async {
       print('Getting details for product >  $pID');
       try {
@@ -93,7 +96,11 @@ class _ProductPageState extends State<ProductPage> {
                         color: Color(0xfffecf0a),
                         child: InkWell(
                           onTap: () {
-                            settingModalBottomSheet(context, "3");
+                            settingModalBottomSheet(
+                                context,
+                                costStore.payableAmount.toInt(),
+                                prodID,
+                                pName);
                           },
                           child: Row(
                             children: [
@@ -105,18 +112,21 @@ class _ProductPageState extends State<ProductPage> {
                         )),
                   ),
                 ),
-                Spacer(),
-                Container(
+                SizedBox(width:25),
+		Expanded(
+		flex:10,
+                child:Container(
                     padding: EdgeInsets.only(left: 8.0, right: 8.0),
-                    width: 120,
-                    height: 100,
+                    height: 1000,
                     child: Row(
+		mainAxisAlignment:MainAxisAlignment.end,
                       children: [
-                        Text("KSH 0", style: TextStyle(fontSize: 24)),
+                        Text("KSH ${costStore.payableAmount}",
+                            style: TextStyle(fontSize: 24)),
                         Spacer(),
                         Icon(Icons.card_travel),
                       ],
-                    )),
+                    ))),
               ],
             )),
       ),
@@ -152,14 +162,19 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         SizedBox(height: 20),
                         Text("Choose Quanity"),
-                        Slider(
-                          value: slide,
-                          divisions: 5,
-                          onChanged: (double value) {
-                            setState(() {
-                              slide = value;
-                            });
-                            //print(value);
+                        Text("Description ${snapshot.data["descriptions"]}"),
+                        SfSlider(
+                          min: 1.0,
+                          max: 10.0, //snapshot.data["stock"]
+                          stepSize: 1.0,
+                          value: costStore.slideQuantity.toDouble(),
+                          interval:1.0,
+                          showTicks: true,
+                          showLabels: true,
+                          enableTooltip: true,
+                          //minorTicksPerInterval: 1,
+                          onChanged: (dynamic value) {
+                            costStore.update(value);
                           },
                         ),
                       ],
@@ -177,7 +192,8 @@ class _ProductPageState extends State<ProductPage> {
   }
 }
 
-void settingModalBottomSheet(context, amountDue) {
+void settingModalBottomSheet(
+    BuildContext context, int amountDue, int _productID, String _prodName) {
   showModalBottomSheet(
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
@@ -186,7 +202,11 @@ void settingModalBottomSheet(context, amountDue) {
     ),
     context: context,
     builder: (BuildContext context) {
-      return PaymentBottomSheet();
+      return PaymentBottomSheet(
+        amount: amountDue,
+        productID: _productID,
+        productName: _prodName,
+      );
     },
   );
 }

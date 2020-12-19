@@ -68,7 +68,7 @@ class _HoverLoginState extends State<HoverLogin> {
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: h == 0.0
                           ? LinearProgressIndicator(
-                              backgroundColor: Colors.black,
+                              backgroundColor: Colors.white,
                             )
                           : Center(
                               child: Text(
@@ -247,6 +247,7 @@ Future cacheUserData(apidata) async {
   print("AAPI$apidata");
   userHiveBox.put("fire_store", apidata["fire_store"]);
   userHiveBox.put("name", apidata["name"]);
+  userHiveBox.put("mobile", apidata["mobile"]);
   userHiveBox.put("timeu", DateFormat("hh:mm a").format(DateTime.now()));
   userHiveBox.put("tenants", apidata["total_tenants"]["total"]);
   userHiveBox.put("vaccant", apidata["vaccant_houses"]["total"]);

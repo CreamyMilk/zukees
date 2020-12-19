@@ -1,38 +1,49 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:zukes/models/r_paymetnResponse.dart';
 
 class PaymentBottomSheet extends StatefulWidget {
+  PaymentBottomSheet({
+    Key key,
+    @required this.productID,
+    @required this.amount,
+    @required this.productName,
+  }) : super(key: key);
+  final int amount;
+  final int productID;
+  final String productName;
+
   @override
   _PaymentBottomSheetState createState() => _PaymentBottomSheetState();
 }
 
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
-  //Box<dynamic> userHiveBox;
+  Box<dynamic> userHiveBox;
   final TextEditingController _testcontroller = TextEditingController();
   String mobile = "2542542";
-  String amountDue = "23";
   String visualAmount;
-  String accountName = "prod1";
+
   @override
   void initState() {
-    // userHiveBox = Hive.box('user');
+    userHiveBox = Hive.box('user');
     // var temp = userHiveBox.get('rent',defaultValue:{'rentDue':0,'account':'err','month':"null","rentStatus":false}); //Add default for non complains
-    // mobile = userHiveBox.get('mobile',defaultValue: "");
+    mobile = userHiveBox.get('mobile', defaultValue: "254797678252");
     // amountDue = temp["rentDue"].toString();
     // accountName=temp["account"];
-    amountDue = "4";
-    accountName = "prod1";
-    visualAmount = amountDue.replaceAllMapped(
-        new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
-    //visualAmount = amountDue;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    String accountName = widget.productName;
+    String amountDue = widget.amount.toString();
+    String visualAmount = amountDue.replaceAllMapped(
+        new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+
     return SingleChildScrollView(
       child: Padding(
         padding:
@@ -175,7 +186,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                     onPressed: () async {
                       Navigator.pop(context);
                       await _sendPayment(
-                          mobile, amountDue, accountName, context);
+                          mobile, visualAmount, accountName, context);
                     },
                     color: Colors.black,
                     child: Text(

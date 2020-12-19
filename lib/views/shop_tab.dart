@@ -53,7 +53,7 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
           future: getAllCategories(context),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-		print("${snapshot.data}");
+              print("${snapshot.data}");
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       mainAxisSpacing: 6,
@@ -72,7 +72,7 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
               //Make UI to act as place holder first
               return Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.black,
+                  backgroundColor: Colors.white,
                 ),
               );
             }
