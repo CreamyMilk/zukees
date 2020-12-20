@@ -7,7 +7,6 @@ import 'package:zukes/pages/login/hover_login.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
 import 'package:zukes/pages/login/number_page.dart';
-//import 'package:zukes/pages/login_page.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';

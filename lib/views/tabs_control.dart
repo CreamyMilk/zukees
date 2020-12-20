@@ -6,7 +6,6 @@ import 'package:zukes/views/service_tab.dart';
 import 'package:zukes/views/settings_tab.dart';
 import 'package:zukes/views/shop_tab.dart';
 import 'package:animations/animations.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 
 class BaseTabView extends StatefulWidget {

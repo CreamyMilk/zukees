@@ -50,6 +50,7 @@ class SettingsTab extends StatelessWidget {
                     focusColor: Colors.red[50],
                     onPressed: () {
                       print("Signing out");
+                      Navigator.of(context).pushNamed("/t");
                     },
                     child: Text(
                       "Sign Out",
