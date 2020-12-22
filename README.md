@@ -10,3 +10,7 @@ A new Flutter project.
 - [x] Firebase Support for Charts
 - [ ] Login Page
 - [ ] Cache User details 
+- [x] Add Counters below chart
+- [ ] Turn store into a cart system
+- [ ] Switch Contacts with a profile page
+- [ ] Add Tabs to the all tenatns page

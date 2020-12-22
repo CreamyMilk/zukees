@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
+import 'package:zukes/widgets/rent_amount_card.dart';
 import 'package:zukes/widgets/user_profile_card.dart';
 import 'package:zukes/widgets/graph_trans.dart';
 
@@ -21,6 +22,7 @@ class HomeTab extends StatelessWidget {
                 Text("Hello from zukes 👋"),
                 UserProfileCard(),
                 CoolGraph(firestoreKey: "building8"),
+                RentAmountsCard(),
               ],
             ),
           ),

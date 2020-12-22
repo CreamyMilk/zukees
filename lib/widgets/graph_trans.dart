@@ -4,9 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:zukes/providers/rent_amounts_provider.dart';
 
 /// Renders the doughnut chart with legend
 class CoolGraph extends StatefulWidget {
@@ -52,6 +54,7 @@ class _CoolGraphState extends State<CoolGraph> {
 
   @override
   Widget build(BuildContext context) {
+    final rBox = Provider.of<RentAmountP>(context);
     return Card(
       child: Column(
         children: [
@@ -80,13 +83,15 @@ class _CoolGraphState extends State<CoolGraph> {
                 if (querySnapshot.docs.length >= 1) {
                   var _da = querySnapshot.docs[0].data();
                   //print("LLLLLLLLLLLLLL${_da.docs}");
-
+                  rBox.updateValues(_da["paymentData"]["paid"].toDouble(),
+                      _da["paymentData"]["due"].toDouble());
                   return _getCoolGraphChart(
                       _da["month"],
                       _da["year"],
                       _da["paymentData"]["paid"].toDouble(),
                       _da["paymentData"]["due"].toDouble());
                 } else {
+                  rBox.updateValues(0.0, 0.0);
                   return _getCoolGraphChart("", "", 1, 1);
                 }
               }),
