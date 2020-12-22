@@ -7,16 +7,20 @@ class RentAmountsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final rBox = Provider.of<RentAmountP>(context);
     return Card(
-      child: ListView(
+      child: Column(
         children: [
-          ListTile(
-            leading: Text("Paid"),
-            trailing: Text("Ksh.${rBox.paid}"),
+          ListView(
+            children: [
+              ListTile(
+                leading: Text("Paid"),
+                trailing: Text("Ksh.${rBox.paid}"),
+              ),
+              ListTile(
+                leading: Text("Due"),
+                trailing: Text("Ksh.${rBox.due}"),
+              )
+            ],
           ),
-          ListTile(
-            leading: Text("Due"),
-            trailing: Text("Ksh.${rBox.due}"),
-          )
         ],
       ),
     );

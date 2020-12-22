@@ -62,7 +62,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
             children: [
               SingleChildScrollView(
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.7,
+                  height: MediaQuery.of(context).size.height * 0.85,
                   child: TabBarView(children: [
                     FutureBuilder(
                         future: _getTrans(widget.branch),
