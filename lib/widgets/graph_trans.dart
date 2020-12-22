@@ -55,6 +55,7 @@ class _CoolGraphState extends State<CoolGraph> {
   @override
   Widget build(BuildContext context) {
     final rBox = Provider.of<RentAmountP>(context);
+    var _da;
     return Card(
       child: Column(
         children: [
@@ -66,6 +67,7 @@ class _CoolGraphState extends State<CoolGraph> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
+                  rBox.updateValues(0.0, 0.0);
                   return _getCoolGraphChart("", "", 1, 1);
                 }
 
@@ -81,10 +83,12 @@ class _CoolGraphState extends State<CoolGraph> {
                   print(querySnapshot.docs[i].data());
                 }
                 if (querySnapshot.docs.length >= 1) {
-                  var _da = querySnapshot.docs[0].data();
+                  _da = querySnapshot.docs[0].data();
                   //print("LLLLLLLLLLLLLL${_da.docs}");
                   rBox.updateValues(_da["paymentData"]["paid"].toDouble(),
                       _da["paymentData"]["due"].toDouble());
+
+                  print("LLLLLLLLLLLLLL   NOTIFIER VALUE >>>>${rBox.paid}");
                   return _getCoolGraphChart(
                       _da["month"],
                       _da["year"],
@@ -215,6 +219,7 @@ class _CoolGraphState extends State<CoolGraph> {
                             items: tempYear,
                             underline: const SizedBox(height: 1),
                             onChanged: (String n) {
+                              rBox.updateValues(5.0, 5.0);
                               setState(() {
                                 _yearvalue = n;
                               });
@@ -224,6 +229,23 @@ class _CoolGraphState extends State<CoolGraph> {
             ],
           ),
           SizedBox(height: 10),
+          Container(
+            height: 100,
+            child: ListView(
+              children: [
+                ListTile(
+                  leading: Text("Paid"),
+                  trailing:
+                      Text("Ksh. ${_da["paymentData"]["paid"].toDouble()}"),
+                ),
+                ListTile(
+                  leading: Text("Due"),
+                  trailing:
+                      Text("Ksh. ${_da["paymentData"]["paid"].toDouble()}"),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
