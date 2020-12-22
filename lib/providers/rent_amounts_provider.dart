@@ -1,16 +1,11 @@
 import 'package:flutter/foundation.dart';
 
-double _paid = 0;
-double _due = 0;
-
 class RentAmountP extends ChangeNotifier {
-  get paid => _paid;
-  get due => _due;
-
+  double paid = 0;
+  double due = 0;
   void updateValues(double x, double y) {
-    _paid = x;
-    _due = y;
-
+    paid = x;
+    due = y;
     notifyListeners();
   }
 }

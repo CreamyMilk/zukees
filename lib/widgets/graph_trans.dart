@@ -4,11 +4,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 /// Chart import
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:zukes/providers/rent_amounts_provider.dart';
 
 /// Renders the doughnut chart with legend
 class CoolGraph extends StatefulWidget {
@@ -54,8 +52,6 @@ class _CoolGraphState extends State<CoolGraph> {
 
   @override
   Widget build(BuildContext context) {
-    final rBox = Provider.of<RentAmountP>(context);
-    var _da;
     return Card(
       child: Column(
         children: [
@@ -67,7 +63,6 @@ class _CoolGraphState extends State<CoolGraph> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  rBox.updateValues(0.0, 0.0);
                   return _getCoolGraphChart("", "", 1, 1);
                 }
 
@@ -77,25 +72,22 @@ class _CoolGraphState extends State<CoolGraph> {
 
                 QuerySnapshot querySnapshot = snapshot.data;
 
-                print("length ${querySnapshot.docs.length}");
-                for (var i = 0; i < querySnapshot.docs.length; i++) {
-                  print(i);
-                  print(querySnapshot.docs[i].data());
-                }
+                //print("length ${querySnapshot.docs.length}");
+                //for (var i = 0; i < querySnapshot.docs.length; i++) {
+                //print(i);
+                // print(querySnapshot.docs[i].data());
+                // }
                 if (querySnapshot.docs.length >= 1) {
-                  _da = querySnapshot.docs[0].data();
+                  var _da = querySnapshot.docs[0].data();
                   //print("LLLLLLLLLLLLLL${_da.docs}");
-                  rBox.updateValues(_da["paymentData"]["paid"].toDouble(),
-                      _da["paymentData"]["due"].toDouble());
 
-                  print("LLLLLLLLLLLLLL   NOTIFIER VALUE >>>>${rBox.paid}");
                   return _getCoolGraphChart(
-                      _da["month"],
-                      _da["year"],
-                      _da["paymentData"]["paid"].toDouble(),
-                      _da["paymentData"]["due"].toDouble());
+                    _da["month"],
+                    _da["year"],
+                    _da["paymentData"]["paid"].toDouble(),
+                    _da["paymentData"]["due"].toDouble(),
+                  );
                 } else {
-                  rBox.updateValues(0.0, 0.0);
                   return _getCoolGraphChart("", "", 1, 1);
                 }
               }),
@@ -219,7 +211,6 @@ class _CoolGraphState extends State<CoolGraph> {
                             items: tempYear,
                             underline: const SizedBox(height: 1),
                             onChanged: (String n) {
-                              rBox.updateValues(5.0, 5.0);
                               setState(() {
                                 _yearvalue = n;
                               });
@@ -228,32 +219,59 @@ class _CoolGraphState extends State<CoolGraph> {
                   color: Colors.white),
             ],
           ),
+          StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection(widget.firestoreKey)
+                  .where("year", isEqualTo: _yearvalue)
+                  .where("month", isEqualTo: _monthvalue)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return _getVisualAmounts(1.0, 1.0);
+                }
+
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
+
+                QuerySnapshot querySnapshot = snapshot.data;
+
+                //print("length ${querySnapshot.docs.length}");
+                //for (var i = 0; i < querySnapshot.docs.length; i++) {
+                //print(i);
+                // print(querySnapshot.docs[i].data());
+                // }
+                if (querySnapshot.docs.length >= 1) {
+                  var _da = querySnapshot.docs[0].data();
+                  //print("LLLLLLLLLLLLLL${_da.docs}");
+
+                  return _getVisualAmounts(
+                    _da["paymentData"]["paid"].toDouble(),
+                    _da["paymentData"]["due"].toDouble(),
+                  );
+                } else {
+                  return _getVisualAmounts(1.0, 1.0);
+                }
+              }),
           SizedBox(height: 10),
-          Container(
-            height: 100,
-            child: ListView(
-              children: [
-                ListTile(
-                  leading: Text("Paid"),
-                  trailing:
-                      Text("Ksh. ${_da["paymentData"]["paid"].toDouble()}"),
-                ),
-                ListTile(
-                  leading: Text("Due"),
-                  trailing:
-                      Text("Ksh. ${_da["paymentData"]["paid"].toDouble()}"),
-                )
-              ],
-            ),
-          ),
         ],
       ),
     );
   }
 
+  Container _getVisualAmounts(double paid, double due) {
+    return Container(
+        height: 180,
+        child: ListView(children: [
+          ListTile(leading: Text("Paid"), trailing: Text("Ksh. $paid")),
+          ListTile(leading: Text("Due"), trailing: Text("Ksh. $due")),
+        ]));
+  }
+
   ///Get the default circular series with legend
   SfCircularChart _getCoolGraphChart(
       String month, String year, double paid, double due) {
+    //print("Hox value = Paid ${hBox.paid}");
     double total = paid;
     double paidtemp = (paid / (paid + due)) * 100;
     double mod = pow(10.0, 4);
