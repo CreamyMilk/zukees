@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -45,26 +44,58 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("All Tenants👨‍💼")),
-      body: SafeArea(
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.85,
-                child: FutureBuilder(
-                    future: _getTrans(widget.branch),
-                    builder: (context, snapshot) {
-                      if (snapshot.data != null) {
-                        return TwigList(apiData: snapshot.data);
-                      } else {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    }),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("All Tenants👨‍💼"),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "All"),
+              Tab(text: "Defaulters"),
+              Tab(text: "Evictions"),
+            ],
+          ),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: TabBarView(children: [
+                    FutureBuilder(
+                        future: _getTrans(widget.branch),
+                        builder: (context, snapshot) {
+                          if (snapshot.data != null) {
+                            return TwigList(apiData: snapshot.data);
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        }),
+                    FutureBuilder(
+                        future: _getTrans(widget.branch),
+                        builder: (context, snapshot) {
+                          if (snapshot.data != null) {
+                            return TwigList(apiData: snapshot.data);
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        }),
+                    FutureBuilder(
+                        future: _getTrans(widget.branch),
+                        builder: (context, snapshot) {
+                          if (snapshot.data != null) {
+                            return TwigList(apiData: snapshot.data);
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        })
+                  ]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
