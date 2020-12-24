@@ -42,7 +42,7 @@ class SettingsTab extends StatelessWidget {
               [
                 Text("jk1@gmail.com👋"),
                 Text("Jothan Kinyua"),
-                SizedBox(height: 400),
+ListTile(leading:Text("LITS")),
                 OutlineButton(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.red[50],
@@ -57,6 +57,7 @@ class SettingsTab extends StatelessWidget {
                       style: TextStyle(color: Colors.red),
                     )),
                 SizedBox(height: 10),
+
                 Text(
                   "App version: $_version",
                   style: TextStyle(color: Colors.grey),

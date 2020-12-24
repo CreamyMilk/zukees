@@ -1,28 +1,31 @@
 import 'package:flutter/foundation.dart';
 
 class LoginData extends ChangeNotifier {
-  String number = "07";
+  String pin = "";
+  List<bool> buttonStates = [false, false, false, false];
+  int pointer = 0;
   bool complete = false;
 
   void backspace() {
-    if (number.length > 0) {
-      number = number.substring(0, number.length - 1);
+    if (pin.length > 0) {
+      pin = pin.substring(0, pin.length - 1);
       notifyListeners();
     }
   }
 
   void submit() {
-    if (number.length >= 10) {
+    if (pin.length == 4) {
       complete = !complete;
       notifyListeners();
     }
   }
 
   void typing(String value) {
-    if (number.length < 10) {
-      number += value;
+    if (pin.length < 4) {
+      pin += value;
       notifyListeners();
-    } else if (number.length == 10) {
+    } else {
+      //Symbit the value or trigger loading
       complete = !complete;
       notifyListeners();
     }

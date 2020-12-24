@@ -19,207 +19,167 @@ class CoolGraph extends StatefulWidget {
 
 class _CoolGraphState extends State<CoolGraph> {
   _CoolGraphState();
-
   Query query;
-  List<String> _months = [""];
-  // static const _years = <String>["2018", "2019", "2020", "2021"];
-
-  // final List<DropdownMenuItem<String>> _dropDownYear = _years
-  //     .map(
-  //       (String v) => DropdownMenuItem<String>(
-  //         value: v,
-  //         child: Text(v),
-  //       ),
-  //     )
-  //     .toList();
-
   String _monthvalue;
   String _yearvalue;
-
-  // double _temp =56.2;
   @override
   void initState() {
-//    Firebase.initializeApp();
     _monthvalue = DateFormat('MMMM').format(DateTime.now());
     _yearvalue = DateFormat('y').format(DateTime.now());
     query = FirebaseFirestore.instance.collection(widget.firestoreKey);
-
-    //final children = <Widget>[];
-
-    print("Montttttt $_months");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection(widget.firestoreKey)
-                  .where("year", isEqualTo: _yearvalue)
-                  .where("month", isEqualTo: _monthvalue)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _getCoolGraphChart("", "", 1, 1);
-                }
-
-                if (snapshot.hasError) {
-                  return Center(child: Text(snapshot.error.toString()));
-                }
-
-                QuerySnapshot querySnapshot = snapshot.data;
-
-                //print("length ${querySnapshot.docs.length}");
-                //for (var i = 0; i < querySnapshot.docs.length; i++) {
-                //print(i);
-                // print(querySnapshot.docs[i].data());
-                // }
-                if (querySnapshot.docs.length >= 1) {
-                  var _da = querySnapshot.docs[0].data();
-                  //print("LLLLLLLLLLLLLL${_da.docs}");
-
-                  return _getCoolGraphChart(
-                    _da["month"],
-                    _da["year"],
-                    _da["paymentData"]["paid"].toDouble(),
-                    _da["paymentData"]["due"].toDouble(),
-                  );
-                } else {
-                  return _getCoolGraphChart("", "", 1, 1);
-                }
-              }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      children: [
+        Card(
+          child: Column(
             children: [
-              MaterialButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  child: FutureBuilder<QuerySnapshot>(
-                      future: FirebaseFirestore.instance
-                          .collection(widget.firestoreKey)
-                          .where("year", isEqualTo: _yearvalue)
-                          .get(),
-                      builder: (context, snapshot) {
-                        List<DropdownMenuItem<String>> temp = [];
-                        List tt = [];
-                        if (snapshot.hasData) {
-                          if (snapshot.data.docs.length >= 1) {
-                            if ((tt.indexWhere((m) => m == _monthvalue)) ==
-                                -1) {
-                              print("Final loop");
+              StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection(widget.firestoreKey)
+                      .where("year", isEqualTo: _yearvalue)
+                      .where("month", isEqualTo: _monthvalue)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return _getCoolGraphChart("", "", 1, 1);
+                    }
 
-                              temp.add(
-                                DropdownMenuItem<String>(
-                                  value: _monthvalue,
-                                  child: Text(_monthvalue),
-                                ),
-                              );
-                              snapshot.data.docs.forEach((doc) {
-                                print("MMMMMMM ---->${doc["month"]}");
-                                //_months.add(doc["month"]);
-                                tt.add(doc["month"]);
-                                _monthvalue != doc["month"]
-                                    ? temp.add(
-                                        DropdownMenuItem<String>(
-                                          value: doc["month"],
-                                          child: Text(doc["month"]),
-                                        ),
-                                        // ignore: unnecessary_statements
-                                      )
-                                    : Text("");
-                              });
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    }
+                    QuerySnapshot querySnapshot = snapshot.data;
+                    if (querySnapshot.docs.length >= 1) {
+                      var _da = querySnapshot.docs[0].data();
+                      return _getCoolGraphChart(
+                        _da["month"],
+                        _da["year"],
+                        _da["paymentData"]["paid"].toDouble(),
+                        _da["paymentData"]["due"].toDouble(),
+                      );
+                    } else {
+                      return _getCoolGraphChart("", "", 1, 1);
+                    }
+                  }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      child: FutureBuilder<QuerySnapshot>(
+                          future: FirebaseFirestore.instance
+                              .collection(widget.firestoreKey)
+                              .where("year", isEqualTo: _yearvalue)
+                              .get(),
+                          builder: (context, snapshot) {
+                            List<DropdownMenuItem<String>> temp = [];
+                            List tt = [];
+                            if (snapshot.hasData) {
+                              if (snapshot.data.docs.length >= 1) {
+                                if ((tt.indexWhere((m) => m == _monthvalue)) ==
+                                    -1) {
+                                  print("Final loop");
+                                  temp.add(
+                                    DropdownMenuItem<String>(
+                                      value: _monthvalue,
+                                      child: Text(_monthvalue),
+                                    ),
+                                  );
+                                  snapshot.data.docs.forEach((doc) {
+                                    tt.add(doc["month"]);
+                                    _monthvalue != doc["month"]
+                                        ? temp.add(
+                                            DropdownMenuItem<String>(
+                                              value: doc["month"],
+                                              child: Text(doc["month"]),
+                                            ),
+                                            // ignore: unnecessary_statements
+                                          )
+                                        : Text("");
+                                  });
+                                } else {
+                                  snapshot.data.docs.forEach((doc) {
+                                    tt.add(doc["month"]);
+                                    temp.add(
+                                      DropdownMenuItem<String>(
+                                        value: doc["month"],
+                                        child: Text(doc["month"]),
+                                      ),
+                                    );
+                                  });
+                                }
+                              } else {
+                                print("The data length is below 1");
+                              }
                             } else {
+                              print("No data");
+                            }
+                            return DropdownButton<String>(
+                                value: _monthvalue,
+                                underline: const SizedBox(height: 1),
+                                items: temp,
+                                onChanged: (String n) {
+                                  setState(() {
+                                    _monthvalue = n;
+                                    // _temp = 90;
+                                  });
+                                });
+                          }),
+                      color: Colors.white),
+                  MaterialButton(
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50.0),
+                      ),
+                      child: FutureBuilder<QuerySnapshot>(
+                          future: FirebaseFirestore.instance
+                              .collection(widget.firestoreKey)
+                              .get(),
+                          builder: (context, snapshot) {
+                            List<dynamic> tempApi = [];
+                            List<DropdownMenuItem<String>> tempYear = [];
+                            if (snapshot.hasData) {
                               snapshot.data.docs.forEach((doc) {
-                                print(" APIIIIIIIIII ${doc["month"]}");
-                                //_months.add(doc["month"]);
-                                tt.add(doc["month"]);
-                                temp.add(
+                                print(doc["month"]);
+
+                                tempApi.add(doc["year"]);
+                              });
+                              tempApi.toSet().toList().forEach((a) {
+                                tempYear.add(
                                   DropdownMenuItem<String>(
-                                    value: doc["month"],
-                                    child: Text(doc["month"]),
+                                    value: a,
+                                    child: Text(a),
                                   ),
                                 );
                               });
+                            } else {
+                              print("ok");
                             }
-                          } else {
-                            print("The data length is below 1");
-                            // temp.add(
-                            //   DropdownMenuItem<String>(
-                            //     value: "December",
-                            //     child: Text(""),
-                            //   ),
-                            // );
-                          }
-                        } else {
-                          print("No data 1");
-                          // temp.add(
-                          //   DropdownMenuItem<String>(
-                          //     value: _monthvalue,
-                          //     child: Text(_monthvalue),
-                          //   ),
-                          // );
-                        }
-//                        return Text("wewe");
-                        return DropdownButton<String>(
-                            value: _monthvalue,
-                            underline: const SizedBox(height: 1),
-                            items: temp,
-                            onChanged: (String n) {
-                              setState(() {
-                                _monthvalue = n;
-                                // _temp = 90;
-                              });
-                            });
-                      }),
-                  color: Colors.white),
-              MaterialButton(
-                  onPressed: () {},
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  child: FutureBuilder<QuerySnapshot>(
-                      future: FirebaseFirestore.instance
-                          .collection(widget.firestoreKey)
-                          .get(),
-                      builder: (context, snapshot) {
-                        List<dynamic> tempApi = [];
-                        List<DropdownMenuItem<String>> tempYear = [];
-                        if (snapshot.hasData) {
-                          snapshot.data.docs.forEach((doc) {
-                            print(doc["month"]);
-                            //_months.add(doc["month"]);
-                            tempApi.add(doc["year"]);
-                          });
-                          tempApi.toSet().toList().forEach((a) {
-                            tempYear.add(
-                              DropdownMenuItem<String>(
-                                value: a,
-                                child: Text(a),
-                              ),
-                            );
-                          });
-                        } else {
-                          print("ok");
-                        }
-                        return DropdownButton<String>(
-                            value: _yearvalue,
-                            items: tempYear,
-                            underline: const SizedBox(height: 1),
-                            onChanged: (String n) {
-                              setState(() {
-                                _yearvalue = n;
-                              });
-                            });
-                      }),
-                  color: Colors.white),
+                            return DropdownButton<String>(
+                                value: _yearvalue,
+                                items: tempYear,
+                                underline: const SizedBox(height: 1),
+                                onChanged: (String n) {
+                                  setState(() {
+                                    _yearvalue = n;
+                                  });
+                                });
+                          }),
+                      color: Colors.white),
+                ],
+              ),
+              SizedBox(height: 10),
             ],
           ),
-          StreamBuilder(
+        ),
+        Card(
+          child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection(widget.firestoreKey)
                   .where("year", isEqualTo: _yearvalue)
@@ -235,16 +195,8 @@ class _CoolGraphState extends State<CoolGraph> {
                 }
 
                 QuerySnapshot querySnapshot = snapshot.data;
-
-                //print("length ${querySnapshot.docs.length}");
-                //for (var i = 0; i < querySnapshot.docs.length; i++) {
-                //print(i);
-                // print(querySnapshot.docs[i].data());
-                // }
                 if (querySnapshot.docs.length >= 1) {
                   var _da = querySnapshot.docs[0].data();
-                  //print("LLLLLLLLLLLLLL${_da.docs}");
-
                   return _getVisualAmounts(
                     _da["paymentData"]["paid"].toDouble(),
                     _da["paymentData"]["due"].toDouble(),
@@ -253,18 +205,28 @@ class _CoolGraphState extends State<CoolGraph> {
                   return _getVisualAmounts(1.0, 1.0);
                 }
               }),
-          SizedBox(height: 10),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Container _getVisualAmounts(double paid, double due) {
+    const TextStyle beBold =
+        TextStyle(fontSize: 13, fontWeight: FontWeight.w600);
+    const TextStyle beLight =
+        TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
     return Container(
         height: 180,
         child: ListView(children: [
-          ListTile(leading: Text("Paid"), trailing: Text("Ksh. $paid")),
-          ListTile(leading: Text("Due"), trailing: Text("Ksh. $due")),
+          Divider(),
+          ListTile(
+              leading: Text("Paid", style: beBold),
+              trailing: Text("Ksh. $paid", style: beLight)),
+          Divider(),
+          ListTile(
+              leading: Text("Due", style: beBold),
+              trailing: Text("Ksh. $due", style: beLight)),
+          Divider()
         ]));
   }
 
@@ -272,9 +234,9 @@ class _CoolGraphState extends State<CoolGraph> {
   SfCircularChart _getCoolGraphChart(
       String month, String year, double paid, double due) {
     //print("Hox value = Paid ${hBox.paid}");
-    double total = paid;
+    double total = paid + due;
     double paidtemp = (paid / (paid + due)) * 100;
-    double mod = pow(10.0, 4);
+    double mod = pow(10.0, 2);
     double paidpercentage = ((paidtemp * mod).round().toDouble() / mod);
     //print("Perc $paidpercentage");
     return SfCircularChart(
@@ -285,7 +247,7 @@ class _CoolGraphState extends State<CoolGraph> {
       annotations: [
         CircularChartAnnotation(
             widget: Container(
-                child: Text('Total\n$total\nKSH',
+                child: Text('Expected.\n$total\nKSH',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 10))))
       ],
@@ -297,7 +259,8 @@ class _CoolGraphState extends State<CoolGraph> {
   List<DoughnutSeries<ChartSampleData, String>> _getCoolGraphSeries(
       double paidperc) {
     final List<ChartSampleData> chartData = <ChartSampleData>[
-      ChartSampleData(x: 'Paid ', y: paidperc, pointColor: Colors.green),
+      ChartSampleData(
+          x: 'Paid ', y: paidperc, pointColor: Colors.green, xValue: "Rnadom"),
       ChartSampleData(x: 'Due', y: 100 - paidperc, pointColor: Colors.red),
     ];
     return <DoughnutSeries<ChartSampleData, String>>[
