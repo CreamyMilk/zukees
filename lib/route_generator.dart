@@ -13,7 +13,7 @@ import 'package:zukes/providers/kra_fromProvide.dart';
 import 'package:zukes/providers/login_data.dart';
 import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/providers/rent_amounts_provider.dart';
-import 'package:zukes/views/tabs_control.dart';
+import 'package:zukes/tabs/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 import 'package:zukes/pages/otp_receiver.dart';
 

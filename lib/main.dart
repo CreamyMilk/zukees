@@ -26,8 +26,6 @@ class MyApp extends StatelessWidget {
               fontSizeFactor: 0.75,
               fontSizeDelta: 1.0,
             ),
-
-        //primarySwatch: Colors.blue,
         primaryColor: Colors.black,
         accentColor: Colors.amber,
       ),

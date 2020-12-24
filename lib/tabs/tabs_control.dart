@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zukes/views/home_tab.dart';
-import 'package:zukes/views/manage_tab.dart';
-import 'package:zukes/views/service_tab.dart';
-import 'package:zukes/views/settings_tab.dart';
-import 'package:zukes/views/shop_tab.dart';
+import 'package:zukes/tabs/home_tab.dart';
+import 'package:zukes/tabs/manage_tab.dart';
+import 'package:zukes/tabs/service_tab.dart';
+import 'package:zukes/tabs/settings_tab.dart';
+import 'package:zukes/tabs/shop_tab.dart';
 import 'package:animations/animations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
