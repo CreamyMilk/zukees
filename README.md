@@ -8,8 +8,8 @@ A new Flutter project.
 - [x] User Welcom Screen Card
 - [x] Tabs View
 - [x] Firebase Support for Charts
-- [ ] Login Page
-- [ ] Cache User details 
+- [x] Login Page
+- [x] Cache User details 
 - [x] Add Counters below chart
 - [ ] Turn store into a cart system
 - [ ] Switch Contacts with a profile page

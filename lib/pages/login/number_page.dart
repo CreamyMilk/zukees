@@ -98,10 +98,10 @@ class _BaseBallState extends State<BaseBall> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _bigWidth = 50;
-          // widget.isActive = !widget.isActive;
-        });
+        // setState(() {
+        //   _bigWidth = 50;
+        //   // widget.isActive = !widget.isActive;
+        // });
       },
       child: Container(
         padding: EdgeInsets.all(8.0),
@@ -120,8 +120,8 @@ class _BaseBallState extends State<BaseBall> {
             child: Center(
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 400),
-                height: !widget.isActive ? 25 : 0,
-                width: !widget.isActive ? 25 : 0,
+                height: widget.isActive ? 25 : 0,
+                width: widget.isActive ? 25 : 0,
                 decoration: BoxDecoration(
                   border: Border.all(
                       color:
