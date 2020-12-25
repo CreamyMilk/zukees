@@ -30,13 +30,16 @@ class LoginData extends ChangeNotifier {
   }
 
   void typing(String value) {
-    if (pin.length < 4) {
+    if (pin.length < 3) {
       buttonStates[pointer] = true;
       pointer++;
       pin += value;
       notifyListeners();
-    } else {
-      //Symbit the value or trigger loading
+    } else if (pin.length == 3) {
+      buttonStates[pointer] = true;
+      pointer++;
+      pin += value;
+      //Sumbit the value or trigger loading
       complete = true;
       notifyListeners();
     }

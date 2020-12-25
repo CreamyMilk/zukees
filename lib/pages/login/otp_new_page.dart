@@ -25,7 +25,7 @@ class OtpNewForm extends StatelessWidget {
             )
           ]),
           CircleAvatar(
-              minRadius: 35,
+              minRadius: 30,
               backgroundColor: Color(0xfffe8fcfa),
               child: Text("JK")),
           SizedBox(height: 2),

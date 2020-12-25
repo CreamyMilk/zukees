@@ -59,6 +59,7 @@ class ProfileTab extends StatelessWidget {
                       style: TextStyle(color: Colors.red),
                     )),
                 SizedBox(height: 10),
+                Spacer(),
                 Text(
                   "App version: $_version",
                   style: TextStyle(color: Colors.grey),

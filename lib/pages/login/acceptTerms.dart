@@ -23,7 +23,7 @@ class AcceptTerms extends StatelessWidget {
               children: [
                 Spacer(),
                 Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  margin: EdgeInsets.only(top: 10, bottom: 8),
                   child: Text("CONTINUE",
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
@@ -53,11 +53,14 @@ class AcceptTerms extends StatelessWidget {
                 ),
               ),
               CircleAvatar(
-                  minRadius: 35,
+                  minRadius: 30,
                   backgroundColor: Color(0xfffe8fcfa),
                   child: Text("JK")),
               SizedBox(height: 2),
-              Text("Jotham Kinyua"),
+              Text(
+                "JOTHAM KINYUA",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
               SizedBox(height: 3),
               Text("+254797678252"),
               Spacer(),
@@ -78,6 +81,7 @@ class AcceptTerms extends StatelessWidget {
               ]),
               Spacer(),
               Container(
+                padding: EdgeInsets.symmetric(horizontal: 14.0),
                 width: MediaQuery.of(context).size.width,
                 child: RichText(
                   text: TextSpan(
