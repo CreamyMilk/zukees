@@ -38,32 +38,30 @@ class ProfileTab extends StatelessWidget {
             elevation: 0.0,
           ),
           SliverFillRemaining(
-            child: SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Text("jk1@gmail.com👋"),
-                  Text("Jothan Kinyua"),
-                  ListTile(leading: Text("LITS")),
-                  OutlineButton(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.red[50],
-                      highlightedBorderColor: Colors.red[50],
-                      focusColor: Colors.red[50],
-                      onPressed: () {
-                        print("Signing out");
-                        Navigator.of(context).pushNamed("/accepttermspage");
-                      },
-                      child: Text(
-                        "Sign Out",
-                        style: TextStyle(color: Colors.red),
-                      )),
-                  SizedBox(height: 10),
-                  Text(
-                    "App version: $_version",
-                    style: TextStyle(color: Colors.grey),
-                  )
-                ],
-              ),
+            child: Column(
+              children: [
+                Text("jk1@gmail.com👋"),
+                Text("Jothan Kinyua"),
+                ListTile(leading: Text("LITS")),
+                OutlineButton(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.red[50],
+                    highlightedBorderColor: Colors.red[50],
+                    focusColor: Colors.red[50],
+                    onPressed: () {
+                      print("Signing out");
+                      Navigator.of(context).pushNamed("/accepttermspage");
+                    },
+                    child: Text(
+                      "Sign Out",
+                      style: TextStyle(color: Colors.red),
+                    )),
+                SizedBox(height: 10),
+                Text(
+                  "App version: $_version",
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
             ),
           ),
         ],
