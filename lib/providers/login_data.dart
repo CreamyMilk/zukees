@@ -8,6 +8,8 @@ class LoginData extends ChangeNotifier {
 
   void backspace() {
     if (pin.length > 0) {
+      buttonStates[pointer] = false;
+      pointer--;
       pin = pin.substring(0, pin.length - 1);
       notifyListeners();
     }
@@ -22,6 +24,8 @@ class LoginData extends ChangeNotifier {
 
   void typing(String value) {
     if (pin.length < 4) {
+      buttonStates[pointer] = true;
+      pointer++;
       pin += value;
       notifyListeners();
     } else {
