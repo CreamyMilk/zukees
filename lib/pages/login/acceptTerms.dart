@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -62,10 +63,14 @@ class AcceptTerms extends StatelessWidget {
                 // lstore.buttonStates.forEach((k) => Text('$k')),
                 Spacer(),
                 Container(
-                    height: 100,
-                    width: 100,
-                    color: Color(0xfff43b02a),
-                    child: Text("Contaract animation will be here")),
+                    height: 120,
+                    width: 80,
+                    child: FlareActor(
+                      'assets/licen.flr',
+                      alignment: Alignment.center,
+                      fit: BoxFit.contain,
+                      animation: "runner",
+                    )),
                 Spacer(),
               ]),
               Spacer(),
