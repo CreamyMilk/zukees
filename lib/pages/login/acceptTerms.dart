@@ -8,10 +8,10 @@ class AcceptTerms extends StatelessWidget {
     return Scaffold(
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(
-              top: 16.0, bottom: 16.0, left: 8.0, right: 8.0),
+              top: 16.0, bottom: 16.0, left: 14.0, right: 14.0),
           child: MaterialButton(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(25.0),
                 side: BorderSide(color: Colors.green)),
             padding: EdgeInsets.all(8.0),
             color: Colors.green,
@@ -25,12 +25,12 @@ class AcceptTerms extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 10),
                   child: Text("CONTINUE",
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                      style: TextStyle(color: Colors.white, fontSize: 18)),
                 ),
                 Spacer(),
                 Icon(
                   Icons.arrow_forward,
-                  size: 15,
+                  size: 20,
                   color: Colors.white,
                 ),
               ],
@@ -42,12 +42,15 @@ class AcceptTerms extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: Colors.grey,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
               CircleAvatar(
                   minRadius: 35,
@@ -63,8 +66,8 @@ class AcceptTerms extends StatelessWidget {
                 // lstore.buttonStates.forEach((k) => Text('$k')),
                 Spacer(),
                 Container(
-                    height: 120,
-                    width: 80,
+                    height: 200,
+                    width: 160,
                     child: FlareActor(
                       'assets/licen.flr',
                       alignment: Alignment.center,
