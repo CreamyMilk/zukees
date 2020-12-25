@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:zukes/providers/login_data.dart';
 import 'package:zukes/widgets/onScreenPad.dart';
 
-class LoginForm extends StatelessWidget {
-  LoginForm({Key key}) : super(key: key);
+class OtpNewForm extends StatelessWidget {
+  OtpNewForm({Key key}) : super(key: key);
   final TextStyle becomeGreen = TextStyle(color: Colors.green);
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,9 @@ class LoginForm extends StatelessWidget {
               child: Text("JK")),
           SizedBox(height: 2),
           Text("Jotham Kinyua"),
-
           SizedBox(height: 3),
           Text("+254797678252"),
           Spacer(),
-
           //Add animation to turn to scratch card then submit to verify
           Text(
             lstore.complete ? "ENTER RECEIVED SMS PIN" : "Validating Pin ...",
@@ -83,7 +81,6 @@ class LoginForm extends StatelessWidget {
 
 class BaseBall extends StatefulWidget {
   final bool isActive;
-
   const BaseBall({Key key, @required this.isActive}) : super(key: key);
   @override
   _BaseBallState createState() => _BaseBallState();
@@ -91,10 +88,12 @@ class BaseBall extends StatefulWidget {
 
 class _BaseBallState extends State<BaseBall> {
   double _bigWidth;
+  double _smallWidth;
 
   @override
   void initState() {
-    _bigWidth = 50;
+    _bigWidth = 40;
+    _smallWidth = _bigWidth / 2;
     super.initState();
   }
 
@@ -124,8 +123,8 @@ class _BaseBallState extends State<BaseBall> {
             child: Center(
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 400),
-                height: widget.isActive ? 25 : 0,
-                width: widget.isActive ? 25 : 0,
+                height: widget.isActive ? _smallWidth : 0,
+                width: widget.isActive ? _smallWidth : 0,
                 decoration: BoxDecoration(
                   border: Border.all(
                       color:

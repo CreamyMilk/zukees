@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:zukes/tabs/home_tab.dart';
 import 'package:zukes/tabs/manage_tab.dart';
 import 'package:zukes/tabs/service_tab.dart';
-import 'package:zukes/tabs/settings_tab.dart';
+import 'package:zukes/tabs/profile_tab.dart';
 import 'package:zukes/tabs/shop_tab.dart';
 import 'package:animations/animations.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +19,7 @@ class _BaseTabViewState extends State<BaseTabView> {
     ManageTab(),
     ServiceTab(),
     ShoppingTab(),
-    SettingsTab(),
+    ProfileTab(),
   ];
   int _activetab;
   bool _reverse;
@@ -55,11 +55,11 @@ class _BaseTabViewState extends State<BaseTabView> {
             Hero(tag: "heal", child: Icon(Icons.healing, color: Colors.black)),
         activeIcon: Icon(Icons.healing, color: Colors.blue));
     var shopItem = BottomNavigationBarItem(
-        label: "Hardware",
+        label: "Store",
         icon: Icon(Icons.shopping_cart, color: Colors.black),
         activeIcon: Icon(Icons.shopping_cart, color: Colors.blue));
     var callItem = BottomNavigationBarItem(
-        label: "Contacts",
+        label: "Profile",
         icon: Icon(Icons.contact_phone, color: Colors.black),
         activeIcon: Icon(Icons.contact_phone, color: Colors.blue));
 

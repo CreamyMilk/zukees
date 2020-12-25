@@ -16,7 +16,7 @@ String getAppversion() {
   return rs;
 }
 
-class SettingsTab extends StatelessWidget {
+class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _version = "sdsdsd";
@@ -37,32 +37,33 @@ class SettingsTab extends StatelessWidget {
             backgroundColor: Colors.white,
             elevation: 0.0,
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Text("jk1@gmail.com👋"),
-                Text("Jothan Kinyua"),
-ListTile(leading:Text("LITS")),
-                OutlineButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.red[50],
-                    highlightedBorderColor: Colors.red[50],
-                    focusColor: Colors.red[50],
-                    onPressed: () {
-                      print("Signing out");
-                      Navigator.of(context).pushNamed("/t");
-                    },
-                    child: Text(
-                      "Sign Out",
-                      style: TextStyle(color: Colors.red),
-                    )),
-                SizedBox(height: 10),
-
-                Text(
-                  "App version: $_version",
-                  style: TextStyle(color: Colors.grey),
-                )
-              ],
+          SliverFillRemaining(
+            child: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Text("jk1@gmail.com👋"),
+                  Text("Jothan Kinyua"),
+                  ListTile(leading: Text("LITS")),
+                  OutlineButton(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.red[50],
+                      highlightedBorderColor: Colors.red[50],
+                      focusColor: Colors.red[50],
+                      onPressed: () {
+                        print("Signing out");
+                        Navigator.of(context).pushNamed("/accepttermspage");
+                      },
+                      child: Text(
+                        "Sign Out",
+                        style: TextStyle(color: Colors.red),
+                      )),
+                  SizedBox(height: 10),
+                  Text(
+                    "App version: $_version",
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              ),
             ),
           ),
         ],

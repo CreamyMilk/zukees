@@ -68,12 +68,12 @@ class _HoverLoginState extends State<HoverLogin> {
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: h == 0.0
                           ? LinearProgressIndicator(
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.black,
                             )
                           : Center(
                               child: Text(
                                 "Login",
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black),
                               ),
                             ),
                     ),

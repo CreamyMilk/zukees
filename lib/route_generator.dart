@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zukes/pages/all_tens.dart';
+import 'package:zukes/pages/login/acceptTerms.dart';
 import 'package:zukes/pages/login/hover_login.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
-import 'package:zukes/pages/login/number_page.dart';
+import 'package:zukes/pages/login/otp_new_page.dart';
+import 'package:zukes/pages/login/termPage.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
@@ -32,15 +34,32 @@ class RouteGenerator {
                         statusBarColor: Colors.white,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
+      case '/accepttermspage':
+        return CupertinoPageRoute(
+            settings: RouteSettings(),
+            builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle(
+                    statusBarColor: Colors.white,
+                    systemNavigationBarColor: Colors.white),
+                child: AcceptTerms()));
+      case '/termspage':
+        return CupertinoPageRoute(
+            settings: RouteSettings(),
+            builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle(
+                    statusBarColor: Colors.white,
+                    systemNavigationBarColor: Colors.white),
+                child: TermsAndConditonsWebView()));
       case '/t':
-        return MaterialPageRoute(
+        return CupertinoPageRoute(
+            settings: RouteSettings(),
             builder: (ctx) => ChangeNotifierProvider<LoginData>(
                 create: (context) => LoginData(),
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
                         statusBarColor: Colors.white,
                         systemNavigationBarColor: Colors.white),
-                    child: LoginForm())));
+                    child: OtpNewForm())));
       case '/verify':
         return MaterialPageRoute(
             builder: (ctx) => OtpReceiver(phonenumber: args));
