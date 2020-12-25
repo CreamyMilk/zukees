@@ -5,7 +5,7 @@ import 'package:zukes/widgets/onScreenPad.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({Key key}) : super(key: key);
-
+  final TextStyle becomeGreen = TextStyle(color: Colors.green);
   @override
   Widget build(BuildContext context) {
     final lstore = Provider.of<LoginData>(context);
@@ -26,8 +26,12 @@ class LoginForm extends StatelessWidget {
           SizedBox(height: 3),
           Text("+254797678252"),
           Spacer(),
+
           //Add animation to turn to scratch card then submit to verify
-          Text(lstore.pin),
+          Text(
+            lstore.complete ? "ENTER RECEIVED SMS PIN" : "Validating Pin ...",
+            style: lstore.complete ? null : becomeGreen,
+          ),
           Row(children: [
             // lstore.buttonStates.forEach((k) => Text('$k')),
             Spacer(),

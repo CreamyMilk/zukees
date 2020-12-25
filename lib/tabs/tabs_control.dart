@@ -92,22 +92,24 @@ class _BaseTabViewState extends State<BaseTabView> {
               }
             },
             items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
-        body: PageTransitionSwitcher(
-            duration: const Duration(milliseconds: 600),
-            reverse: _reverse,
-            transitionBuilder: (
-              Widget child,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) {
-              return SharedAxisTransition(
-                child: child,
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                transitionType: _transitionType,
-              );
-            },
-            child: _tabs[_activetab]),
+        body: SafeArea(
+          child: PageTransitionSwitcher(
+              duration: const Duration(milliseconds: 600),
+              reverse: _reverse,
+              transitionBuilder: (
+                Widget child,
+                Animation<double> animation,
+                Animation<double> secondaryAnimation,
+              ) {
+                return SharedAxisTransition(
+                  child: child,
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: _transitionType,
+                );
+              },
+              child: _tabs[_activetab]),
+        ),
       ),
     );
   }
