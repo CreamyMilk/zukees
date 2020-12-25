@@ -20,17 +20,13 @@ class _HoverLoginState extends State<HoverLogin> {
     super.initState();
   }
 
-  final FocusNode fnOne = FocusNode();
-  final FocusNode fnTwo = FocusNode();
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final typeController = TextEditingController();
-  final descController = TextEditingController();
 
   void validateForm() {
     if (_formkey.currentState.validate()) {
-      var ty = typeController.text;
-      var ds = descController.text;
-      sendLogin(ty, ds, context);
+      String ty = typeController.text;
+      sendLogin(ty, context);
     }
   }
 
@@ -60,10 +56,10 @@ class _HoverLoginState extends State<HoverLogin> {
                       child: Icon(
                         Icons.healing,
                         color: Colors.black,
-                        size: 100,
+                        size: 60,
                       ),
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: 10),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: h == 0.0
@@ -95,10 +91,8 @@ class _HoverLoginState extends State<HoverLogin> {
                           children: [
                             TextFormField(
                               onFieldSubmitted: (term) {
-                                fnOne.unfocus();
-                                FocusScope.of(context).requestFocus(fnTwo);
+                                print(term);
                               },
-                              focusNode: fnOne,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return "Required";
@@ -107,6 +101,9 @@ class _HoverLoginState extends State<HoverLogin> {
                                 }
                               },
                               controller: typeController,
+                              maxLength: 10,
+                              keyboardType:
+                                  TextInputType.numberWithOptions(signed: true),
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 //hintText: 'Kindly enter a category',
@@ -116,23 +113,6 @@ class _HoverLoginState extends State<HoverLogin> {
                               maxLines: 1,
                             ),
                             SizedBox(height: 30),
-                            TextFormField(
-                              focusNode: fnTwo,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return "Required";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              controller: descController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Pin Sent to your number',
-                                labelText: 'Password',
-                              ),
-                              maxLines: 1,
-                            ),
                           ],
                         )),
                     SizedBox(
@@ -183,20 +163,22 @@ class _HoverLoginState extends State<HoverLogin> {
   }
 }
 
-Future sendLogin(phone, password, context) async {
+Future sendLogin(phone, context) async {
   try {
     final response = await http.post(
-      ("http://land.i-crib.co.ke/" + "verify"),
+      ("http://land.i-crib.co.ke/" + "attemptlogin"),
       headers: {
         "Accept": "application/json",
         "content-type": "application/json",
       },
       body: jsonEncode(
-        {"phone": phone, "otp": password},
+        {
+          "phone": phone,
+        },
       ),
     );
     var myjson = json.decode(response.body);
-    if (myjson["response-code"] == 1) {
+    if (myjson["message"] == 2 || myjson["message"] == 3) {
       successfulLogin(myjson, context);
     } else {
       Flushbar(
@@ -229,17 +211,22 @@ Future sendLogin(phone, password, context) async {
   }
 }
 
+class TermsRouteArguments {
+  final String phoneNumber;
+  final String name;
+  final String initals;
+
+  TermsRouteArguments({this.phoneNumber, this.name, this.initals});
+}
+
 Future successfulLogin(response, context) async {
-  final prefs = await SharedPreferences.getInstance();
-  cacheUserData(response);
-  prefs.setString("user_token", "0").then((bool success) {
-    if (success) {
-      print("Token Stored Successfully");
-      Navigator.of(context).pushReplacementNamed('/home');
-    } else {
-      //Show that storage
-    }
-  });
+  final t = response["data"];
+  final name = t["name"];
+  final initals = t["initals"];
+  final phoneNumbet = t["number"];
+  Navigator.pushReplacementNamed(context, '/accepttermspage',
+      arguments: TermsRouteArguments(
+          name: name, initals: initals, phoneNumber: phoneNumbet));
 }
 
 Future cacheUserData(apidata) async {
@@ -251,8 +238,6 @@ Future cacheUserData(apidata) async {
   userHiveBox.put("timeu", DateFormat("hh:mm a").format(DateTime.now()));
   userHiveBox.put("tenants", apidata["total_tenants"]["total"]);
   userHiveBox.put("vaccant", apidata["vaccant_houses"]["total"]);
-
-  //userHiveBox.putAll(apidata);
   print("Inserting login info");
 }
 
@@ -261,7 +246,9 @@ Future getStartUpPage(hstore, ctx) async {
   final prefs = await SharedPreferences.getInstance();
   final userToken = prefs.getString('user_token') ?? "";
   print("UserToken ilikuwa $userToken");
-  userToken == "0"
-      ? Navigator.of(ctx).pushReplacementNamed('/home')
-      : hstore.showlogs();
+  Future.delayed(Duration(seconds: 3), () {
+    userToken == "0"
+        ? Navigator.of(ctx).pushReplacementNamed('/home')
+        : hstore.showlogs();
+  });
 }

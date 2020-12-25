@@ -24,6 +24,7 @@ class LoginData extends ChangeNotifier {
   void submit() {
     if (pin.length == 4) {
       complete = !complete;
+      pointer = 0;
       buttonStates = [false, false, false, false];
       notifyListeners();
     }

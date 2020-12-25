@@ -4,7 +4,15 @@ import 'package:zukes/providers/login_data.dart';
 import 'package:zukes/widgets/onScreenPad.dart';
 
 class OtpNewForm extends StatelessWidget {
-  OtpNewForm({Key key}) : super(key: key);
+  final String phone;
+  final String initals;
+  final String name;
+  OtpNewForm(
+      {Key key,
+      @required this.phone,
+      @required this.initals,
+      @required this.name})
+      : super(key: key);
   final TextStyle becomeGreen = TextStyle(color: Colors.green);
   @override
   Widget build(BuildContext context) {
@@ -27,11 +35,14 @@ class OtpNewForm extends StatelessWidget {
           CircleAvatar(
               minRadius: 30,
               backgroundColor: Color(0xfffe8fcfa),
-              child: Text("JK")),
+              child: Text("$initals")),
           SizedBox(height: 2),
-          Text("Jotham Kinyua"),
+          Text(
+            "$name",
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
           SizedBox(height: 3),
-          Text("+254797678252"),
+          Text("$phone"),
           Spacer(),
           //Add animation to turn to scratch card then submit to verify
           Text(

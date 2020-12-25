@@ -1,8 +1,16 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:zukes/pages/login/hover_login.dart';
 
 class AcceptTerms extends StatelessWidget {
+  final String phone;
+  final String initals;
+  final String name;
+
+  const AcceptTerms(
+      {Key key, @required this.phone, @required this.initals, this.name})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +22,11 @@ class AcceptTerms extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.0),
                 side: BorderSide(color: Colors.green)),
             padding: EdgeInsets.all(8.0),
-            color: Colors.green[200],
+            color: Colors.green,
             onPressed: () {
-              Navigator.of(context).pushNamed('/t');
+              Navigator.of(context).pushNamed('/pinpage',
+                  arguments: TermsRouteArguments(
+                      name: name, initals: initals, phoneNumber: phone));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -25,7 +35,7 @@ class AcceptTerms extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 8),
                   child: Text("CONTINUE",
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
+                      style: TextStyle(color: Colors.white, fontSize: 12)),
                 ),
                 Spacer(),
                 Icon(
@@ -55,14 +65,14 @@ class AcceptTerms extends StatelessWidget {
               CircleAvatar(
                   minRadius: 30,
                   backgroundColor: Color(0xfffe8fcfa),
-                  child: Text("JK")),
+                  child: Text("$initals")),
               SizedBox(height: 2),
               Text(
-                "JOTHAM KINYUA",
+                "$name",
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 3),
-              Text("+254797678252"),
+              Text("$phone"),
               Spacer(),
               //Add animation to turn to scratch card then submit to verify
               Row(children: [
@@ -81,21 +91,21 @@ class AcceptTerms extends StatelessWidget {
               ]),
               Spacer(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 14.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 width: MediaQuery.of(context).size.width,
                 child: RichText(
                   text: TextSpan(
                     children: [
                       TextSpan(
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                          style: TextStyle(color: Colors.grey, fontSize: 10),
                           text:
                               "By tapping \"Continue\" you acknowledge that you have read the"),
                       TextSpan(
                         text: " Privacy Policy ",
                         style: TextStyle(
-                            color: Colors.green[300],
+                            color: Colors.green,
                             fontWeight: FontWeight.w500,
-                            fontSize: 13),
+                            fontSize: 12),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.of(context).pushNamed("/termspage");
@@ -103,17 +113,17 @@ class AcceptTerms extends StatelessWidget {
                       ),
                       TextSpan(
                         text: "and agree to the",
-                        style: TextStyle(color: Colors.grey, fontSize: 13),
+                        style: TextStyle(color: Colors.grey, fontSize: 10),
                       ),
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.of(context).pushNamed("/termspage");
                           },
-                        text: "Terms and Conditions ",
+                        text: " Terms and Conditions ",
                         style: TextStyle(
-                            color: Colors.green[100],
-                            fontSize: 13,
+                            color: Colors.green,
+                            fontSize: 12,
                             fontWeight: FontWeight.w500),
                       ),
                     ],

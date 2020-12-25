@@ -23,7 +23,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-
+    TermsRouteArguments ar = settings.arguments;
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
@@ -41,7 +41,11 @@ class RouteGenerator {
                 value: SystemUiOverlayStyle(
                     statusBarColor: Colors.white,
                     systemNavigationBarColor: Colors.white),
-                child: AcceptTerms()));
+                child: AcceptTerms(
+                  initals: ar.initals,
+                  name: ar.name,
+                  phone: ar.phoneNumber,
+                )));
       case '/termspage':
         return CupertinoPageRoute(
             settings: RouteSettings(),
@@ -50,7 +54,7 @@ class RouteGenerator {
                     statusBarColor: Colors.white,
                     systemNavigationBarColor: Colors.white),
                 child: TermsAndConditonsWebView()));
-      case '/t':
+      case '/pinpage':
         return CupertinoPageRoute(
             settings: RouteSettings(),
             builder: (ctx) => ChangeNotifierProvider<LoginData>(
@@ -59,7 +63,11 @@ class RouteGenerator {
                     value: SystemUiOverlayStyle(
                         statusBarColor: Colors.white,
                         systemNavigationBarColor: Colors.white),
-                    child: OtpNewForm())));
+                    child: OtpNewForm(
+                      initals: ar.initals,
+                      name: ar.name,
+                      phone: ar.phoneNumber,
+                    ))));
       case '/verify':
         return MaterialPageRoute(
             builder: (ctx) => OtpReceiver(phonenumber: args));
