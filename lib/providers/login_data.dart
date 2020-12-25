@@ -7,12 +7,10 @@ class LoginData extends ChangeNotifier {
   bool complete = false;
 
   void backspace() {
-    if (pin.length > 0) {
-      pin = pin.substring(0, pin.length - 1);
-      buttonStates[pointer] = false;
-      pointer--;
-      notifyListeners();
-    }
+    pin = pin.substring(0, pin.length - 1);
+    buttonStates[pointer] = false;
+    pointer--;
+    notifyListeners();
   }
 
   void submit() {
