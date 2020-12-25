@@ -14,7 +14,7 @@ class AcceptTerms extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25.0),
                 side: BorderSide(color: Colors.green)),
             padding: EdgeInsets.all(8.0),
-            color: Colors.green,
+            color: Colors.green[200],
             onPressed: () {
               Navigator.of(context).pushNamed('/t');
             },
@@ -25,7 +25,7 @@ class AcceptTerms extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 10, bottom: 10),
                   child: Text("CONTINUE",
-                      style: TextStyle(color: Colors.white, fontSize: 18)),
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                 ),
                 Spacer(),
                 Icon(
@@ -66,8 +66,8 @@ class AcceptTerms extends StatelessWidget {
                 // lstore.buttonStates.forEach((k) => Text('$k')),
                 Spacer(),
                 Container(
-                    height: 200,
-                    width: 160,
+                    height: 180,
+                    width: 140,
                     child: FlareActor(
                       'assets/licen.flr',
                       alignment: Alignment.center,
@@ -83,7 +83,7 @@ class AcceptTerms extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                          style: TextStyle(color: Colors.grey, fontSize: 10),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
                           text:
                               "By tapping \"Continue\" you acknowledge that you have read the"),
                       TextSpan(
@@ -91,7 +91,7 @@ class AcceptTerms extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.green[300],
                             fontWeight: FontWeight.w500,
-                            fontSize: 10),
+                            fontSize: 13),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             Navigator.of(context).pushNamed("/termspage");
@@ -99,7 +99,7 @@ class AcceptTerms extends StatelessWidget {
                       ),
                       TextSpan(
                         text: "and agree to the",
-                        style: TextStyle(color: Colors.grey, fontSize: 10),
+                        style: TextStyle(color: Colors.grey, fontSize: 13),
                       ),
                       TextSpan(
                         recognizer: TapGestureRecognizer()
@@ -108,8 +108,8 @@ class AcceptTerms extends StatelessWidget {
                           },
                         text: "Terms and Conditions ",
                         style: TextStyle(
-                            color: Colors.green[300],
-                            fontSize: 10,
+                            color: Colors.green[100],
+                            fontSize: 13,
                             fontWeight: FontWeight.w500),
                       ),
                     ],
