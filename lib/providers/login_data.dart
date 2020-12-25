@@ -7,7 +7,13 @@ class LoginData extends ChangeNotifier {
   bool complete = false;
 
   void backspace() {
-    if (pin.length > 0) {
+    if (pin.length == 4) {
+      complete = false;
+      pointer--;
+      pin = pin.substring(0, pin.length - 1);
+      buttonStates[pointer] = false;
+      notifyListeners();
+    } else if (pin.length > 0) {
       pointer--;
       pin = pin.substring(0, pin.length - 1);
       buttonStates[pointer] = false;
@@ -31,7 +37,7 @@ class LoginData extends ChangeNotifier {
       notifyListeners();
     } else {
       //Symbit the value or trigger loading
-      complete = !complete;
+      complete = true;
       notifyListeners();
     }
   }

@@ -30,6 +30,8 @@ class ProfileTab extends StatelessWidget {
         slivers: [
           SliverAppBar(
             expandedHeight: 150,
+            pinned: true,
+            floating: false,
             title: Text(
               "Contacts Page",
               style: TextStyle(color: Colors.black),

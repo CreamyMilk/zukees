@@ -15,7 +15,15 @@ class OtpNewForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Row(children: [Icon(Icons.spa, color: Colors.grey)]),
+          Row(children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: Colors.grey,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ]),
           CircleAvatar(
               minRadius: 35,
               backgroundColor: Color(0xfffe8fcfa),
@@ -27,8 +35,8 @@ class OtpNewForm extends StatelessWidget {
           Spacer(),
           //Add animation to turn to scratch card then submit to verify
           Text(
-            lstore.complete ? "ENTER RECEIVED SMS PIN" : "Validating Pin ...",
-            style: lstore.complete ? null : becomeGreen,
+            !lstore.complete ? "ENTER RECEIVED SMS PIN" : "Validating Pin ...",
+            style: !lstore.complete ? null : becomeGreen,
           ),
           Row(children: [
             // lstore.buttonStates.forEach((k) => Text('$k')),

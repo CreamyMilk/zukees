@@ -7,16 +7,24 @@ class TermsAndConditonsWebView extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              color: Colors.grey,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
             backgroundColor: Colors.white,
             expandedHeight: 180,
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Center(
-                  child: Text(
+              centerTitle: true,
+              title: Text(
                 "TERMS & CONDITIONS",
-                style: TextStyle(color: Colors.black),
-              )),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w200),
+              ),
               background: Container(color: Colors.white),
             ),
           ),
