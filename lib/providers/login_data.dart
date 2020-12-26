@@ -37,6 +37,7 @@ class LoginData extends ChangeNotifier {
       complete = !complete;
       message = "ENTER RECEIVED SMS PIN";
       pointer = 0;
+      pin = "";
       buttonStates = [false, false, false, false];
       notifyListeners();
     }
@@ -63,6 +64,7 @@ class LoginData extends ChangeNotifier {
 
   void setPhone(String value) {
     phoneNumber = value;
+    notifyListeners();
   }
 
   Future sendLogin(String phone, String pin) async {
@@ -78,6 +80,9 @@ class LoginData extends ChangeNotifier {
         ),
       );
       var myjson = json.decode(response.body);
+      print(">>>>>>>>>>>>>>>>>>>>");
+      print(myjson);
+      print("???????????????????");
       if (myjson["message"] == 2 || myjson["message"] == 3) {
         successfulLogin(myjson);
       } else {
@@ -96,8 +101,8 @@ class LoginData extends ChangeNotifier {
         print("error");
       }
     } catch (SocketException) {
-      message = "NO STABLE NETWORK";
-      messageColor = Colors.black;
+      message = "Network connetion is unstable";
+      messageColor = Colors.grey;
       notifyListeners();
     }
   }
