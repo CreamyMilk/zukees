@@ -64,7 +64,6 @@ class LoginData extends ChangeNotifier {
 
   void setPhone(String value) {
     phoneNumber = value;
-    notifyListeners();
   }
 
   Future sendLogin(String phone, String pin) async {
@@ -76,14 +75,15 @@ class LoginData extends ChangeNotifier {
           "content-type": "application/json",
         },
         body: jsonEncode(
-          {"phone": phone, "pin": pin},
+          {"phone": phone, "otp": pin},
         ),
       );
       var myjson = json.decode(response.body);
       print(">>>>>>>>>>>>>>>>>>>>");
+      print(pin);
       print(myjson);
       print("???????????????????");
-      if (myjson["message"] == 2 || myjson["message"] == 3) {
+      if (myjson["message"] == 2 || myjson["response-code"] == 1) {
         successfulLogin(myjson);
       } else {
         submit();
@@ -106,19 +106,19 @@ class LoginData extends ChangeNotifier {
       notifyListeners();
     }
   }
-}
 
-Future successfulLogin(response) async {
-  final prefs = await SharedPreferences.getInstance();
-  cacheUserData(response);
-  prefs.setString("user_token", "0").then((bool success) {
-    if (success) {
-      print("Token Stored Successfully");
-      Navigator.of(null).pushReplacementNamed('/home');
-    } else {
-      //Show that storage
-    }
-  });
+  Future successfulLogin(response) async {
+    final prefs = await SharedPreferences.getInstance();
+    cacheUserData(response);
+    prefs.setString("user_token", "0").then((bool success) {
+      if (success) {
+        print("Token Stored Successfully");
+        Navigator.pushNamed(null, '/home');
+      } else {
+        //Show that storage
+      }
+    });
+  }
 }
 
 Future cacheUserData(apidata) async {
