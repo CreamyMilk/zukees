@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zukes/main.dart';
 
 class LoginData extends ChangeNotifier {
   String pin = "";
@@ -113,7 +114,7 @@ class LoginData extends ChangeNotifier {
     prefs.setString("user_token", "0").then((bool success) {
       if (success) {
         print("Token Stored Successfully");
-        Navigator.pushNamed(null, '/home');
+        navKey.currentState.pushNamed('/home');
       } else {
         //Show that storage
       }

@@ -32,7 +32,6 @@ class RouteGenerator {
                         statusBarColor: Colors.white,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
-
       case '/termspage':
         return CupertinoPageRoute(
             settings: RouteSettings(),

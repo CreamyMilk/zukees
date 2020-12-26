@@ -13,6 +13,8 @@ void main() async {
   runApp(MyApp());
 }
 
+final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   final String appTitle = 'Zuke';
 
@@ -39,6 +41,7 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: RouteGenerator.generateRoute,
       initialRoute: '/',
+      navigatorKey: navKey,
     );
   }
 }
