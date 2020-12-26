@@ -11,7 +11,7 @@ class UserProfileCard extends StatelessWidget {
         color: Colors.white,
         child: Column(children: <Widget>[
           SizedBox(
-            height: 180.0,
+            height: 150.0,
             child: Stack(
               children: <Widget>[
                 Positioned.fill(

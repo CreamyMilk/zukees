@@ -146,7 +146,7 @@ class AcceptTerms extends StatelessWidget {
                                 builder: (ctx) =>
                                     AnnotatedRegion<SystemUiOverlayStyle>(
                                         value: SystemUiOverlayStyle(
-                                            statusBarColor: Colors.white,
+                                            statusBarColor: Colors.transparent,
                                             systemNavigationBarColor:
                                                 Colors.white),
                                         child: TermsAndConditonsWebView())));

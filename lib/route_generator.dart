@@ -15,7 +15,6 @@ import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/providers/rent_amounts_provider.dart';
 import 'package:zukes/tabs/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
-import 'package:zukes/pages/otp_receiver.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -29,7 +28,7 @@ class RouteGenerator {
                 create: (context) => Counter(),
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
-                        statusBarColor: Colors.white,
+                        statusBarColor: Colors.transparent,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
       case '/termspage':
@@ -37,19 +36,16 @@ class RouteGenerator {
             settings: RouteSettings(),
             builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
                 value: SystemUiOverlayStyle(
-                    statusBarColor: Colors.white,
+                    statusBarColor: Colors.transparent,
                     systemNavigationBarColor: Colors.white),
                 child: TermsAndConditonsWebView()));
-      case '/verify':
-        return MaterialPageRoute(
-            builder: (ctx) => OtpReceiver(phonenumber: args));
       case '/home':
-        return MaterialPageRoute(
+        return CupertinoPageRoute(
             builder: (ctx) => ChangeNotifierProvider<RentAmountP>(
                 create: (context) => RentAmountP(),
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
-                        statusBarColor: Colors.white,
+                        statusBarColor: Colors.transparent,
                         systemNavigationBarColor: Colors.white),
                     child: BaseTabView())));
       case '/alltens':

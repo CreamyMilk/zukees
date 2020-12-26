@@ -59,7 +59,7 @@ class ProfileTab extends StatelessWidget {
                           .then((bool success) {
                         if (success) {
                           print("Successfully Logged out.");
-                          Navigator.of(null).pushReplacementNamed('/');
+                          Navigator.of(context).pushReplacementNamed('/');
                         } else {
                           //Show that storage
                         }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
+
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
+import 'package:zukes/widgets/otp_field_package.dart';
 
 class BaseForm extends StatefulWidget {
   BaseForm({Key key}) : super(key: key);
