@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 
 String getAppversion() {
@@ -45,21 +46,30 @@ class ProfileTab extends StatelessWidget {
                 Text("jk1@gmail.com👋"),
                 Text("Jothan Kinyua"),
                 ListTile(leading: Text("LITS")),
+                Spacer(),
                 OutlineButton(
                     highlightColor: Colors.transparent,
                     splashColor: Colors.red[50],
                     highlightedBorderColor: Colors.red[50],
                     focusColor: Colors.red[50],
-                    onPressed: () {
-                      print("Signing out");
-                      Navigator.of(context).pushNamed("/accepttermspage");
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs
+                          .setString("user_token", "Logged Out User")
+                          .then((bool success) {
+                        if (success) {
+                          print("Successfully Logged out.");
+                          Navigator.of(null).pushReplacementNamed('/');
+                        } else {
+                          //Show that storage
+                        }
+                      });
                     },
                     child: Text(
                       "Sign Out",
                       style: TextStyle(color: Colors.red),
                     )),
                 SizedBox(height: 10),
-                Spacer(),
                 Text(
                   "App version: $_version",
                   style: TextStyle(color: Colors.grey),

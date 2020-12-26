@@ -17,6 +17,7 @@ class OtpNewForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lstore = Provider.of<LoginData>(context);
+    lstore.setPhone(phone);
     return Scaffold(
         body: SafeArea(
       child: Column(
@@ -46,8 +47,8 @@ class OtpNewForm extends StatelessWidget {
           Spacer(),
           //Add animation to turn to scratch card then submit to verify
           Text(
-            !lstore.complete ? "ENTER RECEIVED SMS PIN" : "Validating Pin ...",
-            style: !lstore.complete ? null : becomeGreen,
+            lstore.message,
+            style: TextStyle(color: lstore.messageColor),
           ),
           Row(children: [
             // lstore.buttonStates.forEach((k) => Text('$k')),
