@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zukes/pages/login/acceptTerms.dart';
 import 'package:zukes/providers/counter.dart';
 
 class HoverLogin extends StatefulWidget {
@@ -224,9 +227,19 @@ Future successfulLogin(response, context) async {
   final name = t["name"];
   final initals = t["initals"];
   final phoneNumbet = t["number"];
-  Navigator.pushReplacementNamed(context, '/accepttermspage',
-      arguments: TermsRouteArguments(
-          name: name, initals: initals, phoneNumber: phoneNumbet));
+  Navigator.pushReplacement(
+      context,
+      CupertinoPageRoute(
+          settings: RouteSettings(),
+          builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                  statusBarColor: Colors.white,
+                  systemNavigationBarColor: Colors.white),
+              child: AcceptTerms(
+                initals: initals,
+                name: name,
+                phone: phoneNumbet,
+              ))));
 }
 
 Future cacheUserData(apidata) async {

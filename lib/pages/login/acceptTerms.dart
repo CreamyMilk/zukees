@@ -1,7 +1,13 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:zukes/pages/login/hover_login.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'package:zukes/pages/login/otp_new_page.dart';
+import 'package:zukes/pages/login/termPage.dart';
+import 'package:zukes/providers/login_data.dart';
 
 class AcceptTerms extends StatelessWidget {
   final String phone;
@@ -24,9 +30,18 @@ class AcceptTerms extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             color: Colors.green,
             onPressed: () {
-              Navigator.of(context).pushNamed('/pinpage',
-                  arguments: TermsRouteArguments(
-                      name: name, initals: initals, phoneNumber: phone));
+              Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => ChangeNotifierProvider<LoginData>(
+                      create: (context) => LoginData(),
+                      child: AnnotatedRegion<SystemUiOverlayStyle>(
+                          value: SystemUiOverlayStyle(
+                              statusBarColor: Colors.white,
+                              systemNavigationBarColor: Colors.white),
+                          child: OtpNewForm(
+                            initals: initals,
+                            name: name,
+                            phone: phone,
+                          )))));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,7 +123,15 @@ class AcceptTerms extends StatelessWidget {
                             fontSize: 12),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.of(context).pushNamed("/termspage");
+                            Navigator.of(context).push(CupertinoPageRoute(
+                                settings: RouteSettings(),
+                                builder: (ctx) =>
+                                    AnnotatedRegion<SystemUiOverlayStyle>(
+                                        value: SystemUiOverlayStyle(
+                                            statusBarColor: Colors.white,
+                                            systemNavigationBarColor:
+                                                Colors.white),
+                                        child: TermsAndConditonsWebView())));
                           },
                       ),
                       TextSpan(
@@ -118,7 +141,15 @@ class AcceptTerms extends StatelessWidget {
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.of(context).pushNamed("/termspage");
+                            Navigator.of(context).push(CupertinoPageRoute(
+                                settings: RouteSettings(),
+                                builder: (ctx) =>
+                                    AnnotatedRegion<SystemUiOverlayStyle>(
+                                        value: SystemUiOverlayStyle(
+                                            statusBarColor: Colors.white,
+                                            systemNavigationBarColor:
+                                                Colors.white),
+                                        child: TermsAndConditonsWebView())));
                           },
                         text: " Terms and Conditions ",
                         style: TextStyle(

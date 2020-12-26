@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:zukes/pages/all_tens.dart';
-import 'package:zukes/pages/login/acceptTerms.dart';
 import 'package:zukes/pages/login/hover_login.dart';
 import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
-import 'package:zukes/pages/login/otp_new_page.dart';
 import 'package:zukes/pages/login/termPage.dart';
 import 'package:zukes/pages/product_purchase.dart';
 import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
-import 'package:zukes/providers/login_data.dart';
+
 import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/providers/rent_amounts_provider.dart';
 import 'package:zukes/tabs/tabs_control.dart';
@@ -23,7 +21,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-    TermsRouteArguments ar = settings.arguments;
+
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
@@ -34,18 +32,7 @@ class RouteGenerator {
                         statusBarColor: Colors.white,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
-      case '/accepttermspage':
-        return CupertinoPageRoute(
-            settings: RouteSettings(),
-            builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle(
-                    statusBarColor: Colors.white,
-                    systemNavigationBarColor: Colors.white),
-                child: AcceptTerms(
-                  initals: ar.initals,
-                  name: ar.name,
-                  phone: ar.phoneNumber,
-                )));
+
       case '/termspage':
         return CupertinoPageRoute(
             settings: RouteSettings(),
@@ -54,20 +41,6 @@ class RouteGenerator {
                     statusBarColor: Colors.white,
                     systemNavigationBarColor: Colors.white),
                 child: TermsAndConditonsWebView()));
-      case '/pinpage':
-        return CupertinoPageRoute(
-            settings: RouteSettings(),
-            builder: (ctx) => ChangeNotifierProvider<LoginData>(
-                create: (context) => LoginData(),
-                child: AnnotatedRegion<SystemUiOverlayStyle>(
-                    value: SystemUiOverlayStyle(
-                        statusBarColor: Colors.white,
-                        systemNavigationBarColor: Colors.white),
-                    child: OtpNewForm(
-                      initals: ar.initals,
-                      name: ar.name,
-                      phone: ar.phoneNumber,
-                    ))));
       case '/verify':
         return MaterialPageRoute(
             builder: (ctx) => OtpReceiver(phonenumber: args));
