@@ -14,3 +14,4 @@ A new Flutter project.
 - [ ] Turn store into a cart system
 - [ ] Switch Contacts with a profile page
 - [ ] Add Tabs to the all tenatns page
+- [ ] Make a new form of checkout 
