@@ -212,9 +212,9 @@ class _CoolGraphState extends State<CoolGraph> {
 
   Container _getVisualAmounts(double paid, double due) {
     const TextStyle beBold =
-        TextStyle(fontSize: 13, fontWeight: FontWeight.w600);
+        TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
     const TextStyle beLight =
-        TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
+        TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
     return Container(
         height: 180,
         child: ListView(children: [
@@ -226,7 +226,6 @@ class _CoolGraphState extends State<CoolGraph> {
           ListTile(
               leading: Text("Due", style: beBold),
               trailing: Text("Ksh. $due", style: beLight)),
-          Divider()
         ]));
   }
 
@@ -265,6 +264,7 @@ class _CoolGraphState extends State<CoolGraph> {
     ];
     return <DoughnutSeries<ChartSampleData, String>>[
       DoughnutSeries<ChartSampleData, String>(
+          innerRadius: "25%",
           dataSource: chartData,
           strokeColor: Colors.red,
           xValueMapper: (ChartSampleData data, _) => data.x,
