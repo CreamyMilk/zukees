@@ -216,7 +216,7 @@ class _CoolGraphState extends State<CoolGraph> {
     const TextStyle beLight =
         TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
     return Container(
-        height: 180,
+        height: 150,
         child: ListView(children: [
           Divider(),
           ListTile(
@@ -264,7 +264,7 @@ class _CoolGraphState extends State<CoolGraph> {
     ];
     return <DoughnutSeries<ChartSampleData, String>>[
       DoughnutSeries<ChartSampleData, String>(
-          innerRadius: "25%",
+          innerRadius: "70%",
           dataSource: chartData,
           strokeColor: Colors.red,
           xValueMapper: (ChartSampleData data, _) => data.x,
