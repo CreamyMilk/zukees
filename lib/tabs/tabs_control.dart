@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:zukes/pages/store/storefromnt.dart';
 import 'package:zukes/tabs/home_tab.dart';
 import 'package:zukes/tabs/manage_tab.dart';
 import 'package:zukes/tabs/service_tab.dart';
 import 'package:zukes/tabs/profile_tab.dart';
-import 'package:zukes/tabs/shop_tab.dart';
 import 'package:animations/animations.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -18,7 +18,7 @@ class _BaseTabViewState extends State<BaseTabView> {
     HomeTab(),
     ManageTab(),
     ServiceTab(),
-    ShoppingTab(),
+    StoreFront(),
     ProfileTab(),
   ];
   int _activetab;
@@ -70,6 +70,28 @@ class _BaseTabViewState extends State<BaseTabView> {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
+        appBar: _activetab == 3
+            ? AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0.0,
+                actions: [
+                  IconButton(
+                      icon: Icon(
+                        Icons.card_travel_outlined,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/cartPage');
+                      })
+                ],
+                leading: IconButton(
+                  icon: Icon(Icons.read_more, color: Colors.black),
+                  onPressed: () {
+                    print("Show Drawer");
+                  },
+                ),
+              )
+            : null,
         bottomNavigationBar: BottomNavigationBar(
             selectedFontSize: 12,
             unselectedFontSize: 10,
