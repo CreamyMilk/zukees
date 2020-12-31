@@ -35,7 +35,7 @@ class AcceptTerms extends StatelessWidget {
                       create: (context) => LoginData(),
                       child: AnnotatedRegion<SystemUiOverlayStyle>(
                           value: SystemUiOverlayStyle(
-                              statusBarColor: Colors.white,
+                              statusBarColor: Colors.transparent,
                               systemNavigationBarColor: Colors.white),
                           child: OtpNewForm(
                             initals: initals,
@@ -128,7 +128,7 @@ class AcceptTerms extends StatelessWidget {
                                 builder: (ctx) =>
                                     AnnotatedRegion<SystemUiOverlayStyle>(
                                         value: SystemUiOverlayStyle(
-                                            statusBarColor: Colors.white,
+                                            statusBarColor: Colors.transparent,
                                             systemNavigationBarColor:
                                                 Colors.white),
                                         child: TermsAndConditonsWebView())));

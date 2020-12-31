@@ -233,7 +233,7 @@ Future successfulLogin(response, context) async {
           settings: RouteSettings(),
           builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
               value: SystemUiOverlayStyle(
-                  statusBarColor: Colors.white,
+                  statusBarColor: Colors.transparent,
                   systemNavigationBarColor: Colors.white),
               child: AcceptTerms(
                 initals: initals,

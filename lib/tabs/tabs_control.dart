@@ -69,68 +69,71 @@ class _BaseTabViewState extends State<BaseTabView> {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: Scaffold(
-        appBar: _activetab == 3
-            ? AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0.0,
-                actions: [
-                  IconButton(
-                      icon: Icon(
-                        Icons.card_travel_outlined,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/cartPage');
-                      })
-                ],
-                leading: IconButton(
-                  icon: Icon(Icons.read_more, color: Colors.black),
-                  onPressed: () {
-                    print("Show Drawer");
-                  },
-                ),
-              )
-            : null,
-        bottomNavigationBar: BottomNavigationBar(
-            selectedFontSize: 12,
-            unselectedFontSize: 10,
-            iconSize: 20,
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.blue,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _activetab,
-            onTap: (index) {
-              if (index < _activetab) {
-                setState(() {
-                  _reverse = false;
-                  _activetab = index;
-                });
-              } else {
-                setState(() {
-                  _reverse = true;
-                  _activetab = index;
-                });
-              }
-            },
-            items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
-        body: SafeArea(
-          child: PageTransitionSwitcher(
-              duration: const Duration(milliseconds: 600),
-              reverse: _reverse,
-              transitionBuilder: (
-                Widget child,
-                Animation<double> animation,
-                Animation<double> secondaryAnimation,
-              ) {
-                return SharedAxisTransition(
-                  child: child,
-                  animation: animation,
-                  secondaryAnimation: secondaryAnimation,
-                  transitionType: _transitionType,
-                );
+      child: WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+          appBar: _activetab == 3
+              ? AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  actions: [
+                    IconButton(
+                        icon: Icon(
+                          Icons.card_travel_outlined,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/cartPage');
+                        })
+                  ],
+                  leading: IconButton(
+                    icon: Icon(Icons.read_more, color: Colors.black),
+                    onPressed: () {
+                      print("Show Drawer");
+                    },
+                  ),
+                )
+              : null,
+          bottomNavigationBar: BottomNavigationBar(
+              selectedFontSize: 12,
+              unselectedFontSize: 10,
+              iconSize: 20,
+              backgroundColor: Colors.white,
+              selectedItemColor: Colors.blue,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _activetab,
+              onTap: (index) {
+                if (index < _activetab) {
+                  setState(() {
+                    _reverse = false;
+                    _activetab = index;
+                  });
+                } else {
+                  setState(() {
+                    _reverse = true;
+                    _activetab = index;
+                  });
+                }
               },
-              child: _tabs[_activetab]),
+              items: [homeItem, serviceItem, krainItem, shopItem, callItem]),
+          body: SafeArea(
+            child: PageTransitionSwitcher(
+                duration: const Duration(milliseconds: 600),
+                reverse: _reverse,
+                transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                ) {
+                  return SharedAxisTransition(
+                    child: child,
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: _transitionType,
+                  );
+                },
+                child: _tabs[_activetab]),
+          ),
         ),
       ),
     );
