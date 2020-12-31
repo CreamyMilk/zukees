@@ -1,7 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class TermsAndConditonsWebView extends StatelessWidget {
+class TermsAndConditonsWebView extends StatefulWidget {
+  @override
+  _TermsAndConditonsWebViewState createState() =>
+      _TermsAndConditonsWebViewState();
+}
+
+class _TermsAndConditonsWebViewState extends State<TermsAndConditonsWebView> {
+  @override
+  void initState() {
+    super.initState();
+    // Enable hybrid composition.
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +44,17 @@ class TermsAndConditonsWebView extends StatelessWidget {
               background: Container(color: Colors.white),
             ),
           ),
-          SliverFillRemaining(
-              child: WebView(
-            initialUrl:
-                'https://docs.python.org/release/1.4/ref/ref2.html#HDR1',
-          ))
+          SliverList(
+            delegate: SliverChildListDelegate([
+              Container(
+                child: WebView(
+                  initialUrl:
+                      'https://docs.python.org/release/1.4/ref/ref2.html#HDR1',
+                  javascriptMode: JavascriptMode.unrestricted,
+                ),
+              )
+            ]),
+          )
         ],
       ),
     );
