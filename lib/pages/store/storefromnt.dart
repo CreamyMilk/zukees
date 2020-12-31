@@ -18,9 +18,9 @@ class StoreFront extends StatelessWidget {
 }
 
 TextStyle ourStyle =
-    TextStyle(color: Colors.black, fontWeight: FontWeight.w500);
+    TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15.0);
 TextStyle productsNameStyle =
-    TextStyle(color: Colors.black, fontWeight: FontWeight.w500);
+    TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 20.0);
 
 class ProductSearchSection extends StatelessWidget {
   @override
@@ -34,24 +34,37 @@ class ProductSearchSection extends StatelessWidget {
             TextSpan(text: "Products", style: productsNameStyle),
           ]),
         ),
-        Row(children: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: null,
-          ),
-          SizedBox(width: 10),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Search Here',
-                enabledBorder: UnderlineInputBorder(      
-                      borderSide: BorderSide(color: Colors.cyan),   
-                      ),  
-              focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.cyan),
-                   ),  
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(width: 5),
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: null,
             ),
-          )
-        ]),
+            SizedBox(width: 25),
+            Flexible(
+              flex: 10,
+              child: TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Required";
+                  } else {
+                    return null;
+                  }
+                },
+                decoration: const InputDecoration(
+                  counterText: "",
+                  labelText: 'Search here',
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal)),
+                ),
+                maxLines: 1,
+              ),
+            ),
+            SizedBox(width: 5),
+          ],
+        ),
         Text("Categories",
             style: TextStyle(
                 color: Colors.black,

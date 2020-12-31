@@ -47,7 +47,7 @@ class _TermsAndConditonsWebViewState extends State<TermsAndConditonsWebView> {
           SliverFillRemaining(
             child: WebView(
               initialUrl:
-                  'https://docs.python.org/release/1.4/ref/ref2.html#HDR1',
+                  'https://filesamples.com/samples/document/txt/sample1.txt',
             ),
           )
         ],
