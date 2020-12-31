@@ -27,7 +27,7 @@ class ProductSearchSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.3,
-      child: Column(children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         RichText(
           text: TextSpan(children: [
             TextSpan(text: "Our", style: ourStyle),
@@ -116,10 +116,11 @@ class CategoryTile extends StatefulWidget {
 }
 
 class _CategoryTileState extends State<CategoryTile> {
-  bool _enabled = true;
+  bool _enabled = false;
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.all(4.0),
@@ -129,7 +130,7 @@ class _CategoryTileState extends State<CategoryTile> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 side: _enabled
-                    ? BorderSide(color: Colors.yellow)
+                    ? BorderSide(color: Colors.orange)
                     : BorderSide(color: Colors.grey)),
             elevation: 3.0,
             padding: EdgeInsets.all(10.0),
@@ -168,20 +169,20 @@ class _CategoryTileState extends State<CategoryTile> {
                       0,
                     ]),
               child: Container(
-                width: 45,
-                height: 35,
-                child: Image.asset(
-                  'assets/mpesa.png',
+                width: 20,
+                height: 20,
+                child: Image.network(
+                  'https://favicon-generator.org/favicon-generator/htdocs/favicons/2014-11-30/10ef4f0ab17f09ae2073866695eae3f7.ico',
                   fit: BoxFit.scaleDown,
                   width: 10,
-                  height: 5,
+                  height: 10,
                 ),
               ),
             ),
           ),
         ),
         Text("Cement",
-            style: TextStyle(color: _enabled ? Colors.yellow : Colors.grey)),
+            style: TextStyle(color: _enabled ? Colors.orange : Colors.grey)),
       ],
     );
   }
@@ -191,8 +192,9 @@ class ProductsCarossel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.8,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("Products",
               style: TextStyle(
@@ -214,9 +216,6 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 50,
-      color: Colors.indigo[50],
-    );
+        height: 100, width: 50, color: Colors.red, child: Text("one"));
   }
 }
