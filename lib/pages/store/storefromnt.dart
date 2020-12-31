@@ -43,15 +43,12 @@ class ProductSearchSection extends StatelessWidget {
           TextField(
             decoration: InputDecoration(
               hintText: 'Search Here',
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
+                enabledBorder: UnderlineInputBorder(      
+                      borderSide: BorderSide(color: Colors.cyan),   
+                      ),  
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-              ),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-              ),
+                      borderSide: BorderSide(color: Colors.cyan),
+                   ),  
             ),
           )
         ]),

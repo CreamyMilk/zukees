@@ -34,7 +34,7 @@ dependencies:
   flutter_blurhash: ^0.5.0
   cloud_firestore: ^0.14.3+1
   cached_network_image: ^2.4.1
-  package_info:
+  webview_flutter: ^1.0.7
   url_launcher:
   sms_consent: ^0.0.6
   firebase_core:

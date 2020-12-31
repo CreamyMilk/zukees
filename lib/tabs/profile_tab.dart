@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
-
-String getAppversion() {
-  //String appName = packageInfo.appName;
-  String rs;
-  PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-    //String appName = packageInfo.appName;
-    String packageName = packageInfo.packageName;
-    String version = packageInfo.version;
-    String buildNumber = packageInfo.buildNumber;
-    rs = packageName + "/ v:" + version + "/ b:" + buildNumber;
-  });
-  print("-------------<$rs");
-  return rs;
-}
 
 class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _version = "sdsdsd";
-
-    getAppversion();
+    String _version = "0.1 Beta";
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
         child: RefreshIndicator(
@@ -30,11 +13,12 @@ class ProfileTab extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 150,
+            expandedHeight: 100,
             pinned: true,
             floating: false,
+            centerTitle: true,
             title: Text(
-              "Contacts Page",
+              "Profile ",
               style: TextStyle(color: Colors.black),
             ),
             backgroundColor: Colors.white,
@@ -45,7 +29,6 @@ class ProfileTab extends StatelessWidget {
               children: [
                 Text("jk1@gmail.com👋"),
                 Text("Jothan Kinyua"),
-                ListTile(leading: Text("LITS")),
                 Spacer(),
                 OutlineButton(
                     highlightColor: Colors.transparent,
