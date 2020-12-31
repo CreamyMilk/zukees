@@ -44,16 +44,11 @@ class _TermsAndConditonsWebViewState extends State<TermsAndConditonsWebView> {
               background: Container(color: Colors.white),
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                child: WebView(
-                  initialUrl:
-                      'https://docs.python.org/release/1.4/ref/ref2.html#HDR1',
-                  javascriptMode: JavascriptMode.unrestricted,
-                ),
-              )
-            ]),
+          SliverFillRemaining(
+            child: WebView(
+              initialUrl:
+                  'https://docs.python.org/release/1.4/ref/ref2.html#HDR1',
+            ),
           )
         ],
       ),
