@@ -65,7 +65,7 @@ class _BaseTabViewState extends State<BaseTabView> {
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.white,
+        systemNavigationBarColor: Colors.transparent,
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
@@ -83,7 +83,7 @@ class _BaseTabViewState extends State<BaseTabView> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushNamed('/cartPage');
+                          Navigator.of(context).pushNamed('/cart');
                         })
                   ],
                   leading: IconButton(

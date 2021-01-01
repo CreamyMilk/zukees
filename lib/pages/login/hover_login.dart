@@ -64,7 +64,7 @@ class _HoverLoginState extends State<HoverLogin> {
                     ),
                     SizedBox(height: 10),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       child: h == 0.0
                           ? LinearProgressIndicator(
                               backgroundColor: Colors.black,

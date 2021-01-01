@@ -8,6 +8,7 @@ import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
 import 'package:zukes/pages/login/termPage.dart';
 import 'package:zukes/pages/product_purchase.dart';
+import 'package:zukes/pages/shoppingCart.dart';
 import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
 
@@ -31,6 +32,14 @@ class RouteGenerator {
                         statusBarColor: Colors.transparent,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
+                          case '/cart':
+        return CupertinoPageRoute(
+            settings: RouteSettings(),
+            builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle(
+                    statusBarColor: Colors.transparent,
+                    systemNavigationBarColor: Colors.white),
+                child: ShoppingCartPage()));
       case '/termspage':
         return CupertinoPageRoute(
             settings: RouteSettings(),
