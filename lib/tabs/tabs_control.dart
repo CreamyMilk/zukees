@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zukes/pages/store/storefromnt.dart';
@@ -77,14 +78,18 @@ class _BaseTabViewState extends State<BaseTabView> {
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
                   actions: [
-                    IconButton(
-                        icon: Icon(
-                          Icons.card_travel_outlined,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/cart');
-                        })
+                    Badge(
+                      badgeContent: Text('3'),
+                      animationType: BadgeAnimationType.scale,
+                      child: IconButton(
+                          icon: Icon(
+                            Icons.card_travel_outlined,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/cart');
+                          }),
+                    ),
                   ],
                   leading: IconButton(
                     icon: Icon(Icons.read_more, color: Colors.black),
