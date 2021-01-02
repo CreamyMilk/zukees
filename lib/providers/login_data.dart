@@ -125,6 +125,7 @@ class LoginData extends ChangeNotifier {
 Future cacheUserData(apidata) async {
   final userHiveBox = Hive.box('user');
   print("AAPI$apidata");
+  //Add Building Infomation
   userHiveBox.put("fire_store", apidata["fire_store"]);
   userHiveBox.put("name", apidata["name"]);
   userHiveBox.put("mobile", apidata["mobile"]);
