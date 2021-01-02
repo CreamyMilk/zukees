@@ -29,13 +29,12 @@ class ProfileTab extends StatelessWidget {
           ),
           SliverFillRemaining(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ValueListenableBuilder(
                     valueListenable: Hive.box('user').listenable(),
                     builder: (BuildContext context, box, Widget child) {
                       return ListTile(
-                        visualDensity:
-                            VisualDensity(horizontal: 1.0, vertical: 2.0),
                         title: Text("${box.get("name")}"),
                         subtitle: Text("ST.FRANCIS"),
                         trailing: Icon(Icons.qr_code),
@@ -45,76 +44,70 @@ class ProfileTab extends StatelessWidget {
                             child: Text("ON")),
                       );
                     }),
-                SizedBox(height: 20),
-                Divider(),
+                SizedBox(height: 5),
                 Text("GENERAL",
                     style: TextStyle(
-                        color: Colors.grey, letterSpacing: 2, fontSize: 20)),
+                        color: Colors.black87, letterSpacing: 2, fontSize: 20)),
                 ListTile(
+                  dense: true,
                   title: Text("Account"),
                   subtitle: Text("Privacy , Notifications"),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  leading: IconButton(
-                    icon: Icon(Icons.vpn_key),
-                    onPressed: () {},
-                  ),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 10),
+                  leading: Icon(Icons.vpn_key),
                 ),
                 Divider(),
                 ListTile(
+                  dense: true,
                   title: Text("Shopping"),
                   subtitle: Text(
                     "Past Orders,Receipts",
                     style: TextStyle(color: Colors.grey),
                   ),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  leading: IconButton(
-                    icon: Icon(Icons.receipt_long),
-                    onPressed: () {},
-                  ),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 10),
+                  leading: Icon(Icons.receipt_long),
                 ),
                 Divider(),
                 ListTile(
+                  dense: true,
                   title: Text("Help"),
                   subtitle: Text(
                     "Contacts,Faqs",
                     style: TextStyle(color: Colors.grey),
                   ),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: Icon(Icons.arrow_forward_ios, size: 10),
                   leading: IconButton(
                     icon: Icon(Icons.help),
                     onPressed: () {},
                   ),
                 ),
                 Divider(),
+                SizedBox(height: 2),
                 Text("FEEDBACK",
                     style: TextStyle(
-                        color: Colors.grey, letterSpacing: 2, fontSize: 20)),
+                        color: Colors.black87, letterSpacing: 2, fontSize: 20)),
+                SizedBox(height: 2),
                 ListTile(
+                  dense: true,
+                  onTap: () async {
+                    final url =
+                        "https://wa.me/254798979797?text=My%20Landloard%20app%20is%20having%20some%20issues.";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
                   title: Text("Report a bug"),
-                  subtitle: Text(
-                    "Contacts,Report Issues",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  trailing: Icon(Icons.connect_without_contact),
                   leading: IconButton(
-                    icon: Icon(Icons.help),
-                    onPressed: () async {
-                      final url =
-                          "https://wa.me/254798979797?text=My%20Landloard%20app%20is%20having%20some%20issues.";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                  ),
+                      icon: Icon(Icons.connect_without_contact),
+                      onPressed: () {}),
                 ),
                 Divider(),
                 ListTile(
+                  dense: true,
                   title: Text("Send feedback"),
-                  trailing: Icon(Icons.send),
                   leading: IconButton(
-                    icon: Icon(Icons.help),
+                    icon: Icon(Icons.send),
                     onPressed: () async {
                       final url =
                           "https://wa.me/254798979797?text=My%20Landloard%20app%20is%20having%20some%20issues.";
@@ -152,7 +145,7 @@ class ProfileTab extends StatelessWidget {
                         style: TextStyle(color: Colors.red),
                       )),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 5),
                 Text(
                   "App Version: $_version",
                   style: TextStyle(color: Colors.grey),
