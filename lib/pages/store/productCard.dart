@@ -25,9 +25,10 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard>
     with SingleTickerProviderStateMixin {
   AnimationController _myanimationcontrol;
-
+  int count;
   @override
   void initState() {
+    count = 0;
     _myanimationcontrol =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     super.initState();
@@ -64,62 +65,100 @@ class _ProductCardState extends State<ProductCard>
       child: AnimatedBuilder(
           animation: animation,
           builder: (context, snapshot) {
-            return AnimatedContainer(
-                duration: Duration(seconds: 1),
-                height: 600 * _getHeight(animation.value),
-                width: 200 * _getHeight(animation.value),
-                color: Colors.transparent,
-                child: Card(
-                  child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AnimatedContainer(
-                              duration: Duration(seconds: 1),
-                              height: 200 * _getHeight(animation.value),
-                              width: 200 * _getHeight(animation.value),
-                              color: Colors.transparent,
-                              child: BlurHash(
-                                  color: Colors.transparent,
-                                  hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
-                                  image: widget.imageUrl)),
-                          SizedBox(height: 3),
-                          Text("\$ ${widget.amount}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 24)),
-                          SizedBox(height: 3),
-                          Text(widget.prodname,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 15)),
-                          SizedBox(height: 13),
-                          Text(widget.packingType,
-                              style: TextStyle(color: Colors.grey)),
-                          Spacer(),
-                          Row(
+            return Stack(
+              children: [
+                AnimatedContainer(
+                    duration: Duration(seconds: 1),
+                    height: 600 * _getHeight(animation.value),
+                    width: 200 * _getHeight(animation.value),
+                    color: Colors.transparent,
+                    child: Card(
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              AnimatedContainer(
+                                  duration: Duration(seconds: 1),
+                                  height: 200 * _getHeight(animation.value),
+                                  width: 200 * _getHeight(animation.value),
+                                  color: Colors.transparent,
+                                  child: BlurHash(
+                                      color: Colors.transparent,
+                                      hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
+                                      image: widget.imageUrl)),
+                              SizedBox(height: 3),
+                              Text("\$ ${widget.amount}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 24)),
+                              SizedBox(height: 3),
+                              Text(widget.prodname,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15)),
+                              SizedBox(height: 13),
+                              Text(widget.packingType,
+                                  style: TextStyle(color: Colors.grey)),
                               Spacer(),
-                              Icon(Icons.add_circle_outline),
-                            ],
-                          ),
-                          // Hero(
-                          //   tag: "button $productID",
-                          //   child: MaterialButton(
-                          //     color: Colors.red,
-                          //     onPressed: () {
-                          //       Navigator.of(context).pushNamed("/product", arguments: productID);
-                          //     },
-                          //     child: Text("Buy Now",
-                          //         style: TextStyle(
-                          //             fontSize: 14.4,
-                          //             fontFamily: 'Poppins',
-                          //             color: Colors.white)),
-                          //   ),
-                          // ),
-                          SizedBox(height: 5)
-                        ]),
-                  ),
-                ));
+                              Row(
+                                children: [
+                                  Spacer(),
+                                  Icon(Icons.add_circle_outline),
+                                ],
+                              ),
+                              // Hero(
+                              //   tag: "button $productID",
+                              //   child: MaterialButton(
+                              //     color: Colors.red,
+                              //     onPressed: () {
+                              //       Navigator.of(context).pushNamed("/product", arguments: productID);
+                              //     },
+                              //     child: Text("Buy Now",
+                              //         style: TextStyle(
+                              //             fontSize: 14.4,
+                              //             fontFamily: 'Poppins',
+                              //             color: Colors.white)),
+                              //   ),
+                              // ),
+                              SizedBox(height: 5)
+                            ]),
+                      ),
+                    )),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: AnimatedContainer(
+                      duration: Duration(milliseconds: 500),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.only(topLeft: Radius.circular(5))),
+                      color: Colors.black,
+                      width: 20,
+                      height: count == 0 ? 20 : 90,
+                      child: Column(children: [
+                        count != 0
+                            ? IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    count--;
+                                  });
+                                },
+                                icon: Icon(Icons.remove, color: Colors.white),
+                              )
+                            : null,
+                        count != 0 ? Text("0$count") : null,
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              count++;
+                            });
+                          },
+                          icon: Icon(Icons.add, color: Colors.white),
+                        )
+                      ])),
+                ),
+              ],
+            );
           }),
     );
   }
