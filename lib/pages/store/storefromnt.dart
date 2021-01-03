@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:zukes/pages/store/productCard.dart';
 import 'package:zukes/tabs/shop_tab.dart';
 
 class StoreFront extends StatelessWidget {
@@ -111,24 +111,6 @@ class StoreAppBar extends StatelessWidget {
   }
 }
 
-class CategoriesList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        // CategoryTile(),
-        // CategoryTile(),
-        // CategoryTile(),
-        // // SizedBox(
-        //   width: 10,
-        // ),
-        // PaymentTile(),
-      ],
-    );
-  }
-}
-
 class CategoriesListNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -236,7 +218,7 @@ class _CategoryTileState extends State<CategoryTile> {
                 width: 20,
                 height: 20,
                 child: Image.network(
-                  'https://favicon-generator.org/favicon-generator/htdocs/favicons/2014-11-30/10ef4f0ab17f09ae2073866695eae3f7.ico',
+                  widget.imageUrl,
                   fit: BoxFit.scaleDown,
                   width: 10,
                   height: 10,
@@ -245,7 +227,7 @@ class _CategoryTileState extends State<CategoryTile> {
             ),
           ),
         ),
-        Text("Cement",
+        Text("${widget.prodname}",
             style: TextStyle(color: _enabled ? Colors.orange : Colors.grey)),
       ],
     );
@@ -306,76 +288,5 @@ class ProductsCarossel extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  const ProductCard(
-      {Key key,
-      @required this.prodname,
-      @required this.packingType,
-      @required this.imageUrl,
-      @required this.amount,
-      @required this.productID,
-      @required this.heros})
-      : super(key: key);
-  final String prodname;
-  final String imageUrl;
-  final int amount;
-  final int productID;
-  final String packingType;
-  final int heros;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 600,
-        width: 210,
-        color: Colors.transparent,
-        child: Card(
-          child: Container(
-            padding: EdgeInsets.all(8.0),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                  height: 190,
-                  width: 200,
-                  color: Colors.transparent,
-                  child: BlurHash(
-                      color: Colors.transparent,
-                      hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
-                      image: imageUrl)),
-              SizedBox(height: 3),
-              Text("\$ $amount",
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24)),
-              SizedBox(height: 3),
-              Text(prodname,
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15)),
-              SizedBox(height: 13),
-              Text(packingType, style: TextStyle(color: Colors.grey)),
-              Spacer(),
-              Row(
-                children: [
-                  Spacer(),
-                  Icon(Icons.add_circle_outline),
-                ],
-              ),
-              // Hero(
-              //   tag: "button $productID",
-              //   child: MaterialButton(
-              //     color: Colors.red,
-              //     onPressed: () {
-              //       Navigator.of(context).pushNamed("/product", arguments: productID);
-              //     },
-              //     child: Text("Buy Now",
-              //         style: TextStyle(
-              //             fontSize: 14.4,
-              //             fontFamily: 'Poppins',
-              //             color: Colors.white)),
-              //   ),
-              // ),
-              SizedBox(height: 5)
-            ]),
-          ),
-        ));
   }
 }

@@ -49,35 +49,44 @@ class _ItemCategoryGridState extends State<ItemCategoryGrid> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.85,
       width: MediaQuery.of(context).size.width,
-      child: FutureBuilder(
-          future: getAllCategories(context),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              print("${snapshot.data}");
-              return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisSpacing: 6,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 6),
-                  padding: EdgeInsets.all(8.0),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return Itemtile(
-                      prodname: snapshot.data[index]["category_name"],
-                      imageUrl: snapshot.data[index]["category_image"],
-                      categoryID: snapshot.data[index]["category_id"],
-                    );
-                  });
-            } else {
-              //Make UI to act as place holder first
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                ),
-              );
-            }
-          }),
+      child: CategoriesFutureBuilder(),
     );
+  }
+}
+
+class CategoriesFutureBuilder extends StatelessWidget {
+  const CategoriesFutureBuilder({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: getAllCategories(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("${snapshot.data}");
+            return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 6, crossAxisCount: 2, crossAxisSpacing: 6),
+                padding: EdgeInsets.all(8.0),
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return Itemtile(
+                    prodname: snapshot.data[index]["category_name"],
+                    imageUrl: snapshot.data[index]["category_image"],
+                    categoryID: snapshot.data[index]["category_id"],
+                  );
+                });
+          } else {
+            //Make UI to act as place holder first
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
+            );
+          }
+        });
   }
 }
 
