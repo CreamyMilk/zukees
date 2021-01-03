@@ -78,17 +78,20 @@ class _BaseTabViewState extends State<BaseTabView> {
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
                   actions: [
-                    Badge(
-                      badgeContent: Text('3'),
-                      animationType: BadgeAnimationType.scale,
-                      child: IconButton(
-                          icon: Icon(
-                            Icons.card_travel_outlined,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/cart');
-                          }),
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
+                      child: Badge(
+                        badgeContent: Text('3'),
+                        animationType: BadgeAnimationType.scale,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.card_travel_outlined,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/cart');
+                            }),
+                      ),
                     ),
                   ],
                   leading: IconButton(

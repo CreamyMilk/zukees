@@ -16,18 +16,18 @@ class ProfileTab extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            
             backgroundColor: Colors.white70,
-            flexibleSpace: FlexibleSpaceBar(centerTitle: true, title: Text(
-              "Profile /Settings",
-              style: TextStyle(fontWeight:FontWeight.w500,color: Colors.black),
-            ),),
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text(
+                "Profile /Settings",
+                style:
+                    TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
+              ),
+            ),
             expandedHeight: 110,
             pinned: true,
             floating: true,
-            
-           
-            
             elevation: 0.5,
           ),
           SliverFillRemaining(
@@ -44,7 +44,7 @@ class ProfileTab extends StatelessWidget {
                   trailing: Icon(Icons.qr_code),
                   leading: CircleAvatar(
                       minRadius: 3,
-                      maxRadius: 30,
+                      maxRadius: 25,
                       backgroundColor: Color(0xfffe8fcfa),
                       child: Text("ON")),
                 ),
@@ -53,11 +53,13 @@ class ProfileTab extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.grey, letterSpacing: 2, fontSize: 15)),
                 ListTile(
-                   leading:IconButton( onPressed:(){},icon:Icon(Icons.person_outline,size:30,color:Colors.black)),
+                  leading: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.person_outline,
+                          size: 25, color: Colors.black)),
                   title: Text("🔑 Account"),
                   subtitle: Text("Privacy , Notifications"),
                   trailing: Icon(Icons.arrow_forward_ios, size: 10),
-               
                 ),
                 Divider(),
                 ListTile(
@@ -67,13 +69,15 @@ class ProfileTab extends StatelessWidget {
                     style: TextStyle(color: Colors.grey),
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, size: 10),
-                  leading:IconButton( onPressed:(){},icon:Icon(Icons.receipt_long,size:30,color:Colors.black87)),
+                  leading: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.receipt_long,
+                          size: 25, color: Colors.black87)),
                 ),
                 Divider(),
                 ListTile(
-                  dense:true,
-        
-                  onTap: (){
+                  dense: true,
+                  onTap: () {
                     print("oooo");
                   },
                   title: Text("📞 Help"),
@@ -83,7 +87,8 @@ class ProfileTab extends StatelessWidget {
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, size: 10),
                   leading: IconButton(
-                    icon: Icon(Icons.help_outline,size:30,color:Colors.black87),
+                    icon: Icon(Icons.help_outline,
+                        size: 25, color: Colors.black87),
                     onPressed: () {},
                   ),
                 ),
@@ -96,7 +101,8 @@ class ProfileTab extends StatelessWidget {
                 ListTile(
                   title: Text("Report a bug"),
                   leading: IconButton(
-                      icon: Icon(Icons.connect_without_contact,size:25,color:Colors.black87),
+                      icon: Icon(Icons.connect_without_contact,
+                          size: 23, color: Colors.black87),
                       onPressed: () {}),
                 ),
                 Divider(),
@@ -104,7 +110,7 @@ class ProfileTab extends StatelessWidget {
                   dense: true,
                   title: Text("Send feedback"),
                   leading: IconButton(
-                    icon: Icon(Icons.send,size:25,color:Colors.black87),
+                    icon: Icon(Icons.send, size: 23, color: Colors.black87),
                     onPressed: () async {
                       final url =
                           "https://wa.me/254798979797?text=My%20Landloard%20app%20is%20having%20some%20issues.";

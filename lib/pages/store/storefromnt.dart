@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
-
 class StoreFront extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -227,28 +226,35 @@ class ProductsCarossel extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.all(4.0),
               scrollDirection: Axis.horizontal,
-              children: [ProductCard(
-                amount:4000,
-                        heros:2,
-                        prodname:"Cool Name",
-                         imageUrl: "https://google.com/favicon.ico",
-                        productID: 1,
-                        packingType: "Cool packing config",
-                      ),ProductCard(
-                        amount:34,
-                        heros:5,
-                        prodname:"Cool Name",
-                        imageUrl: "https://google.com/favicon.ico",
-                        productID: 1,
-                        packingType: "Cool packing config",
-                      ),ProductCard(
-                        amount:9903,
-                        heros:6,
-                        prodname:"Cool Name",
-                        imageUrl: "https://google.com/favicon.ico",
-                        productID: 1,
-                        packingType: "Cool packing config",
-                      )],
+              children: [
+                ProductCard(
+                  amount: 4000,
+                  heros: 2,
+                  prodname: "Cool Name",
+                  imageUrl:
+                      "https://shop.twiga.ke/static/ac2803e0375850278fe923c52490784b/8ea22/eddacd9e-8170-4e1d-8cad-0a550d5c2a461604472076.52438.webp",
+                  productID: 1,
+                  packingType: "Cool packing config",
+                ),
+                ProductCard(
+                  amount: 34,
+                  heros: 5,
+                  prodname: "Cool Name",
+                  imageUrl:
+                      "https://shop.twiga.ke/static/ac2803e0375850278fe923c52490784b/8ea22/eddacd9e-8170-4e1d-8cad-0a550d5c2a461604472076.52438.webp",
+                  productID: 1,
+                  packingType: "Cool packing config",
+                ),
+                ProductCard(
+                  amount: 9903,
+                  heros: 6,
+                  prodname: "Cool Name",
+                  imageUrl:
+                      "https://shop.twiga.ke/static/ac2803e0375850278fe923c52490784b/8ea22/eddacd9e-8170-4e1d-8cad-0a550d5c2a461604472076.52438.webp",
+                  productID: 1,
+                  packingType: "Cool packing config",
+                )
+              ],
             ),
           ),
         ],
@@ -258,7 +264,7 @@ class ProductsCarossel extends StatelessWidget {
 }
 
 class ProductCard extends StatelessWidget {
-    const ProductCard(
+  const ProductCard(
       {Key key,
       @required this.prodname,
       @required this.packingType,
@@ -276,51 +282,54 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-              height: 600,
+        height: 600,
         width: 210,
         color: Colors.transparent,
         child: Card(
-      child: Container(
-        padding:EdgeInsets.all(8.0),
-        child: Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
-          Container(
-              height: 190,
-              width:200,
-              color: Colors.transparent,
-              child: BlurHash(
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                  height: 190,
+                  width: 200,
                   color: Colors.transparent,
-                  hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
-                  image: imageUrl)),
-                          SizedBox(height:3),
-          Text("\$ $amount", style: TextStyle(fontWeight: FontWeight.w400,fontSize:24)),
-          SizedBox(height:3),
-          Text(prodname,  style: TextStyle(fontWeight: FontWeight.w400,fontSize:15)),
-          SizedBox(height:13),
-          Text(packingType,style:TextStyle(color:Colors.grey)),
-          Spacer(),
-          Row(
-            children: [
+                  child: BlurHash(
+                      color: Colors.transparent,
+                      hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
+                      image: imageUrl)),
+              SizedBox(height: 3),
+              Text("\$ $amount",
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24)),
+              SizedBox(height: 3),
+              Text(prodname,
+                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15)),
+              SizedBox(height: 13),
+              Text(packingType, style: TextStyle(color: Colors.grey)),
               Spacer(),
-              Icon(Icons.add_circle_outline),
-            ],
+              Row(
+                children: [
+                  Spacer(),
+                  Icon(Icons.add_circle_outline),
+                ],
+              ),
+              // Hero(
+              //   tag: "button $productID",
+              //   child: MaterialButton(
+              //     color: Colors.red,
+              //     onPressed: () {
+              //       Navigator.of(context).pushNamed("/product", arguments: productID);
+              //     },
+              //     child: Text("Buy Now",
+              //         style: TextStyle(
+              //             fontSize: 14.4,
+              //             fontFamily: 'Poppins',
+              //             color: Colors.white)),
+              //   ),
+              // ),
+              SizedBox(height: 5)
+            ]),
           ),
-          // Hero(
-          //   tag: "button $productID",
-          //   child: MaterialButton(
-          //     color: Colors.red,
-          //     onPressed: () {
-          //       Navigator.of(context).pushNamed("/product", arguments: productID);
-          //     },
-          //     child: Text("Buy Now",
-          //         style: TextStyle(
-          //             fontSize: 14.4,
-          //             fontFamily: 'Poppins',
-          //             color: Colors.white)),
-          //   ),
-          // ),
-          SizedBox(height: 5)
-        ]),
-      ),
-    ));
+        ));
   }
 }

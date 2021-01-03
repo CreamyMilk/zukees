@@ -20,8 +20,8 @@ class HomeTab extends StatelessWidget {
                 ),
                 Text("Hello from zukes 👋"),
                 UserProfileCard(),
-                CoolGraph(
-                    firestoreKey: "building8"), //Add Hive to proivde this value
+                CoolGraph(firestoreKey: "building8"),
+                SizedBox(height: 100) //Add Hive to proivde this value
               ],
             ),
           ),

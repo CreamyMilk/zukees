@@ -12,21 +12,36 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   List<Widget> _createShoppingCartRows() {
-    return [ShoppingCartRow(
-            product: Product(category: "null", id: 1, isFeatured: true, name: (_) { return "sd"; }, price: 11),
-            quantity: 3,
-            onPressed: () {
-              // model.removeItemFromCart(id);
+    return [
+      ShoppingCartRow(
+        product: Product(
+            category: "null",
+            id: 1,
+            isFeatured: true,
+            name: (_) {
+              return "Item Name";
             },
-          ),
-          ShoppingCartRow(
-            product: Product(category: "null", id: 1, isFeatured: true, name: (_) { return "sd"; }, price: 11),
-            quantity: 3,
-            onPressed: () {
-              // model.removeItemFromCart(id);
+            price: 11),
+        quantity: 3,
+        onPressed: () {
+          // model.removeItemFromCart(id);
+        },
+      ),
+      ShoppingCartRow(
+        product: Product(
+            category: "null",
+            id: 1,
+            isFeatured: true,
+            name: (_) {
+              return "Item Name";
             },
-          ),
-        ];
+            price: 11),
+        quantity: 3,
+        onPressed: () {
+          // model.removeItemFromCart(id);
+        },
+      ),
+    ];
   }
 
   @override
@@ -36,90 +51,74 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
-
-              child: Stack(
-                children: [
-                  ListView(
+            child: Stack(
+          children: [
+            ListView(
+              children: [
+                Semantics(
+                  sortKey: const OrdinalSortKey(0, name: _ordinalSortKeyName),
+                  child: Row(
                     children: [
-                      Semantics(
-                        sortKey:
-                            const OrdinalSortKey(0, name: _ordinalSortKeyName),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: _startColumnWidth,
-                              child: IconButton(
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                onPressed: null,),
-                                    //ExpandingBottomSheet.of(context).close(),
-                                // tooltip: GalleryLocalizations.of(context)
-                                //     .shrineTooltipCloseCart,
-                              
-                            ),
-                            Text(
-                         "ok",
-                              style: localTheme.textTheme.subtitle1
-                                  .copyWith(fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(width: 16),
-                            Text(
-                              "333"
-                              ),
-                            
-                          ],
+                      SizedBox(
+                        width: _startColumnWidth,
+                        child: IconButton(
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
+                        //ExpandingBottomSheet.of(context).close(),
+                        // tooltip: GalleryLocalizations.of(context)
+                        //     .shrineTooltipCloseCart,
                       ),
-                      const SizedBox(height: 16),
-                      Semantics(
-                        sortKey:
-                            const OrdinalSortKey(1, name: _ordinalSortKeyName),
-                        child: Column(
-                          children: _createShoppingCartRows(),
-                        ),
+                      Text(
+                        "Cart",
+                        style: localTheme.textTheme.subtitle1
+                            .copyWith(fontWeight: FontWeight.w600),
                       ),
-          
-                      const SizedBox(height: 100),
-                      ShoppingCartSummary(),
+                      const SizedBox(width: 16),
+                      Text("3 ITEMS"),
                     ],
-
                   ),
-                  PositionedDirectional(
-                    bottom: 16,
-                    start: 16,
-                    end: 16,
-                    child: Semantics(
-                      sortKey:
-                          const OrdinalSortKey(3, name: _ordinalSortKeyName),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
-                          ),
-                          primary: Colors.green,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Text(
-                 """           GalleryLocalizations.of(context)
-                                .shrineCartClearButtonCaption,""",
-                            style: TextStyle(
-                                letterSpacing:
-                                    1.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          // model.clearCart();
-                          // ExpandingBottomSheet.of(context).close();
-                        },
-                      ),
-                    ),
+                ),
+                const SizedBox(height: 16),
+                Semantics(
+                  sortKey: const OrdinalSortKey(1, name: _ordinalSortKeyName),
+                  child: Column(
+                    children: _createShoppingCartRows(),
                   ),
-                ],
-              )
-        ),
-          ),
-        
-      
+                ),
+                const SizedBox(height: 100),
+                ShoppingCartSummary(),
+              ],
+            ),
+            PositionedDirectional(
+              bottom: 16,
+              start: 16,
+              end: 16,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const BeveledRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(7)),
+                  ),
+                  primary: Colors.green[400],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    "CHECKOUT",
+                    style: TextStyle(letterSpacing: 1.0),
+                  ),
+                ),
+                onPressed: () {
+                  // model.clearCart();
+                  // ExpandingBottomSheet.of(context).close();
+                },
+              ),
+            ),
+          ],
+        )),
+      ),
     );
   }
 }
@@ -127,16 +126,12 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 class ShoppingCartSummary extends StatelessWidget {
   const ShoppingCartSummary();
 
-  
-
   @override
   Widget build(BuildContext context) {
     final smallAmountStyle =
         Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.brown);
-    final largeAmountStyle = Theme.of(context)
-        .textTheme
-        .headline4
-        .copyWith(letterSpacing:0.0);
+    final largeAmountStyle =
+        Theme.of(context).textTheme.headline4.copyWith(letterSpacing: 0.0);
     // final formatter = NumberFormat.simpleCurrency(
     //   decimalDigits: 2,
     //   locale: Localizations.localeOf(context).toString(),
@@ -154,12 +149,13 @@ class ShoppingCartSummary extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                  Text(
-                       "TotalC aption"
+                      Text(
+                        "TOTAL",
+                        style: TextStyle(fontSize: 20),
                       ),
                       Expanded(
                         child: Text(
-                          "formatter.format(model.totalCost),",
+                          "\$910.85",
                           style: largeAmountStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -171,12 +167,10 @@ class ShoppingCartSummary extends StatelessWidget {
                 MergeSemantics(
                   child: Row(
                     children: [
-                Text(
-                       "Caption"
-                      ),
+                      Text("Subtotal:"),
                       Expanded(
                         child: Text(
-                       "   formatter.format(model.subtotalCost),",
+                          "\$54.00",
                           style: smallAmountStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -188,12 +182,10 @@ class ShoppingCartSummary extends StatelessWidget {
                 MergeSemantics(
                   child: Row(
                     children: [
-                      Text(
-                       "Caption"
-                      ),
+                      Text("Shipping:"),
                       Expanded(
                         child: Text(
-                         " formatter.format(model.shippingCost),",
+                          "\$54.00",
                           style: smallAmountStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -205,12 +197,10 @@ class ShoppingCartSummary extends StatelessWidget {
                 MergeSemantics(
                   child: Row(
                     children: [
-                      Text(
-                        "Tax Value"
-                      ),
+                      Text("Tax:"),
                       Expanded(
                         child: Text(
-                     "     formatter.format(model.tax),",
+                          "\$4.48",
                           style: smallAmountStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -244,7 +234,6 @@ class ShoppingCartRow extends StatelessWidget {
     //   decimalDigits: 0,
     //   locale: Localizations.localeOf(context).toString(),
     // );
-    final localTheme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -257,7 +246,6 @@ class ShoppingCartRow extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.remove_circle_outline),
               onPressed: onPressed,
-
             ),
           ),
           Expanded(
@@ -269,7 +257,7 @@ class ShoppingCartRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.network(
-                    "https://google.com/favicon.ico",
+                        "https://shop.twiga.ke/static/ac2803e0375850278fe923c52490784b/8ea22/eddacd9e-8170-4e1d-8cad-0a550d5c2a461604472076.52438.webp",
                         fit: BoxFit.cover,
                         width: 75,
                         height: 75,
@@ -277,31 +265,25 @@ class ShoppingCartRow extends StatelessWidget {
                       ),
                       const SizedBox(width: 16),
                       Expanded(
-                        child: MergeSemantics(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MergeSemantics(
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "$quantity",
-                                      ),
-                                    ),
-                                    Text(
-                                   "${product.price}"),
-
-                                  ],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "$quantity",
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                product.name(context),
-                                style: localTheme.textTheme.subtitle1
-                                    .copyWith(fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
+                                Text("x \$${product.price}"),
+                              ],
+                            ),
+                            Text(
+                              product.name(context),
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w600),
+                            ),
+                          ],
                         ),
                       ),
                     ],

@@ -30,9 +30,10 @@ class RouteGenerator {
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
                         statusBarColor: Colors.transparent,
+                        statusBarIconBrightness: Brightness.dark,
                         systemNavigationBarColor: Colors.white),
                     child: HoverLogin())));
-                          case '/cart':
+      case '/cart':
         return CupertinoPageRoute(
             settings: RouteSettings(),
             builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
@@ -46,6 +47,7 @@ class RouteGenerator {
             builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
                 value: SystemUiOverlayStyle(
                     statusBarColor: Colors.transparent,
+                    statusBarIconBrightness: Brightness.dark,
                     systemNavigationBarColor: Colors.white),
                 child: TermsAndConditonsWebView()));
       case '/home':
@@ -55,6 +57,7 @@ class RouteGenerator {
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
                         statusBarColor: Colors.transparent,
+                        statusBarIconBrightness: Brightness.dark,
                         systemNavigationBarColor: Colors.white),
                     child: BaseTabView())));
       case '/alltens':
@@ -83,6 +86,7 @@ class RouteGenerator {
                 child: AnnotatedRegion<SystemUiOverlayStyle>(
                     value: SystemUiOverlayStyle(
                         statusBarColor: Colors.white,
+                        statusBarIconBrightness: Brightness.light,
                         systemNavigationBarColor: Colors.white),
                     child: ProductPage(
                       productID: args,
