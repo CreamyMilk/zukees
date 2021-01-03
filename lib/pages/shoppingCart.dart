@@ -46,7 +46,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localTheme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -73,11 +72,15 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       ),
                       Text(
                         "Cart",
-                        style: localTheme.textTheme.subtitle1
-                            .copyWith(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 10),
                       ),
                       const SizedBox(width: 16),
-                      Text("3 ITEMS"),
+                      Text(
+                        "3 ITEMS",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w200, fontSize: 10),
+                      ),
                     ],
                   ),
                 ),
@@ -130,8 +133,10 @@ class ShoppingCartSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final smallAmountStyle =
         Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.brown);
-    final largeAmountStyle =
-        Theme.of(context).textTheme.headline4.copyWith(letterSpacing: 0.0);
+    final largeAmountStyle = Theme.of(context)
+        .textTheme
+        .headline4
+        .copyWith(color: Colors.green[900], letterSpacing: 0.0);
     // final formatter = NumberFormat.simpleCurrency(
     //   decimalDigits: 2,
     //   locale: Localizations.localeOf(context).toString(),
@@ -234,7 +239,6 @@ class ShoppingCartRow extends StatelessWidget {
     //   decimalDigits: 0,
     //   locale: Localizations.localeOf(context).toString(),
     // );
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
@@ -271,11 +275,17 @@ class ShoppingCartRow extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: Text(
-                                    "$quantity",
-                                  ),
+                                  child: Text("Quantity:  $quantity",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18)),
                                 ),
-                                Text("x \$${product.price}"),
+                                Text(
+                                  "x \$${product.price}",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 18),
+                                ),
                               ],
                             ),
                             Text(
