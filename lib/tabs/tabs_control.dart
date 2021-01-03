@@ -83,6 +83,19 @@ class _BaseTabViewState extends State<BaseTabView> {
                         Navigator.of(context).pushNamed('/cart');
                       },
                       child: Badge(
+                        badgeContent: Text('900'),
+                        animationType: BadgeAnimationType.scale,
+                        child: Icon(
+                          Icons.card_travel_outlined,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/cart');
+                      },
+                      child: Badge(
                         badgeContent: Text('3'),
                         animationType: BadgeAnimationType.scale,
                         child: Icon(

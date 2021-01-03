@@ -44,8 +44,8 @@ class _ProductCardState extends State<ProductCard>
     final animation =
         Tween<double>(begin: 0.1, end: 1.0).animate(_myanimationcontrol);
     double _getHeight(double value) {
-      if (value > 0.9) {
-        return 1.5;
+      if (value > 0.7) {
+        return 1.1;
       } else if (value > 0.5) {
         return 0.8;
       } else {
@@ -54,7 +54,9 @@ class _ProductCardState extends State<ProductCard>
     }
 
     return InkWell(
-      onTapCancel: () {},
+      onTapCancel: () {
+        print("Tap canncelled");
+      },
       onTap: () {
         print("Adding item to cart here");
         _myanimationcontrol.forward();
@@ -64,8 +66,8 @@ class _ProductCardState extends State<ProductCard>
           builder: (context, snapshot) {
             return AnimatedContainer(
                 duration: Duration(seconds: 1),
-                height: 600,
-                width: 200,
+                height: 600 * _getHeight(animation.value),
+                width: 200 * _getHeight(animation.value),
                 color: Colors.transparent,
                 child: Card(
                   child: Container(
@@ -74,7 +76,7 @@ class _ProductCardState extends State<ProductCard>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AnimatedContainer(
-                            duration: Duration(seconds: 1),
+                              duration: Duration(seconds: 1),
                               height: 600 * _getHeight(animation.value),
                               width: 200 * _getHeight(animation.value),
                               color: Colors.transparent,
