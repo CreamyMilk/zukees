@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:zukes/tabs/shop_tab.dart';
 
 class StoreFront extends StatelessWidget {
   @override
@@ -78,7 +79,7 @@ class ProductSearchSection extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w500)),
             SizedBox(height: 5),
-            CategoriesList(),
+            CategoriesListNew(),
           ]),
     );
   }
@@ -116,10 +117,10 @@ class CategoriesList extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CategoryTile(),
-        CategoryTile(),
-        CategoryTile(),
-        // SizedBox(
+        // CategoryTile(),
+        // CategoryTile(),
+        // CategoryTile(),
+        // // SizedBox(
         //   width: 10,
         // ),
         // PaymentTile(),
@@ -128,13 +129,55 @@ class CategoriesList extends StatelessWidget {
   }
 }
 
+class CategoriesListNew extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: getAllCategories(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("${snapshot.data}");
+            return Container(
+              height: 100,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.all(8.0),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return CategoryTile(
+                      prodname: snapshot.data[index]["category_name"],
+                      imageUrl: snapshot.data[index]["category_image"],
+                      categoryID: snapshot.data[index]["category_id"],
+                    );
+                  }),
+            );
+          } else {
+            //Make UI to act as place holder first
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              ),
+            );
+          }
+        });
+  }
+}
+
 class CategoryTile extends StatefulWidget {
+  final String prodname;
+  final String imageUrl;
+  final int categoryID;
+  CategoryTile(
+      {@required this.prodname,
+      @required this.imageUrl,
+      @required this.categoryID});
   @override
   _CategoryTileState createState() => _CategoryTileState();
 }
 
 class _CategoryTileState extends State<CategoryTile> {
   bool _enabled = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -144,7 +187,10 @@ class _CategoryTileState extends State<CategoryTile> {
           padding: const EdgeInsets.all(4.0),
           child: MaterialButton(
             minWidth: 20,
-            height: 20,
+            height: 20, // CategoryTile(),
+            // CategoryTile(),
+            // CategoryTile(),
+            // // SizedBox(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 side: _enabled
