@@ -125,14 +125,15 @@ class _ProductCardState extends State<ProductCard>
                             ]),
                       ),
                     )),
-                Align(
-                  alignment: Alignment.bottomRight,
+                Positioned(
+                  right: 10.0,
+                  bottom: 25.0,
                   child: AnimatedContainer(
                       duration: Duration(milliseconds: 500),
                       decoration: BoxDecoration(
+                          color: Colors.black,
                           borderRadius:
                               BorderRadius.only(topLeft: Radius.circular(5))),
-                      color: Colors.black,
                       width: 20,
                       height: count == 0 ? 20 : 90,
                       child: Column(children: [
@@ -145,8 +146,13 @@ class _ProductCardState extends State<ProductCard>
                                 },
                                 icon: Icon(Icons.remove, color: Colors.white),
                               )
-                            : null,
-                        count != 0 ? Text("0$count") : null,
+                            : Container(),
+                        count != 0
+                            ? Text(
+                                "0$count",
+                                style: TextStyle(color: Colors.white),
+                              )
+                            : Container(),
                         IconButton(
                           onPressed: () {
                             setState(() {
