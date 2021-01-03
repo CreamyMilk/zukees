@@ -47,8 +47,6 @@ class _ProductCardState extends State<ProductCard>
       if (value == 1) {
         return 1.0;
       } else if (value > 0.7) {
-        return 0.1;
-      } else if (value > 0.5) {
         return 0.8;
       } else {
         return 1;
@@ -79,7 +77,7 @@ class _ProductCardState extends State<ProductCard>
                         children: [
                           AnimatedContainer(
                               duration: Duration(seconds: 1),
-                              height: 250 * _getHeight(animation.value),
+                              height: 200 * _getHeight(animation.value),
                               width: 200 * _getHeight(animation.value),
                               color: Colors.transparent,
                               child: BlurHash(

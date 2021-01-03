@@ -283,15 +283,15 @@ class ShoppingCartRow extends StatelessWidget {
                                 Text(
                                   "x \$${product.price}",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
                                 ),
                               ],
                             ),
                             Text(
                               product.name(context),
                               style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.w500),
+                                  fontSize: 20, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
