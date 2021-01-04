@@ -126,15 +126,15 @@ class _ProductCardState extends State<ProductCard>
                       ),
                     )),
                 Positioned(
-                  right: 10.0,
-                  bottom: 25.0,
+                  right: 0.0,
+                  bottom: 0.0,
                   child: AnimatedContainer(
                       duration: Duration(milliseconds: 500),
                       decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius:
                               BorderRadius.only(topLeft: Radius.circular(5))),
-                      width: 20,
+                      width: 40,
                       height: count == 0 ? 20 : 90,
                       child: Column(children: [
                         count != 0

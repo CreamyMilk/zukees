@@ -78,32 +78,18 @@ class _BaseTabViewState extends State<BaseTabView> {
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
                   actions: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/cart');
-                      },
-                      child: Badge(
-                        badgeContent: Text('900'),
-                        animationType: BadgeAnimationType.scale,
-                        child: Icon(
-                          Icons.card_travel_outlined,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/cart');
-                      },
-                      child: Badge(
-                        badgeContent: Text('3'),
-                        animationType: BadgeAnimationType.scale,
-                        child: Icon(
-                          Icons.card_travel_outlined,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+                    Container(
+                        color: Colors.amber,
+                        child: Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(Icons.card_travel),
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/cart');
+                                }),
+                            Text("3")
+                          ],
+                        )),
                   ],
                   leading: IconButton(
                     icon: Icon(Icons.read_more, color: Colors.black),
