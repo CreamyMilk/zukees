@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zukes/pages/store/storefromnt.dart';
@@ -79,7 +78,11 @@ class _BaseTabViewState extends State<BaseTabView> {
                   elevation: 0.0,
                   actions: [
                     Container(
-                        color: Colors.amber,
+                        margin: EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0))),
                         child: Row(
                           children: [
                             IconButton(

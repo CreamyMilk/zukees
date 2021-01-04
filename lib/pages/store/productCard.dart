@@ -65,14 +65,14 @@ class _ProductCardState extends State<ProductCard>
       child: AnimatedBuilder(
           animation: animation,
           builder: (context, snapshot) {
-            return Stack(
-              children: [
-                AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    height: 600 * _getHeight(animation.value),
-                    width: 200 * _getHeight(animation.value),
-                    color: Colors.transparent,
-                    child: Card(
+            return AnimatedContainer(
+                duration: Duration(seconds: 1),
+                height: 600 * _getHeight(animation.value),
+                width: 200 * _getHeight(animation.value),
+                color: Colors.transparent,
+                child: Stack(
+                  children: [
+                    Card(
                       child: Container(
                         padding: EdgeInsets.all(8.0),
                         child: Column(
@@ -124,47 +124,48 @@ class _ProductCardState extends State<ProductCard>
                               SizedBox(height: 5)
                             ]),
                       ),
-                    )),
-                Positioned(
-                  right: 0.0,
-                  bottom: 0.0,
-                  child: AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius:
-                              BorderRadius.only(topLeft: Radius.circular(5))),
-                      width: 40,
-                      height: count == 0 ? 20 : 90,
-                      child: Column(children: [
-                        count != 0
-                            ? IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    count--;
-                                  });
-                                },
-                                icon: Icon(Icons.remove, color: Colors.white),
-                              )
-                            : Container(),
-                        count != 0
-                            ? Text(
-                                "0$count",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            : Container(),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              count++;
-                            });
-                          },
-                          icon: Icon(Icons.add, color: Colors.white),
-                        )
-                      ])),
-                ),
-              ],
-            );
+                    ),
+                    Positioned(
+                      right: 0.0,
+                      bottom: 8.0,
+                      child: AnimatedContainer(
+                          duration: Duration(milliseconds: 500),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(5))),
+                          width: 40,
+                          height: count == 0 ? 20 : 90,
+                          child: Column(children: [
+                            count != 0
+                                ? IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        count--;
+                                      });
+                                    },
+                                    icon:
+                                        Icon(Icons.remove, color: Colors.white),
+                                  )
+                                : Container(),
+                            count != 0
+                                ? Text(
+                                    "0$count",
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                : Container(),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  count++;
+                                });
+                              },
+                              icon: Icon(Icons.add, color: Colors.white),
+                            )
+                          ])),
+                    ),
+                  ],
+                ));
           }),
     );
   }
