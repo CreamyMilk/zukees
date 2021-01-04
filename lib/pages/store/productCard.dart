@@ -60,7 +60,7 @@ class _ProductCardState extends State<ProductCard>
       },
       onTap: () {
         print("Adding item to cart here");
-        _myanimationcontrol.forward();
+        //_myanimationcontrol.forward();
       },
       child: AnimatedBuilder(
           animation: animation,
@@ -104,7 +104,6 @@ class _ProductCardState extends State<ProductCard>
                               Row(
                                 children: [
                                   Spacer(),
-                                  Icon(Icons.add_circle_outline),
                                 ],
                               ),
                               // Hero(
@@ -126,16 +125,16 @@ class _ProductCardState extends State<ProductCard>
                       ),
                     ),
                     Positioned(
-                      right: 0.0,
+                      right: 8.0,
                       bottom: 8.0,
                       child: AnimatedContainer(
                           duration: Duration(milliseconds: 500),
                           decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5))),
+                                  topLeft: Radius.circular(8))),
                           width: 40,
-                          height: count == 0 ? 20 : 90,
+                          height: count == 0 ? 40 : 100,
                           child: Column(children: [
                             count != 0
                                 ? IconButton(

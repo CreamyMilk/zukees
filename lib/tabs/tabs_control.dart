@@ -78,21 +78,21 @@ class _BaseTabViewState extends State<BaseTabView> {
                   elevation: 0.0,
                   actions: [
                     Container(
-                        margin: EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0))),
-                        child: Row(
-                          children: [
-                            IconButton(
-                                icon: Icon(Icons.card_travel),
-                                onPressed: () {
-                                  Navigator.of(context).pushNamed('/cart');
-                                }),
-                            Text("3")
-                          ],
-                        )),
+                      margin: EdgeInsets.only(right: 20),
+                      decoration: BoxDecoration(
+                          color: Colors.green[900],
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              icon: Icon(Icons.card_travel),
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/cart');
+                              }),
+                          Text("3")
+                        ],
+                      ),
+                    ),
                   ],
                   leading: IconButton(
                     icon: Icon(Icons.read_more, color: Colors.black),

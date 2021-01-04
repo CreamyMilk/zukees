@@ -277,21 +277,21 @@ class ShoppingCartRow extends StatelessWidget {
                                 Expanded(
                                   child: Text("Quantity:  $quantity",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14)),
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 11)),
                                 ),
                                 Text(
                                   "x \$${product.price}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               ],
                             ),
                             Text(
                               product.name(context),
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w400),
+                                  fontSize: 17, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
