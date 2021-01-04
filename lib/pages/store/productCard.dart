@@ -125,8 +125,8 @@ class _ProductCardState extends State<ProductCard>
                       ),
                     ),
                     Positioned(
-                      right: 2.0,
-                      bottom: 2.0,
+                      right: 4.0,
+                      bottom: 4.0,
                       child: AnimatedContainer(
                           duration: Duration(milliseconds: 500),
                           decoration: BoxDecoration(
