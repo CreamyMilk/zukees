@@ -80,7 +80,7 @@ class _BaseTabViewState extends State<BaseTabView> {
                     Container(
                       margin: EdgeInsets.only(right: 20),
                       decoration: BoxDecoration(
-                          color: Colors.green[900],
+                          color: Colors.orange,
                           borderRadius: BorderRadius.all(Radius.circular(5.0))),
                       child: Row(
                         children: [
@@ -89,7 +89,11 @@ class _BaseTabViewState extends State<BaseTabView> {
                               onPressed: () {
                                 Navigator.of(context).pushNamed('/cart');
                               }),
-                          Text("3")
+                          Text(
+                            "3",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          SizedBox(width: 20)
                         ],
                       ),
                     ),

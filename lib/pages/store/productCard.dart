@@ -125,8 +125,8 @@ class _ProductCardState extends State<ProductCard>
                       ),
                     ),
                     Positioned(
-                      right: 8.0,
-                      bottom: 8.0,
+                      right: 2.0,
+                      bottom: 2.0,
                       child: AnimatedContainer(
                           duration: Duration(milliseconds: 500),
                           decoration: BoxDecoration(
@@ -134,7 +134,7 @@ class _ProductCardState extends State<ProductCard>
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(8))),
                           width: 40,
-                          height: count == 0 ? 40 : 100,
+                          height: count == 0 ? 45 : 100,
                           child: Column(children: [
                             count != 0
                                 ? IconButton(
