@@ -126,7 +126,7 @@ class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
     Key key,
   }) : super(key: key);
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +137,6 @@ class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
         ChangeNotifierProvider<StoreProvider>(
             create: (context) => StoreProvider(),
             builder: (context, widgett) {
-              final storeP = Provider.of<StoreProvider>(context);
-
               return Container(
                 margin: EdgeInsets.only(right: 10),
                 decoration: BoxDecoration(
@@ -151,10 +149,12 @@ class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
                         onPressed: () {
                           Navigator.of(context).pushNamed('/cart');
                         }),
-                    Text(
-                      "${storeP.toalNumberofProducts}",
-                      style: TextStyle(fontSize: 15),
-                    ),
+                    Consumer<StoreProvider>(builder: (context, storeP, child) {
+                      return Text(
+                        "${storeP.toalNumberofProducts}",
+                        style: TextStyle(fontSize: 15),
+                      );
+                    }),
                     SizedBox(width: 20)
                   ],
                 ),
