@@ -134,32 +134,28 @@ class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0.0,
       actions: [
-        ChangeNotifierProvider<StoreProvider>(
-            create: (context) => StoreProvider(),
-            builder: (context, widgett) {
-              return Container(
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                child: Row(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.card_travel),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/cart');
-                        }),
-                    Consumer<StoreProvider>(builder: (context, storeP, child) {
-                      return Text(
-                        "${storeP.toalNumberofProducts}",
-                        style: TextStyle(fontSize: 15),
-                      );
-                    }),
-                    SizedBox(width: 20)
-                  ],
-                ),
-              );
-            }),
+        Container(
+          margin: EdgeInsets.only(right: 10),
+          decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          child: Row(
+            children: [
+              IconButton(
+                  icon: Icon(Icons.card_travel),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/cart');
+                  }),
+              Consumer<StoreProvider>(builder: (context, storeP, child) {
+                return Text(
+                  "${storeP.numberOfProducts()}",
+                  style: TextStyle(fontSize: 15),
+                );
+              }),
+              SizedBox(width: 20)
+            ],
+          ),
+        ),
       ],
       leading: IconButton(
         icon: Icon(Icons.read_more, color: Colors.black),

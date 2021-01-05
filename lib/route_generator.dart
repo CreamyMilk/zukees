@@ -14,6 +14,7 @@ import 'package:zukes/providers/kra_fromProvide.dart';
 
 import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/providers/rent_amounts_provider.dart';
+import 'package:zukes/providers/store_provider.dart';
 import 'package:zukes/tabs/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 
@@ -25,14 +26,19 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-            builder: (ctx) => ChangeNotifierProvider<Counter>(
-                create: (context) => Counter(),
-                child: AnnotatedRegion<SystemUiOverlayStyle>(
-                    value: SystemUiOverlayStyle(
-                        statusBarColor: Colors.transparent,
-                        statusBarIconBrightness: Brightness.dark,
-                        systemNavigationBarColor: Colors.white),
-                    child: HoverLogin())));
+            builder: (ctx) => MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider<Counter>(
+                          create: (context) => Counter()),
+                    ],
+                    builder: (context, child) {
+                      return AnnotatedRegion<SystemUiOverlayStyle>(
+                          value: SystemUiOverlayStyle(
+                              statusBarColor: Colors.transparent,
+                              statusBarIconBrightness: Brightness.dark,
+                              systemNavigationBarColor: Colors.white),
+                          child: HoverLogin());
+                    }));
       case '/cart':
         return CupertinoPageRoute(
             settings: RouteSettings(),
@@ -50,16 +56,24 @@ class RouteGenerator {
                     statusBarIconBrightness: Brightness.dark,
                     systemNavigationBarColor: Colors.white),
                 child: TermsAndConditonsWebView()));
+
       case '/home':
         return CupertinoPageRoute(
-            builder: (ctx) => ChangeNotifierProvider<RentAmountP>(
-                create: (context) => RentAmountP(),
-                child: AnnotatedRegion<SystemUiOverlayStyle>(
-                    value: SystemUiOverlayStyle(
-                        statusBarColor: Colors.transparent,
-                        statusBarIconBrightness: Brightness.dark,
-                        systemNavigationBarColor: Colors.white),
-                    child: BaseTabView())));
+            builder: (ctx) => MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider<RentAmountP>(
+                          create: (context) => RentAmountP()),
+                      ChangeNotifierProvider<StoreProvider>(
+                          create: (context) => StoreProvider()),
+                    ],
+                    builder: (context, child) {
+                      return AnnotatedRegion<SystemUiOverlayStyle>(
+                          value: SystemUiOverlayStyle(
+                              statusBarColor: Colors.transparent,
+                              statusBarIconBrightness: Brightness.dark,
+                              systemNavigationBarColor: Colors.white),
+                          child: BaseTabView());
+                    }));
       case '/alltens':
         return MaterialPageRoute(
             builder: (ctx) => AllTenatsTable(branch: args));

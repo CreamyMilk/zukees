@@ -43,7 +43,7 @@ class StoreProvider extends ChangeNotifier {
   }
 
   int numberOfProducts() {
-    return cart.length;
+    return toalNumberofProducts;
   }
 
   int quantityOfProduct(String productID) {
