@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:zukes/pages/store/storefromnt.dart';
+import 'package:zukes/providers/store_provider.dart';
 import 'package:zukes/tabs/home_tab.dart';
 import 'package:zukes/tabs/manage_tab.dart';
 import 'package:zukes/tabs/service_tab.dart';
@@ -72,40 +74,7 @@ class _BaseTabViewState extends State<BaseTabView> {
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          appBar: _activetab == 3
-              ? AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0.0,
-                  actions: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              icon: Icon(Icons.card_travel),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/cart');
-                              }),
-                          Text(
-                            "3",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          SizedBox(width: 20)
-                        ],
-                      ),
-                    ),
-                  ],
-                  leading: IconButton(
-                    icon: Icon(Icons.read_more, color: Colors.black),
-                    onPressed: () {
-                      print("Show Drawer");
-                    },
-                  ),
-                )
-              : null,
+          appBar: _activetab == 3 ? StoreAppBar() : null,
           bottomNavigationBar: BottomNavigationBar(
               selectedFontSize: 12,
               unselectedFontSize: 10,
@@ -147,6 +116,56 @@ class _BaseTabViewState extends State<BaseTabView> {
                 child: _tabs[_activetab]),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
+  const StoreAppBar({
+    Key key,
+  }) : super(key: key);
+  @override
+  Size get preferredSize => const Size.fromHeight(100);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0.0,
+      actions: [
+        ChangeNotifierProvider<StoreProvider>(
+            create: (context) => StoreProvider(),
+            builder: (context, widgett) {
+              final storeP = Provider.of<StoreProvider>(context);
+              double totalCartItems = storeP.numberOfItems();
+              return Container(
+                margin: EdgeInsets.only(right: 20),
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                child: Row(
+                  children: [
+                    IconButton(
+                        icon: Icon(Icons.card_travel),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/cart');
+                        }),
+                    Text(
+                      "$totalCartItems",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    SizedBox(width: 20)
+                  ],
+                ),
+              );
+            }),
+      ],
+      leading: IconButton(
+        icon: Icon(Icons.read_more, color: Colors.black),
+        onPressed: () {
+          print("Show Drawer");
+        },
       ),
     );
   }

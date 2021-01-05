@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:provider/provider.dart';
+import 'package:zukes/providers/store_provider.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard(
@@ -25,10 +27,9 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard>
     with SingleTickerProviderStateMixin {
   AnimationController _myanimationcontrol;
-  int count;
+
   @override
   void initState() {
-    count = 0;
     _myanimationcontrol =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     super.initState();
@@ -127,41 +128,43 @@ class _ProductCardState extends State<ProductCard>
                     Positioned(
                       right: 4.0,
                       bottom: 4.0,
-                      child: AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(8))),
-                          width: 40,
-                          height: count == 0 ? 45 : 100,
-                          child: Column(children: [
-                            count != 0
-                                ? IconButton(
+                      child: ChangeNotifierProvider<StoreProvider>(
+                          create: (context) => StoreProvider(),
+                          builder: (context, snapshot) {
+                            final storeP = Provider.of<StoreProvider>(context);
+                            int counter = storeP.quantityOfProduct("1");
+                            return AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(8))),
+                                width: 40,
+                                height: counter == 0 ? 45 : 100,
+                                child: Column(children: [
+                                  counter != 0
+                                      ? IconButton(
+                                          onPressed: () {
+                                            storeP.decrementFromCart("1");
+                                          },
+                                          icon: Icon(Icons.remove,
+                                              color: Colors.white),
+                                        )
+                                      : Container(),
+                                  counter != 0
+                                      ? Text(
+                                          "0$counter",
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      : Container(),
+                                  IconButton(
                                     onPressed: () {
-                                      setState(() {
-                                        count--;
-                                      });
+                                      storeP.addToCart("1");
                                     },
-                                    icon:
-                                        Icon(Icons.remove, color: Colors.white),
+                                    icon: Icon(Icons.add, color: Colors.white),
                                   )
-                                : Container(),
-                            count != 0
-                                ? Text(
-                                    "0$count",
-                                    style: TextStyle(color: Colors.white),
-                                  )
-                                : Container(),
-                            IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  count++;
-                                });
-                              },
-                              icon: Icon(Icons.add, color: Colors.white),
-                            )
-                          ])),
+                                ]));
+                          }),
                     ),
                   ],
                 ));
