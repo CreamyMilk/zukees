@@ -71,14 +71,15 @@ class _ProductCardState extends State<ProductCard>
         builder: (context, snapshot) {
           return AnimatedContainer(
             duration: Duration(seconds: 1),
-            height: 600 * _getHeight(animation.value),
+            height:
+                550 * _getHeight(animation.value), //Heights of product cards
             width: 200 * _getHeight(animation.value),
             color: Colors.transparent,
             child: Stack(
               children: [
                 Card(
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(6.0),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

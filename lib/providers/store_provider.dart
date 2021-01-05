@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
-  Map<String, int> cart = {"1": 4};
+  Map<String, int> cart = {};
   int totalPrice = 0;
   int toalNumberofProducts = 0;
   void addToCart(String productID) {

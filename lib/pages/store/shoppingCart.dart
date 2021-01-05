@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:zukes/providers/store_provider.dart';
 //import 'package:intl/intl.dart';
 
 const _startColumnWidth = 60.0;
@@ -11,38 +13,24 @@ class ShoppingCartPage extends StatefulWidget {
 }
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
-  List<Widget> _createShoppingCartRows() {
-    return [
-      ShoppingCartRow(
-        product: Product(
-            category: "null",
-            id: 1,
-            isFeatured: true,
-            name: (_) {
-              return "Item Name";
-            },
-            price: 11),
-        quantity: 3,
-        onPressed: () {
-          // model.removeItemFromCart(id);
-        },
-      ),
-      ShoppingCartRow(
-        product: Product(
-            category: "null",
-            id: 1,
-            isFeatured: true,
-            name: (_) {
-              return "Item Name";
-            },
-            price: 11),
-        quantity: 3,
-        onPressed: () {
-          // model.removeItemFromCart(id);
-        },
-      ),
-    ];
-  }
+  // List<Widget> _createShoppingCartRows() {
+  //   return [
+  //     ShoppingCartRow(
+  //       product: Product(
+  //           category: "null",
+  //           id: 1,
+  //           isFeatured: true,
+  //           name: (_) {
+  //             return "Item Name";
+  //           },
+  //           price: 11),
+  //       quantity: 3,
+  //       onPressed: () {
+  //         // model.removeItemFromCart(id);
+  //       },
+  //     ),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,24 +61,44 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       Text(
                         "Cart",
                         style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 10),
+                            fontWeight: FontWeight.w500, fontSize: 13),
                       ),
                       const SizedBox(width: 16),
-                      Text(
-                        "3 ITEMS",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w200, fontSize: 10),
-                      ),
+                      Consumer<StoreProvider>(
+                          builder: (context, storeP, child) {
+                        return Text(
+                          "${storeP.numberOfProducts()} ITEMS",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300, fontSize: 11),
+                        );
+                      }),
                     ],
                   ),
                 ),
                 const SizedBox(height: 16),
-                Semantics(
-                  sortKey: const OrdinalSortKey(1, name: _ordinalSortKeyName),
-                  child: Column(
-                    children: _createShoppingCartRows(),
-                  ),
-                ),
+                Consumer<StoreProvider>(builder: (context, storeP, child) {
+                  return Container(
+                    height: 120 * storeP.cart.length.toDouble(),
+                    child: ListView.builder(
+                        itemCount: storeP.cart.length,
+                        itemBuilder: (context, index) {
+                          return ShoppingCartRow(
+                            product: Product(
+                                category: "null",
+                                id: 1,
+                                isFeatured: true,
+                                name: (_) {
+                                  return "Item Name";
+                                },
+                                price: 11),
+                            quantity: 3,
+                            onPressed: () {
+                              // model.removeItemFromCart(id);
+                            },
+                          );
+                        }),
+                  );
+                }),
                 const SizedBox(height: 100),
                 ShoppingCartSummary(),
               ],
