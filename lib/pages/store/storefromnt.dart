@@ -24,8 +24,8 @@ class ProductSearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.31,
-      padding: EdgeInsets.all(8.0),
+      height: MediaQuery.of(context).size.height * 0.291,
+      padding: EdgeInsets.only(left: 8.0, right: 8.0),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -73,13 +73,12 @@ class ProductSearchSection extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 25),
+            SizedBox(height: 15),
             Text("Categories",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500)),
-            SizedBox(height: 5),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300)),
             CategoriesListNew(),
           ]),
     );
@@ -121,8 +120,8 @@ class ProductsListNew extends StatelessWidget {
           if (snapshot.hasData) {
             print("${snapshot.data}");
             return Container(
-              padding: EdgeInsets.all(8.0),
-              height: MediaQuery.of(context).size.height * 0.5,
+              padding: EdgeInsets.only(left: 8.0, right: 8.0),
+              height: MediaQuery.of(context).size.height * 0.7,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +144,8 @@ class ProductsListNew extends StatelessWidget {
                             prodname: snapshot.data[index]["product_name"],
                             imageUrl: snapshot.data[index]["product_image"],
                             productID: snapshot.data[index]["product_id"],
-                            packingType: snapshot.data[index]["product_id"],
+                            packingType: snapshot.data[index]
+                                ["product_packtype"],
                           );
                         }),
                   ),
@@ -173,7 +173,7 @@ class CategoriesListNew extends StatelessWidget {
           if (snapshot.hasData) {
             print("${snapshot.data}");
             return Container(
-              height: 100,
+              height: 80,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.all(8.0),
@@ -219,7 +219,7 @@ class _CategoryTileState extends State<CategoryTile> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(2.0),
           child: MaterialButton(
             minWidth: 20,
             height: 20, // CategoryTile(),

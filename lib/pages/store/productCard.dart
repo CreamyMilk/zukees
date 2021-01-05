@@ -136,7 +136,7 @@ class _ProductCardState extends State<ProductCard>
                           borderRadius:
                               BorderRadius.only(topLeft: Radius.circular(8))),
                       width: 40,
-                      height: counter == 0 ? 45 : 100,
+                      height: counter == 0 ? 50 : 108,
                       child: Column(children: [
                         counter != 0
                             ? IconButton(
