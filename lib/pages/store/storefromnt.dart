@@ -11,7 +11,8 @@ class StoreFront extends StatelessWidget {
         child: ListView(
           children: [
             ProductSearchSection(),
-            ProductsCarossel(),
+            //ProductsCarossel(),
+            ProductsListNew()
           ],
         ),
       ),
