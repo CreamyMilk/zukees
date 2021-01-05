@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 class StoreProvider extends ChangeNotifier {
-  Map<String, int> cart = {"1": 4};
+  //Print I should not be initaizing the values here so add to future
+  Map<String, int> cart = {"1": 4, "2": 0};
   int totalPrice = 0;
   int toalNumberofProducts = 0;
   void addToCart(String productID) {
@@ -28,6 +29,7 @@ class StoreProvider extends ChangeNotifier {
       print("Product is already at the minimum 0");
     } else {
       cart[productID] = cart[productID] - 1;
+      calculateNumberOfItems();
       notifyListeners();
     }
   }

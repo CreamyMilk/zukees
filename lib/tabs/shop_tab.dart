@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:zukes/pages/store/getShopData.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 
 class ShoppingTab extends StatelessWidget {
@@ -122,22 +121,5 @@ class Itemtile extends StatelessWidget {
               hash: """LXP~\$byZ?aM|_4x]R%Vs%OX3RQt6""",
               image: imageUrl)),
     );
-  }
-}
-
-Future getAllCategories(BuildContext ctx) async {
-  try {
-    final response = await http.get(
-      ("http://store.i-crib.co.ke/" + "categories"),
-      headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-      },
-    );
-    var myjson = json.decode(response.body);
-    //print(myjson);
-    return myjson;
-  } catch (SocketException) {
-    print("Could not fetch data");
   }
 }

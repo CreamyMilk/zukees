@@ -43,8 +43,9 @@ class _ProductCardState extends State<ProductCard>
 
   @override
   Widget build(BuildContext context) {
+    final String productIDString = widget.productID.toString();
     final storeP = Provider.of<StoreProvider>(context);
-    int counter = storeP.quantityOfProduct("1");
+    int counter = storeP.quantityOfProduct(productIDString);
     final animation =
         Tween<double>(begin: 0.1, end: 1.0).animate(_myanimationcontrol);
     double _getHeight(double value) {
@@ -140,7 +141,7 @@ class _ProductCardState extends State<ProductCard>
                         counter != 0
                             ? IconButton(
                                 onPressed: () {
-                                  storeP.decrementFromCart("1");
+                                  storeP.decrementFromCart(productIDString);
                                 },
                                 icon: Icon(Icons.remove, color: Colors.white),
                               )
@@ -153,7 +154,7 @@ class _ProductCardState extends State<ProductCard>
                             : Container(),
                         IconButton(
                           onPressed: () {
-                            storeP.addToCart("1");
+                            storeP.addToCart(productIDString);
                           },
                           icon: Icon(Icons.add, color: Colors.white),
                         )
