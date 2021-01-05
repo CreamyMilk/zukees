@@ -138,12 +138,12 @@ class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
             create: (context) => StoreProvider(),
             builder: (context, widgett) {
               final storeP = Provider.of<StoreProvider>(context);
-              double totalCartItems = storeP.numberOfItems();
+
               return Container(
-                margin: EdgeInsets.only(right: 20),
+                margin: EdgeInsets.only(right: 10),
                 decoration: BoxDecoration(
                     color: Colors.orange,
-                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 child: Row(
                   children: [
                     IconButton(
@@ -152,7 +152,7 @@ class StoreAppBar extends StatelessWidget with PreferredSizeWidget {
                           Navigator.of(context).pushNamed('/cart');
                         }),
                     Text(
-                      "$totalCartItems",
+                      "${storeP.toalNumberofProducts}",
                       style: TextStyle(fontSize: 15),
                     ),
                     SizedBox(width: 20)

@@ -1,14 +1,17 @@
 import 'package:flutter/foundation.dart';
 
 class StoreProvider extends ChangeNotifier {
-  Map<String, int> cart = {"1": 0};
-  int total = 0;
+  Map<String, int> cart = {"1": 4};
+  int totalPrice = 0;
+  int toalNumberofProducts = 0;
   void addToCart(String productID) {
     if (cart[productID] == null) {
       cart[productID] = 1;
+      calculateNumberOfItems();
       notifyListeners();
     } else {
-      cart[productID] = cart[productID] = 1 + 1;
+      cart[productID] = cart[productID] + 1;
+      calculateNumberOfItems();
       notifyListeners();
     }
   }
@@ -29,13 +32,14 @@ class StoreProvider extends ChangeNotifier {
     }
   }
 
-  double numberOfItems() {
-    double temp = 0;
-    final productQuantities = cart.keys;
-    for (String v in productQuantities) {
-      temp += double.parse(v);
+  void calculateNumberOfItems() {
+    int temp = 0;
+    final productQuantities = cart.values;
+    for (int v in productQuantities) {
+      temp += v;
     }
-    return temp;
+    toalNumberofProducts = temp;
+    notifyListeners();
   }
 
   int numberOfProducts() {
@@ -46,12 +50,13 @@ class StoreProvider extends ChangeNotifier {
     return cart[productID];
   }
 
-  void totalPrice() {
-    total = 0;
+  void totalPriceCalc() {
+    totalPrice = 0;
     cart.forEach((key, value) {
       //Do a llok up in hive or sql
       int unitCost = 23;
-      total += (value * unitCost);
+      totalPrice += (value * unitCost);
     });
+    notifyListeners();
   }
 }
