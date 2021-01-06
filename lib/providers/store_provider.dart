@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 
 class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
@@ -82,5 +83,30 @@ class StoreProvider extends ChangeNotifier {
     notifyListeners();
     print(
         "#########################################Stored products into Hive#################################################");
+  }
+
+  Future getAllProducts() async {
+    try {
+      final response = await get(
+        ("http://store.i-crib.co.ke/" + "products"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+        },
+      );
+      var myjson = json.decode(response.body);
+      Map<String, String> products;
+      for (dynamic product in myjson) {
+        //We Enode back to string cause hive kinda trippy with hash maps and Normal Maps
+        products[product["product_id"].toString()] = json.encode(product);
+      }
+      productDetails = products;
+      notifyListeners();
+      print(
+          "#########################################Stored products into Hive#################################################");
+      return myjson;
+    } catch (SocketException) {
+      print("Could not fetch data");
+    }
   }
 }

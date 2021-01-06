@@ -116,54 +116,56 @@ class StoreAppBar extends StatelessWidget {
 class ProductsListNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getAllProducts(context),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print("${snapshot.data}");
-            Provider.of<StoreProvider>(context).addProductDetails();
-            return Container(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Products",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w400)),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.40,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.all(4.0),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          return ProductCard(
-                            amount: snapshot.data[index]["amount"],
-                            heros: snapshot.data[index]["product_id"],
-                            prodname: snapshot.data[index]["product_name"],
-                            imageUrl: snapshot.data[index]["product_image"],
-                            productID: snapshot.data[index]["product_id"],
-                            packingType: snapshot.data[index]
-                                ["product_packtype"],
-                          );
-                        }),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            //Make UI to act as place holder first
-            return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              ),
-            );
-          }
-        });
+    return Consumer<StoreProvider>(builder: (context, storeP, child) {
+      return FutureBuilder(
+          future: storeP.getAllProducts(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              print("${snapshot.data}");
+
+              return Container(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Products",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w400)),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.40,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.all(4.0),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return ProductCard(
+                              amount: snapshot.data[index]["amount"],
+                              heros: snapshot.data[index]["product_id"],
+                              prodname: snapshot.data[index]["product_name"],
+                              imageUrl: snapshot.data[index]["product_image"],
+                              productID: snapshot.data[index]["product_id"],
+                              packingType: snapshot.data[index]
+                                  ["product_packtype"],
+                            );
+                          }),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              //Make UI to act as place holder first
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                ),
+              );
+            }
+          });
+    });
   }
 }
 
