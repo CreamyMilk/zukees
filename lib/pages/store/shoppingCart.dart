@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:zukes/providers/store_provider.dart';
 //import 'package:intl/intl.dart';
@@ -79,23 +83,34 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 Consumer<StoreProvider>(builder: (context, storeP, child) {
                   return Container(
                     height: 120 * storeP.cart.length.toDouble(),
-                    child: ListView.builder(
-                        itemCount: storeP.cart.length,
-                        itemBuilder: (context, index) {
-                          return ShoppingCartRow(
-                            product: Product(
-                                category: "null",
-                                id: 1,
-                                isFeatured: true,
-                                name: (_) {
-                                  return "Item Name";
-                                },
-                                price: 11),
-                            quantity: 3,
-                            onPressed: () {
-                              // model.removeItemFromCart(id);
-                            },
-                          );
+                    child: ValueListenableBuilder(
+                        valueListenable: Hive.box('user').listenable(),
+                        builder: (BuildContext context, box, Widget child) {
+                          final productSearch =
+                              json.decode(box.get("products"));
+                          var keys = storeP.cart.keys.toList();
+                          return ListView.builder(
+                              itemCount: storeP.cart.length,
+                              itemBuilder: (context, index) {
+                                final String productID = keys[index];
+                                return ShoppingCartRow(
+                                  product: Product(
+                                      //Fix the categories later
+                                      category: productSearch[productID]
+                                          ["category_id"],
+                                      id: productID,
+                                      isFeatured: true,
+                                      name: (_) {
+                                        return "${productSearch[productID]["product_name"]}";
+                                      },
+                                      price: productSearch[productID]
+                                          ["amount"]),
+                                  quantity: storeP.cart[productID],
+                                  onPressed: () {
+                                    storeP.removeFromCart(productID);
+                                  },
+                                );
+                              });
                         }),
                   );
                 }),
@@ -250,7 +265,7 @@ class ShoppingCartRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
-        key: ValueKey<int>(product.id),
+        key: ValueKey<String>(product.id), //Changed Types for better parsing
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
@@ -337,7 +352,7 @@ class Product {
         assert(assetAspectRatio != null);
 
   final String category;
-  final int id;
+  final String id;
   final bool isFeatured;
   final double assetAspectRatio;
 
@@ -346,7 +361,4 @@ class Product {
   final String Function(BuildContext) name;
 
   final int price;
-
-  String get assetName => '$id-0.jpg';
-  String get assetPackage => 'shrine_images';
 }
