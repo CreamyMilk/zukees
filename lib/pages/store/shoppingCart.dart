@@ -78,23 +78,26 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 ),
                 const SizedBox(height: 16),
                 Consumer<StoreProvider>(builder: (context, storeP, child) {
+                  storeP.addProductDetails();
                   return Container(
                       height: 120 * storeP.cart.length.toDouble(),
                       child: ListView.builder(
                           itemCount: storeP.cart.length,
                           itemBuilder: (context, index) {
-                            final String productID = "1";
+                            final allKeys = storeP.cart.keys.toList();
+                            final String productID = allKeys[index];
                             return ShoppingCartRow(
                               product: Product(
                                   //Fix the categories later
-                                  category: "1",
-                                  id: "23",
+                                  category: storeP.t[productID]["product_name"],
+                                  id: storeP.t[productID]["product_id"]
+                                      .toString(),
                                   isFeatured: true,
                                   name: (_) {
-                                    return "new";
+                                    return storeP.t[productID]["product_name"];
                                   },
-                                  price: 23),
-                              quantity: 34,
+                                  price: storeP.t[productID]["amount"]),
+                              quantity: storeP.cart[productID],
                               onPressed: () {
                                 storeP.removeFromCart(productID);
                               },

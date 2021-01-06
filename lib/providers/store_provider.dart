@@ -79,7 +79,7 @@ class StoreProvider extends ChangeNotifier {
     for (dynamic product in productDetails) {
       products[product["product_id"].toString()] = product;
     }
-    productDetails = products;
+    t = products;
     notifyListeners();
     print(
         "#########################################Stored products into Hive#################################################");
@@ -94,11 +94,10 @@ class StoreProvider extends ChangeNotifier {
           "content-type": "application/json",
         },
       );
-       productDetails = json.decode(response.body);
+      productDetails = json.decode(response.body);
       return productDetails;
     } catch (SocketException) {
       print("Could not fetch data");
     }
   }
-
 }
