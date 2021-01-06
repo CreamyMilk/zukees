@@ -7,6 +7,7 @@ class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
   Map<String, int> cart = {};
   dynamic productDetails;
+  dynamic t;
   int totalPrice = 0;
   int toalNumberofProducts = 0;
   void addToCart(String productID) {
@@ -73,11 +74,10 @@ class StoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addProductDetails(dynamic jsonBlob) {
+  void addProductDetails() {
     Map<String, String> products;
-    for (dynamic product in jsonBlob) {
-      //We Enode back to string cause hive kinda trippy with hash maps and Normal Maps
-      products[product["product_id"].toString()] = json.encode(product);
+    for (dynamic product in productDetails) {
+      products[product["product_id"].toString()] = product;
     }
     productDetails = products;
     notifyListeners();
@@ -94,19 +94,11 @@ class StoreProvider extends ChangeNotifier {
           "content-type": "application/json",
         },
       );
-      var myjson = json.decode(response.body);
-      Map<String, String> products;
-      for (dynamic product in myjson) {
-        //We Enode back to string cause hive kinda trippy with hash maps and Normal Maps
-        products[product["product_id"].toString()] = json.encode(product);
-      }
-      productDetails = products;
-      notifyListeners();
-      print(
-          "#########################################Stored products into Hive#################################################");
-      return myjson;
+       productDetails = json.decode(response.body);
+      return productDetails;
     } catch (SocketException) {
       print("Could not fetch data");
     }
   }
+
 }

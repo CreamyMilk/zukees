@@ -176,7 +176,7 @@ class CategoriesListNew extends StatelessWidget {
         future: getAllCategories(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print("${snapshot.data}");
+            //print("${snapshot.data}");
             return Container(
               height: 80,
               child: ListView.builder(
