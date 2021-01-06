@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zukes/pages/store/getShopData.dart';
 import 'package:zukes/pages/store/productCard.dart';
+import 'package:zukes/providers/store_provider.dart';
 
 class StoreFront extends StatelessWidget {
   @override
@@ -119,6 +121,7 @@ class ProductsListNew extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             print("${snapshot.data}");
+            Provider.of<StoreProvider>(context).addProductDetails();
             return Container(
               padding: EdgeInsets.only(left: 8.0, right: 8.0),
               height: MediaQuery.of(context).size.height * 0.7,

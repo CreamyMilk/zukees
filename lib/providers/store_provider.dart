@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 
 class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
   Map<String, int> cart = {};
+  dynamic productDetails;
   int totalPrice = 0;
   int toalNumberofProducts = 0;
   void addToCart(String productID) {
@@ -67,5 +70,17 @@ class StoreProvider extends ChangeNotifier {
       totalPrice += (value * unitCost);
     });
     notifyListeners();
+  }
+
+  void addProductDetails(dynamic jsonBlob) {
+    Map<String, String> products;
+    for (dynamic product in jsonBlob) {
+      //We Enode back to string cause hive kinda trippy with hash maps and Normal Maps
+      products[product["product_id"].toString()] = json.encode(product);
+    }
+    productDetails = products;
+    notifyListeners();
+    print(
+        "#########################################Stored products into Hive#################################################");
   }
 }
