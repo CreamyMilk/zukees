@@ -13,8 +13,6 @@ import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
 
 import 'package:zukes/providers/purchaceProvide.dart';
-import 'package:zukes/providers/rent_amounts_provider.dart';
-import 'package:zukes/providers/store_provider.dart';
 import 'package:zukes/tabs/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
 
@@ -59,21 +57,12 @@ class RouteGenerator {
 
       case '/home':
         return CupertinoPageRoute(
-            builder: (ctx) => MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider<RentAmountP>(
-                          create: (context) => RentAmountP()),
-                      ChangeNotifierProvider<StoreProvider>(
-                          create: (context) => StoreProvider()),
-                    ],
-                    builder: (context, child) {
-                      return AnnotatedRegion<SystemUiOverlayStyle>(
-                          value: SystemUiOverlayStyle(
-                              statusBarColor: Colors.transparent,
-                              statusBarIconBrightness: Brightness.dark,
-                              systemNavigationBarColor: Colors.white),
-                          child: BaseTabView());
-                    }));
+            builder: (ctx) => AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle(
+                    statusBarColor: Colors.transparent,
+                    statusBarIconBrightness: Brightness.dark,
+                    systemNavigationBarColor: Colors.white),
+                child: BaseTabView()));
       case '/alltens':
         return MaterialPageRoute(
             builder: (ctx) => AllTenatsTable(branch: args));

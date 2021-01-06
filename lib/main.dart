@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:zukes/providers/rent_amounts_provider.dart';
+import 'package:zukes/providers/store_provider.dart';
 import 'package:zukes/route_generator.dart';
 
 void main() async {
@@ -20,28 +23,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: Theme.of(context).textTheme.apply(
-              fontSizeFactor: 0.75,
-              fontSizeDelta: 1.0,
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<RentAmountP>(
+              create: (context) => RentAmountP()),
+          ChangeNotifierProvider<StoreProvider>(
+              create: (context) => StoreProvider()),
+        ],
+        builder: (context, child) {
+          return MaterialApp(
+            title: appTitle,
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              textTheme: Theme.of(context).textTheme.apply(
+                    fontSizeFactor: 0.75,
+                    fontSizeDelta: 1.0,
+                  ),
+              primaryColor: Colors.black,
+              accentColor: Colors.amber,
             ),
-        primaryColor: Colors.black,
-        accentColor: Colors.amber,
-      ),
-      darkTheme: ThemeData(
-        textTheme: Theme.of(context).textTheme.apply(
-              fontSizeFactor: 0.75,
-              fontSizeDelta: 1.0,
+            darkTheme: ThemeData(
+              textTheme: Theme.of(context).textTheme.apply(
+                    fontSizeFactor: 0.75,
+                    fontSizeDelta: 1.0,
+                  ),
+              primaryColor: Colors.black,
+              accentColor: Colors.amber,
             ),
-        primaryColor: Colors.black,
-        accentColor: Colors.amber,
-      ),
-      onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: '/',
-      navigatorKey: navKey,
-    );
+            onGenerateRoute: RouteGenerator.generateRoute,
+            initialRoute: '/',
+            navigatorKey: navKey,
+          );
+        });
   }
 }
