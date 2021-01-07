@@ -8,8 +8,8 @@ class StoreProvider extends ChangeNotifier {
 
   Map<String, dynamic> cart = {
     "1": {
-      "quantity": 1,
-      "details": {"name": 5}
+      "quantity": 0,
+      "details": null
     }
   };
   List<dynamic> productDetails;
@@ -42,12 +42,15 @@ class StoreProvider extends ChangeNotifier {
   }
 
   void decrementFromCart(String productID) {
-    if (cart[productID] == null) {
+    if (cart[productID]["quantity"] == null) {
       print("Tried to decrement value that is out of view");
-    } else if (cart[productID] == 0) {
+    } else if (cart[productID]["quantity"] == 0) {
       print("Product is already at the minimum 0");
     } else {
-      cart[productID] = cart[productID] - 1;
+            cart[productID] = {
+        "quantity": cart[productID]["quantity"] - 1,
+        "details": productDetails,
+      };
       calculateNumberOfItems();
       notifyListeners();
     }

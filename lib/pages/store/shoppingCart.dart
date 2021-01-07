@@ -87,7 +87,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             final allKeys = storeP.cart.keys.toList();
                             final String productID = allKeys[index];
                             final Map<String, dynamic> cartItem =
-                                storeP.cart[productID];
+                                storeP.cart[productID]["details"];
                             return ShoppingCartRow(
                               product: Product(
                                 category: cartItem["product_name"],
