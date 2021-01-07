@@ -88,24 +88,25 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             final String productID = allKeys[index];
                             final dynamic cartItem =
                                 storeP.cart[productID]["details"];
-                                print(cartItem);
-                                if(storeP.cart[productID]["quantity"] > 0){
-                            return ShoppingCartRow(
-                              product: Product(
-                                imageURL:cartItem["product_image"],
-                                category: cartItem["product_name"],
-                                id: cartItem["product_id"].toString(),
-                                isFeatured: true,
-                                name: (_) {
-                                  return cartItem["product_name"];
+                            print(cartItem);
+                            if (storeP.cart[productID]["quantity"] > 0) {
+                              return ShoppingCartRow(
+                                product: Product(
+                                  imageURL: cartItem["product_image"],
+                                  category: cartItem["product_name"],
+                                  id: cartItem["product_id"].toString(),
+                                  isFeatured: true,
+                                  name: (_) {
+                                    return cartItem["product_name"];
+                                  },
+                                  price: cartItem["amount"],
+                                ),
+                                quantity: storeP.cart[productID]["quantity"],
+                                onPressed: () {
+                                  storeP.removeFromCart(productID);
                                 },
-                                price: cartItem["amount"],
-                              ),
-                              quantity: storeP.cart[productID]["quantity"],
-                              onPressed: () {
-                                storeP.removeFromCart(productID);
-                              },
-                            );}else{
+                              );
+                            } else {
                               return Container();
                             }
                           }));
@@ -178,11 +179,14 @@ class ShoppingCartSummary extends StatelessWidget {
                         style: TextStyle(fontSize: 20),
                       ),
                       Expanded(
-                        child: Text(
-                          "\$910.85",
-                          style: largeAmountStyle,
-                          textAlign: TextAlign.end,
-                        ),
+                        child: Consumer<StoreProvider>(
+                            builder: (context, storeP, child) {
+                          return Text(
+                            "\$${storeP.totalPrice}",
+                            style: largeAmountStyle,
+                            textAlign: TextAlign.end,
+                          );
+                        }),
                       ),
                     ],
                   ),

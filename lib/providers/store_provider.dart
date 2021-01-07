@@ -6,9 +6,7 @@ import 'package:http/http.dart';
 class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
 
-  Map<String, dynamic> cart = {
-
-  };
+  Map<String, dynamic> cart = {};
   dynamic productDetails;
   int totalPrice = 0;
   int toalNumberofProducts = 0;
@@ -20,8 +18,8 @@ class StoreProvider extends ChangeNotifier {
         "quantity": 1,
         "details": productDetail,
       };
-      
-       calculateNumberOfItems();
+
+      calculateNumberOfItems();
       notifyListeners();
     } else {
       cart[productID] = {
@@ -35,19 +33,23 @@ class StoreProvider extends ChangeNotifier {
   }
 
   void removeFromCart(String productID) {
-    cart.remove(productID);
-      calculateNumberOfItems();
-      notifyListeners();
+    final productDetail = getProductDetails(productID);
+    cart[productID] = {
+      "quantity": 0,
+      "details": productDetail,
+    };
+    calculateNumberOfItems();
+    notifyListeners();
   }
 
   void decrementFromCart(String productID) {
-        final productDetail = getProductDetails(productID);
+    final productDetail = getProductDetails(productID);
     if (cart[productID]["quantity"] == null) {
       print("Tried to decrement value that is out of view");
     } else if (cart[productID]["quantity"] == 0) {
       print("Product is already at the minimum 0");
     } else {
-            cart[productID] = {
+      cart[productID] = {
         "quantity": cart[productID]["quantity"] - 1,
         "details": productDetail,
       };
@@ -58,11 +60,14 @@ class StoreProvider extends ChangeNotifier {
 
   void calculateNumberOfItems() {
     int temp = 0;
+    int amountSum = 0;
     final productQuantities = cart.values;
     for (Map<String, dynamic> v in productQuantities) {
       temp += v["quantity"];
+      amountSum += v["quantity"] * v["details"]["amount"];
     }
     toalNumberofProducts = temp;
+    totalPrice = amountSum;
     notifyListeners();
   }
 
@@ -80,24 +85,14 @@ class StoreProvider extends ChangeNotifier {
     }
   }
 
-  void totalPriceCalc() {
-    totalPrice = 0;
-    cart.forEach((key, value) {
-      //Do a llok up in hive or sql
-      int unitCost = 23;
-      totalPrice += (value * unitCost);
-    });
-    notifyListeners();
-  }
-
   dynamic getProductDetails(String prodID) {
-    dynamic response ;
+    dynamic response;
     for (dynamic v in productDetails) {
       if (v["product_id"].toString() == prodID) {
-        if(response ==null){
-          response= v;
+        if (response == null) {
+          response = v;
         }
-      } 
+      }
     }
     return response;
   }
