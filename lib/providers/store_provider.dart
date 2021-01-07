@@ -7,28 +7,26 @@ class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
 
   Map<String, dynamic> cart = {
-    "1": {
-      "quantity": 0,
-      "details": null
-    }
+
   };
-  List<dynamic> productDetails;
+  dynamic productDetails;
   int totalPrice = 0;
   int toalNumberofProducts = 0;
 
   void addToCart(String productID) {
-    final productDetails = getProductDetails(productID);
+    final productDetail = getProductDetails(productID);
     if (cart[productID] == null) {
       cart[productID] = {
         "quantity": 1,
-        "details": productDetails,
+        "details": productDetail,
       };
-      calculateNumberOfItems();
+      
+       calculateNumberOfItems();
       notifyListeners();
     } else {
       cart[productID] = {
         "quantity": cart[productID]["quantity"] + 1,
-        "details": productDetails,
+        "details": productDetail,
       };
 
       calculateNumberOfItems();
@@ -38,10 +36,12 @@ class StoreProvider extends ChangeNotifier {
 
   void removeFromCart(String productID) {
     cart.remove(productID);
-    notifyListeners();
+      calculateNumberOfItems();
+      notifyListeners();
   }
 
   void decrementFromCart(String productID) {
+        final productDetail = getProductDetails(productID);
     if (cart[productID]["quantity"] == null) {
       print("Tried to decrement value that is out of view");
     } else if (cart[productID]["quantity"] == 0) {
@@ -49,7 +49,7 @@ class StoreProvider extends ChangeNotifier {
     } else {
             cart[productID] = {
         "quantity": cart[productID]["quantity"] - 1,
-        "details": productDetails,
+        "details": productDetail,
       };
       calculateNumberOfItems();
       notifyListeners();
@@ -90,14 +90,16 @@ class StoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  dynamic getProductDetails(String productID) {
+  dynamic getProductDetails(String prodID) {
+    dynamic response ;
     for (dynamic v in productDetails) {
-      if (v["product_id"] == productID) {
-        return v;
-      } else {
-        return null;
-      }
+      if (v["product_id"].toString() == prodID) {
+        if(response ==null){
+          response= v;
+        }
+      } 
     }
+    return response;
   }
 
   Future getAllProducts() async {

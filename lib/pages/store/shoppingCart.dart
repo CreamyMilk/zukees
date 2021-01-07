@@ -86,10 +86,13 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             //Cart Builder
                             final allKeys = storeP.cart.keys.toList();
                             final String productID = allKeys[index];
-                            final Map<String, dynamic> cartItem =
+                            final dynamic cartItem =
                                 storeP.cart[productID]["details"];
+                                print(cartItem);
+                                if(storeP.cart[productID]["quantity"] > 0){
                             return ShoppingCartRow(
                               product: Product(
+                                imageURL:cartItem["product_image"],
                                 category: cartItem["product_name"],
                                 id: cartItem["product_id"].toString(),
                                 isFeatured: true,
@@ -98,11 +101,13 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                                 },
                                 price: cartItem["amount"],
                               ),
-                              quantity: storeP.cart[productID],
+                              quantity: storeP.cart[productID]["quantity"],
                               onPressed: () {
                                 storeP.removeFromCart(productID);
                               },
-                            );
+                            );}else{
+                              return Container();
+                            }
                           }));
                 }),
                 const SizedBox(height: 100),
@@ -275,7 +280,7 @@ class ShoppingCartRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Image.network(
-                        "https://shop.twiga.ke/static/ac2803e0375850278fe923c52490784b/8ea22/eddacd9e-8170-4e1d-8cad-0a550d5c2a461604472076.52438.webp",
+                        product.imageURL,
                         fit: BoxFit.cover,
                         width: 75,
                         height: 75,
@@ -331,12 +336,14 @@ class Product {
   const Product({
     @required this.category,
     @required this.id,
+    @required this.imageURL,
     @required this.isFeatured,
     @required this.name,
     @required this.price,
     this.assetAspectRatio = 1,
   })  : assert(category != null),
         assert(id != null),
+        assert(imageURL != null),
         assert(isFeatured != null),
         assert(name != null),
         assert(price != null),
@@ -344,6 +351,7 @@ class Product {
 
   final String category;
   final String id;
+  final String imageURL;
   final bool isFeatured;
   final double assetAspectRatio;
 

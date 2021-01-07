@@ -121,7 +121,7 @@ class ProductsListNew extends StatelessWidget {
           future: storeP.getAllProducts(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print("${snapshot.data}");
+              //print("${snapshot.data}");
 
               return Container(
                 padding: EdgeInsets.only(left: 8.0, right: 8.0),
