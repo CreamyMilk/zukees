@@ -146,7 +146,7 @@ class _CoolGraphState extends State<CoolGraph> {
                             List<DropdownMenuItem<String>> tempYear = [];
                             if (snapshot.hasData) {
                               snapshot.data.docs.forEach((doc) {
-                                print(doc["month"]);
+                                //print(doc["month"]);
 
                                 tempApi.add(doc["year"]);
                               });

@@ -78,25 +78,26 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 ),
                 const SizedBox(height: 16),
                 Consumer<StoreProvider>(builder: (context, storeP, child) {
-                  storeP.addProductDetails();
                   return Container(
                       height: 120 * storeP.cart.length.toDouble(),
                       child: ListView.builder(
                           itemCount: storeP.cart.length,
                           itemBuilder: (context, index) {
+                            //Cart Builder
                             final allKeys = storeP.cart.keys.toList();
                             final String productID = allKeys[index];
+                            final Map<String, dynamic> cartItem =
+                                storeP.cart[productID];
                             return ShoppingCartRow(
                               product: Product(
-                                  //Fix the categories later
-                                  category: storeP.t[productID]["product_name"],
-                                  id: storeP.t[productID]["product_id"]
-                                      .toString(),
-                                  isFeatured: true,
-                                  name: (_) {
-                                    return storeP.t[productID]["product_name"];
-                                  },
-                                  price: storeP.t[productID]["amount"]),
+                                category: cartItem["product_name"],
+                                id: cartItem["product_id"].toString(),
+                                isFeatured: true,
+                                name: (_) {
+                                  return cartItem["product_name"];
+                                },
+                                price: cartItem["amount"],
+                              ),
                               quantity: storeP.cart[productID],
                               onPressed: () {
                                 storeP.removeFromCart(productID);

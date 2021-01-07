@@ -5,18 +5,32 @@ import 'package:http/http.dart';
 
 class StoreProvider extends ChangeNotifier {
   //Print I should not be initaizing the values here so add to future
-  Map<String, int> cart = {};
-  dynamic productDetails;
-  dynamic t;
+
+  Map<String, dynamic> cart = {
+    "1": {
+      "quantity": 1,
+      "details": {"name": 5}
+    }
+  };
+  List<dynamic> productDetails;
   int totalPrice = 0;
   int toalNumberofProducts = 0;
+
   void addToCart(String productID) {
+    final productDetails = getProductDetails(productID);
     if (cart[productID] == null) {
-      cart[productID] = 1;
+      cart[productID] = {
+        "quantity": 1,
+        "details": productDetails,
+      };
       calculateNumberOfItems();
       notifyListeners();
     } else {
-      cart[productID] = cart[productID] + 1;
+      cart[productID] = {
+        "quantity": cart[productID]["quantity"] + 1,
+        "details": productDetails,
+      };
+
       calculateNumberOfItems();
       notifyListeners();
     }
@@ -42,8 +56,8 @@ class StoreProvider extends ChangeNotifier {
   void calculateNumberOfItems() {
     int temp = 0;
     final productQuantities = cart.values;
-    for (int v in productQuantities) {
-      temp += v;
+    for (Map<String, dynamic> v in productQuantities) {
+      temp += v["quantity"];
     }
     toalNumberofProducts = temp;
     notifyListeners();
@@ -55,12 +69,11 @@ class StoreProvider extends ChangeNotifier {
 
   int quantityOfProduct(String productID) {
     if (cart[productID] == null) {
-      cart[productID] = 0;
-
+      cart[productID] = {"quantity": 0, "details": null};
       notifyListeners();
-      return cart[productID];
+      return cart[productID]["quantity"];
     } else {
-      return cart[productID];
+      return cart[productID]["quantity"];
     }
   }
 
@@ -74,15 +87,14 @@ class StoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addProductDetails() {
-    Map<String, String> products;
-    for (dynamic product in productDetails) {
-      products[product["product_id"].toString()] = product;
+  dynamic getProductDetails(String productID) {
+    for (dynamic v in productDetails) {
+      if (v["product_id"] == productID) {
+        return v;
+      } else {
+        return null;
+      }
     }
-    t = products;
-    notifyListeners();
-    print(
-        "#########################################Stored products into Hive#################################################");
   }
 
   Future getAllProducts() async {
@@ -95,6 +107,7 @@ class StoreProvider extends ChangeNotifier {
         },
       );
       productDetails = json.decode(response.body);
+
       return productDetails;
     } catch (SocketException) {
       print("Could not fetch data");
