@@ -30,8 +30,7 @@ class _ProductCardState extends State<ProductCard>
 
   @override
   void initState() {
-    _myanimationcontrol =
-        AnimationController(value: this, duration: Duration(seconds: 1));
+    _myanimationcontrol = AnimationController(duration: Duration(seconds: 1));
     super.initState();
   }
 
