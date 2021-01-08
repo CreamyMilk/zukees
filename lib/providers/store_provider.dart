@@ -33,17 +33,17 @@ class StoreProvider extends ChangeNotifier {
   }
 
   void removeFromCart(String productID) {
-    final productDetail = getProductDetails(productID);
+    final previousDetail = cart[productID]["details"];
     cart[productID] = {
       "quantity": 0,
-      "details": productDetail,
+      "details": previousDetail,
     };
     calculateNumberOfItems();
     notifyListeners();
   }
 
   void decrementFromCart(String productID) {
-    final productDetail = getProductDetails(productID);
+    final previousDetail = cart[productID]["details"];
     if (cart[productID]["quantity"] == null) {
       print("Tried to decrement value that is out of view");
     } else if (cart[productID]["quantity"] == 0) {
@@ -51,7 +51,7 @@ class StoreProvider extends ChangeNotifier {
     } else {
       cart[productID] = {
         "quantity": cart[productID]["quantity"] - 1,
-        "details": productDetail,
+        "details": previousDetail,
       };
       calculateNumberOfItems();
       notifyListeners();
