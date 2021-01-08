@@ -122,7 +122,6 @@ class ProductsListNew extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               //print("${snapshot.data}");
-
               return Container(
                 padding: EdgeInsets.only(left: 8.0, right: 8.0),
                 height: MediaQuery.of(context).size.height * 0.7,

@@ -76,11 +76,13 @@ class StoreProvider extends ChangeNotifier {
   }
 
   int quantityOfProduct(String productID) {
+    final pDetail = getProductDetails(productID);
     if (cart[productID] == null) {
-      cart[productID] = {"quantity": 0, "details": null};
+      cart[productID] = {"quantity": 0, "details": pDetail};
       notifyListeners();
       return cart[productID]["quantity"];
     } else {
+      notifyListeners();
       return cart[productID]["quantity"];
     }
   }
