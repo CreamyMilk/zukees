@@ -80,9 +80,8 @@ class StoreProvider extends ChangeNotifier {
     if (cart[productID] == null) {
       cart[productID] = {"quantity": 0, "details": pDetail};
       notifyListeners();
-      return cart[productID]["quantity"];
+      return 0;
     } else {
-      notifyListeners();
       return cart[productID]["quantity"];
     }
   }
