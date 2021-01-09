@@ -1,5 +1,11 @@
+import 'dart:convert';
+
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:zukes/models/product_search_model.dart';
+
 import 'package:zukes/pages/store/getShopData.dart';
 import 'package:zukes/pages/store/productCard.dart';
 import 'package:zukes/providers/store_provider.dart';
@@ -56,21 +62,26 @@ class ProductSearchSection extends StatelessWidget {
                 SizedBox(width: 10),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.85,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "Required";
-                      } else {
-                        return null;
-                      }
+                  child: DropdownSearch<Data>(
+                    label: "Search Here",
+                    onFind: (String filter) async {
+                      String endpointUrl = 'https:/store.i-crib.co.ke/serach';
+                      Map<String, String> queryParams = {
+                        'q': filter,
+                      };
+                      String queryString =
+                          Uri(queryParameters: queryParams).query;
+
+                      String requestUrl = endpointUrl + '?' + queryString;
+                      var response = await get(requestUrl);
+
+                      var models = ProductSearchModel.fromJson(
+                          json.decode(response.body));
+                      return models.data;
                     },
-                    decoration: const InputDecoration(
-                      counterText: "",
-                      labelText: 'Search here',
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.teal)),
-                    ),
-                    maxLines: 1,
+                    onChanged: (Data data) {
+                      print(data);
+                    },
                   ),
                 ),
               ],
