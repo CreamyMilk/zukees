@@ -16,7 +16,7 @@ class ProfileTab extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Colors.white70,
+            backgroundColor: Colors.white,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Text(
@@ -26,8 +26,7 @@ class ProfileTab extends StatelessWidget {
               ),
             ),
             expandedHeight: 110,
-            pinned: true,
-            floating: true,
+            pinned: false,
             elevation: 0.5,
           ),
           SliverFillRemaining(
@@ -35,6 +34,7 @@ class ProfileTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
+                  dense: true,
                   title: ValueListenableBuilder(
                       valueListenable: Hive.box('user').listenable(),
                       builder: (BuildContext context, box, Widget child) {
@@ -49,10 +49,14 @@ class ProfileTab extends StatelessWidget {
                       child: Text("ON")),
                 ),
                 SizedBox(height: 10),
-                Text("GENERAL",
-                    style: TextStyle(
-                        color: Colors.grey, letterSpacing: 2, fontSize: 15)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text("GENERAL",
+                      style: TextStyle(
+                          color: Colors.grey, letterSpacing: 2, fontSize: 15)),
+                ),
                 ListTile(
+                  dense: true,
                   leading: IconButton(
                       onPressed: () {},
                       icon: Icon(Icons.person_outline,
@@ -61,8 +65,8 @@ class ProfileTab extends StatelessWidget {
                   subtitle: Text("Privacy , Notifications"),
                   trailing: Icon(Icons.arrow_forward_ios, size: 10),
                 ),
-                Divider(),
                 ListTile(
+                  dense: true,
                   title: Text("🛍 Shopping"),
                   subtitle: Text(
                     "Past Orders ,Receipts",
@@ -74,7 +78,6 @@ class ProfileTab extends StatelessWidget {
                       icon: Icon(Icons.receipt_long,
                           size: 25, color: Colors.black87)),
                 ),
-                Divider(),
                 ListTile(
                   dense: true,
                   onTap: () {
@@ -92,20 +95,22 @@ class ProfileTab extends StatelessWidget {
                     onPressed: () {},
                   ),
                 ),
-                Divider(),
                 SizedBox(height: 10),
-                Text("FEEDBACK",
-                    style: TextStyle(
-                        color: Colors.grey, letterSpacing: 2, fontSize: 15)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text("FEEDBACK",
+                      style: TextStyle(
+                          color: Colors.grey, letterSpacing: 2, fontSize: 15)),
+                ),
                 SizedBox(height: 2),
                 ListTile(
+                  dense: true,
                   title: Text("Report a bug"),
                   leading: IconButton(
                       icon: Icon(Icons.connect_without_contact,
                           size: 23, color: Colors.black87),
                       onPressed: () {}),
                 ),
-                Divider(),
                 ListTile(
                   dense: true,
                   title: Text("Send feedback"),

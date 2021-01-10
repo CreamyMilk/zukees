@@ -55,7 +55,7 @@ class ProductSearchSection extends StatelessWidget {
                               fontSize: 25.0)),
                     ]),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                   Text("Categories",
                       style: TextStyle(
                           color: Colors.black,
