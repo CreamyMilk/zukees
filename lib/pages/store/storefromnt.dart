@@ -1,14 +1,10 @@
-import 'dart:convert';
-
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:zukes/models/product_search_model.dart';
 
 import 'package:zukes/pages/store/getShopData.dart';
 import 'package:zukes/pages/store/productCard.dart';
 import 'package:zukes/providers/store_provider.dart';
+import 'package:zukes/pages/store/prodSearch.dart';
 
 class StoreFront extends StatelessWidget {
   @override
@@ -16,11 +12,16 @@ class StoreFront extends StatelessWidget {
     return SafeArea(
       child: Container(
         height: MediaQuery.of(context).size.height,
-        child: ListView(
+        child: Stack(
           children: [
-            ProductSearchSection(),
-            //ProductsCarossel(),
-            ProductsListNew()
+            ListView(
+              children: [
+                ProductSearchSection(),
+                //ProductsCarossel(),
+                ProductsListNew()
+              ],
+            ),
+            MatSearchBar(), //Switch to position for accurate positioning
           ],
         ),
       ),
@@ -60,30 +61,7 @@ class ProductSearchSection extends StatelessWidget {
               children: [
                 Icon(Icons.search, color: Colors.grey),
                 SizedBox(width: 10),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.85,
-                  child: DropdownSearch<Data>(
-                    label: "Search Here",
-                    onFind: (String filter) async {
-                      String endpointUrl = 'https:/store.i-crib.co.ke/serach';
-                      Map<String, String> queryParams = {
-                        'q': filter,
-                      };
-                      String queryString =
-                          Uri(queryParameters: queryParams).query;
-
-                      String requestUrl = endpointUrl + '?' + queryString;
-                      var response = await get(requestUrl);
-
-                      var models = ProductSearchModel.fromJson(
-                          json.decode(response.body));
-                      return models.data;
-                    },
-                    onChanged: (Data data) {
-                      print(data);
-                    },
-                  ),
-                ),
+                MatSearchBar(),
               ],
             ),
             SizedBox(height: 15),

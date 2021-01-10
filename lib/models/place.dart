@@ -1,31 +1,4 @@
-class ProductSearchModel {
-  int message;
-  List<Data> data;
-
-  ProductSearchModel({this.message, this.data});
-
-  ProductSearchModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    if (json['data'] != null) {
-      // ignore: deprecated_member_use
-      data = new List<Data>();
-      json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Data {
+class Place {
   int productId;
   int categoryId;
   String productName;
@@ -36,7 +9,7 @@ class Data {
   int stock;
   String productPacktype;
 
-  Data(
+  Place(int i,
       {this.productId,
       this.categoryId,
       this.productName,
@@ -47,7 +20,7 @@ class Data {
       this.stock,
       this.productPacktype});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Place.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
     categoryId = json['category_id'];
     productName = json['product_name'];

@@ -62,7 +62,9 @@ class _OTPTextFieldState extends State<OTPTextField> {
   @override
   void initState() {
     super.initState();
+    // ignore: deprecated_member_use
     _focusNodes = List<FocusNode>(widget.length);
+    // ignore: deprecated_member_use
     _textControllers = List<TextEditingController>(widget.length);
 
     _pin = List.generate(widget.length, (int i) {

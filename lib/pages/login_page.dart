@@ -31,7 +31,6 @@ class _LoginOTPState extends State<LoginOTP> {
       onWillPop: () async => false,
       child: Stack(
         children: [
-         
           Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
@@ -42,7 +41,7 @@ class _LoginOTPState extends State<LoginOTP> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                   //Flushbar(message:"👷‍♂️ Coming Soon...")..show(context);
+                  //Flushbar(message:"👷‍♂️ Coming Soon...")..show(context);
                   //Navigator.of(context).pushNamed('/url');
                 },
               ),
@@ -95,7 +94,7 @@ class _LoginOTPState extends State<LoginOTP> {
                       child: _myAnimatedWidget,
                     ),
                     Spacer(flex: 2),
-                     _ThreeBButtons(),
+                    _ThreeBButtons(),
                   ],
                 ),
               ],
@@ -115,7 +114,7 @@ class _ThreeBButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //double pageHeight = MediaQuery.of(context).size.height;
-      return Align(
+    return Align(
         alignment: Alignment.bottomCenter,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,20 +165,18 @@ class _ThreeBButtons extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                   
-
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                            content:Text("Turn on location service"),
-                            action: SnackBarAction(
-                              textColor: Colors.yellow,
-                              label:"Turn On",
-                              onPressed:(){
-                                //AppSettings.openLocationSettings();
-                                print("Opening Settings");
-                              }
-                            ),));
-                      },
-                    
+                      // ignore: deprecated_member_use
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        content: Text("Turn on location service"),
+                        action: SnackBarAction(
+                            textColor: Colors.yellow,
+                            label: "Turn On",
+                            onPressed: () {
+                              //AppSettings.openLocationSettings();
+                              print("Opening Settings");
+                            }),
+                      ));
+                    },
                     child: Container(
                       alignment: Alignment.bottomCenter,
                       height: MediaQuery.of(context).size.height * 0.20495,
@@ -263,12 +260,13 @@ class _ThreeBButtons extends StatelessWidget {
                                   size: constraints.maxWidth / 2.5,
                                   color: Colors.white,
                                 ),
-                                Text("Help\nContacts",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  )
+                                Text(
+                                  "Help\nContacts",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -282,9 +280,8 @@ class _ThreeBButtons extends StatelessWidget {
             SizedBox(width: 5),
           ],
         ));
-    }
   }
-
+}
 
 class _Logincard extends StatelessWidget {
   const _Logincard({
@@ -340,6 +337,7 @@ class _Logincard extends StatelessWidget {
     );
   }
 }
+
 class PopupForm extends StatefulWidget {
   PopupForm({Key key}) : super(key: key);
 
@@ -348,10 +346,10 @@ class PopupForm extends StatefulWidget {
 }
 
 class _PopupFormState extends State<PopupForm> {
-   TextEditingController _mytextcontroller;
-  bool _otploading=false;
-  int otpstatus=0;
-  String mobile="";
+  TextEditingController _mytextcontroller;
+  bool _otploading = false;
+  int otpstatus = 0;
+  String mobile = "";
   //   String validatePassword(String value) {
   //   print('Value $value');
 
@@ -363,109 +361,110 @@ class _PopupFormState extends State<PopupForm> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 100),
-          child: AlertDialog(
-            title: Icon(Icons.phone),
-            content: Container(
-              height: 200,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+      constraints: BoxConstraints(maxHeight: 100),
+      child: AlertDialog(
+        title: Icon(Icons.phone),
+        content: Container(
+          height: 200,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Please enter the number provided during house registration.',
+                textAlign: TextAlign.center,
+              ),
+              Divider(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Please enter the number provided during house registration.',
-                    textAlign: TextAlign.center,
-                  ),
-                  Divider(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Spacer(flex: 2),
-                      Expanded(
-                        flex: 20,
-                        child: TextField(
-                          controller: _mytextcontroller,
-                          showCursor: true,
-                          autofocus: true,
-                          maxLength:13,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            //errorText: validatePassword(mobile),
-                          ),
-                          onChanged: (value) {
-                            mobile = value;
-                            print(mobile);
-                          },
-                        ),
+                  Spacer(flex: 2),
+                  Expanded(
+                    flex: 20,
+                    child: TextField(
+                      controller: _mytextcontroller,
+                      showCursor: true,
+                      autofocus: true,
+                      maxLength: 13,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                        //errorText: validatePassword(mobile),
                       ),
-                      Spacer(flex: 1),
-                    ],
-                  ),
-                  SizedBox(height: 30),
-                  Spacer(),
-                  Text(
-                    "By choosing to proceed, you agree to the following terms of service",
-                    style: const TextStyle(color: Colors.black54, fontSize: 12),
-                    textAlign: TextAlign.center,
-                  ),
-                  GestureDetector(
-                  onTap: () async {
-                    final url = 'https://i-crib.co.ke/terms';
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
-                      child: Text("Terms & Conditions",                   
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.blue,
-                        fontSize: 12,
-                      ),
+                      onChanged: (value) {
+                        mobile = value;
+                        print(mobile);
+                      },
                     ),
-                  )],
+                  ),
+                  Spacer(flex: 1),
+                ],
               ),
-            ),
-            actions: <Widget>[
-              OutlineButton(
-                child: Text('CANCEL'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+              SizedBox(height: 30),
+              Spacer(),
+              Text(
+                "By choosing to proceed, you agree to the following terms of service",
+                style: const TextStyle(color: Colors.black54, fontSize: 12),
+                textAlign: TextAlign.center,
               ),
-              _otploading?CircularProgressIndicator(strokeWidth:1.0):
-              MaterialButton(
-                color: Theme.of(context).primaryColor,
-                child: Text('PROCCED',style:TextStyle(
-                  color:Colors.white
-                )),
-                //getOTP()
-                onPressed: () async {
-                  //final appsignature = await SmsAutoFill().getAppSignature;             
-                  if (mobile.length > 9) {
-                    setState((){
-                    _otploading =true;
-                  });
-                  otpstatus= await getOTP(mobile, context);
-                  if(otpstatus == 0){
-                    setState((){
-                      _otploading =true;
-                  });}}else {
-                    print("Lenght");
+              GestureDetector(
+                onTap: () async {
+                  final url = 'https://i-crib.co.ke/terms';
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
                   }
                 },
-              ),
+                child: Text(
+                  "Terms & Conditions",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.blue,
+                    fontSize: 12,
+                  ),
+                ),
+              )
             ],
           ),
-        );
+        ),
+        actions: <Widget>[
+          OutlineButton(
+            child: Text('CANCEL'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          _otploading
+              ? CircularProgressIndicator(strokeWidth: 1.0)
+              : MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  child: Text('PROCCED', style: TextStyle(color: Colors.white)),
+                  //getOTP()
+                  onPressed: () async {
+                    //final appsignature = await SmsAutoFill().getAppSignature;
+                    if (mobile.length > 9) {
+                      setState(() {
+                        _otploading = true;
+                      });
+                      otpstatus = await getOTP(mobile, context);
+                      if (otpstatus == 0) {
+                        setState(() {
+                          _otploading = true;
+                        });
+                      }
+                    } else {
+                      print("Lenght");
+                    }
+                  },
+                ),
+        ],
+      ),
+    );
   }
 }
 
-
 Future<void> showMyDialog(BuildContext context) async {
-
   return showDialog(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -475,38 +474,45 @@ Future<void> showMyDialog(BuildContext context) async {
   );
 }
 
-Future getOTP(mobile,context) async {
+Future getOTP(mobile, context) async {
   OtpResponse data;
   print('Phone $mobile');
   if (mobile != null) {
-    try{
-    final response = await http.post(
-      ("https://land.i-crib.co.ke/" + "login"),
-      headers: {
-        "Accept": "application/json",
-        "content-type": "application/json",
-      },
-      body: jsonEncode(
-        {
-          'phone': '$mobile'
-          //'appsignature': appsign,
+    try {
+      final response = await http.post(
+        ("https://land.i-crib.co.ke/" + "login"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
         },
-      ),
-    );
-    var myjson = json.decode(response.body);
-    data = OtpResponse.fromJson(myjson);
-    print(data.description);
-  
-    Navigator.of(context).pushNamed('/verify', arguments: mobile);
-  }catch(SocketException){
-  
-showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-        title: Text("No Network connection."),
-        actions: [MaterialButton(color:Colors.black,onPressed:(){},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
-  }}else {
+        body: jsonEncode(
+          {
+            'phone': '$mobile'
+            //'appsignature': appsign,
+          },
+        ),
+      );
+      var myjson = json.decode(response.body);
+      data = OtpResponse.fromJson(myjson);
+      print(data.description);
+
+      Navigator.of(context).pushNamed('/verify', arguments: mobile);
+    } catch (SocketException) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("No Network connection."),
+                actions: [
+                  MaterialButton(
+                      color: Colors.black,
+                      onPressed: () {},
+                      child: Text("Turn on",
+                          style: TextStyle(color: Colors.white)))
+                ],
+              ));
+    }
+  } else {
     print('Please add number');
   }
-    return 0;
+  return 0;
 }

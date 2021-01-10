@@ -42,6 +42,9 @@ dependencies:
   flare_flutter:
   shared_preferences:
   cupertino_icons: ^0.1.3
+  implicitly_animated_reorderable_list: ^0.2.5
+  material_design_icons_flutter: ^4.0.5345
+  material_floating_search_bar:
 
 dev_dependencies:
   flutter_test:
