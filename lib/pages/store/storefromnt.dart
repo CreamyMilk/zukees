@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:zukes/pages/store/getShopData.dart';
 import 'package:zukes/pages/store/productCard.dart';
 import 'package:zukes/providers/store_provider.dart';
-import 'package:zukes/pages/store/prodSearch.dart';
+
+import 'prodSearch.dart';
 
 class StoreFront extends StatelessWidget {
   @override
@@ -12,16 +14,11 @@ class StoreFront extends StatelessWidget {
     return SafeArea(
       child: Container(
         height: MediaQuery.of(context).size.height,
-        child: Stack(
+        child: ListView(
           children: [
-            ListView(
-              children: [
-                ProductSearchSection(),
-                //ProductsCarossel(),
-                ProductsListNew()
-              ],
-            ),
-            MatSearchBar(), //Switch to position for accurate positioning
+            ProductSearchSection(),
+            //ProductsCarossel(),
+            ProductsListNew()
           ],
         ),
       ),
@@ -32,46 +29,56 @@ class StoreFront extends StatelessWidget {
 class ProductSearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.291,
-      padding: EdgeInsets.only(left: 8.0, right: 8.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+    return SingleChildScrollView(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.40,
+        padding: EdgeInsets.only(left: 8.0, right: 8.0),
+        child: Stack(
           children: [
-            RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: "Our \n",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 30.0)),
-                TextSpan(
-                    text: "Products",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 25.0)),
-              ]),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: "Our \n",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 30.0)),
+                      TextSpan(
+                          text: "Products",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 25.0)),
+                    ]),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                  Text("Categories",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300)),
+                  CategoriesListNew(),
+                ]),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.08,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: 10),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    child: MatSearchBar(),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(Icons.search, color: Colors.grey),
-                SizedBox(width: 10),
-                MatSearchBar(),
-              ],
-            ),
-            SizedBox(height: 15),
-            Text("Categories",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300)),
-            CategoriesListNew(),
-          ]),
+          ],
+        ),
+      ),
     );
   }
 }

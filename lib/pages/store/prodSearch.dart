@@ -32,6 +32,13 @@ class _MatSearchBarState extends State<MatSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    return Column(children: [
+      Container(height: 15, color: Colors.transparent),
+      Container(height: 700, child: buildSearchBar()),
+    ]);
+  }
+
+  Widget buildSearchBar() {
     final actions = [
       FloatingSearchBarAction(
         showIfOpened: false,
@@ -47,34 +54,35 @@ class _MatSearchBarState extends State<MatSearchBar> {
 
     final isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
-    return Column(children: [
-      Container(
-          height: 500,
-          child: Consumer<SearchModel>(
-            builder: (context, model, _) => FloatingSearchBar(
-              elevation: 0.0,
-              automaticallyImplyBackButton: false,
-              controller: controller,
-              clearQueryOnClose: true,
-              hint: 'Search Here...',
-              iconColor: Colors.grey,
-              transitionDuration: const Duration(milliseconds: 800),
-              transitionCurve: Curves.easeInOutCubic,
-              physics: const BouncingScrollPhysics(),
-              axisAlignment: isPortrait ? 0.0 : -1.0,
-              openAxisAlignment: 0.0,
-              maxWidth: isPortrait ? 600 : 500,
-              actions: actions,
-              progress: model.isLoading,
-              debounceDelay: const Duration(milliseconds: 500),
-              onQueryChanged: model.onQueryChanged,
-              scrollPadding: EdgeInsets.zero,
-              transition: CircularFloatingSearchBarTransition(),
-              builder: (context, _) => buildExpandableBody(model),
-              //body: Container(),
-            ),
-          )),
-    ]);
+
+    return Container(
+      height: 100,
+      child: Consumer<SearchModel>(
+        builder: (context, model, _) => FloatingSearchBar(
+          elevation: 0.0,
+          backdropColor: Colors.white10,
+          automaticallyImplyBackButton: false,
+          controller: controller,
+          clearQueryOnClose: true,
+          hint: 'Search Here...',
+          iconColor: Colors.grey,
+          transitionDuration: const Duration(milliseconds: 800),
+          transitionCurve: Curves.easeInOutCubic,
+          physics: const BouncingScrollPhysics(),
+          axisAlignment: isPortrait ? 0.0 : -1.0,
+          openAxisAlignment: 0.0,
+          maxWidth: isPortrait ? 600 : 500,
+          actions: actions,
+          progress: model.isLoading,
+          debounceDelay: const Duration(milliseconds: 500),
+          onQueryChanged: model.onQueryChanged,
+          scrollPadding: EdgeInsets.zero,
+          transition: CircularFloatingSearchBarTransition(),
+          builder: (context, _) => buildExpandableBody(model),
+          //body: Container(),
+        ),
+      ),
+    );
   }
 
   Widget buildExpandableBody(SearchModel model) {

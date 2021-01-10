@@ -168,76 +168,75 @@ class ShoppingCartSummary extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: const EdgeInsetsDirectional.only(end: 16),
-            child: Column(
-              children: [
-                MergeSemantics(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "TOTAL",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      Expanded(
-                        child: Consumer<StoreProvider>(
-                            builder: (context, storeP, child) {
-                          return Text(
-                            "\$${storeP.totalPrice}",
-                            style: largeAmountStyle,
+            child: Consumer<StoreProvider>(builder: (context, storeP, child) {
+              return Column(
+                children: [
+                  MergeSemantics(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "TOTAL",
+                          style:
+                              TextStyle(color: Colors.green[900], fontSize: 20),
+                        ),
+                        Expanded(
+                            child: Text(
+                          "\$${storeP.totalPrice}",
+                          style: largeAmountStyle,
+                          textAlign: TextAlign.end,
+                        )),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  MergeSemantics(
+                    child: Row(
+                      children: [
+                        Text("Subtotal:"),
+                        Expanded(
+                          child: Text(
+                            "\$${((storeP.totalPrice) * 0.95).toStringAsFixed(2)}",
+                            style: smallAmountStyle,
                             textAlign: TextAlign.end,
-                          );
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                MergeSemantics(
-                  child: Row(
-                    children: [
-                      Text("Subtotal:"),
-                      Expanded(
-                        child: Text(
-                          "\$54.00",
-                          style: smallAmountStyle,
-                          textAlign: TextAlign.end,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                MergeSemantics(
-                  child: Row(
-                    children: [
-                      Text("Shipping:"),
-                      Expanded(
-                        child: Text(
-                          "\$54.00",
-                          style: smallAmountStyle,
-                          textAlign: TextAlign.end,
+                  const SizedBox(height: 4),
+                  MergeSemantics(
+                    child: Row(
+                      children: [
+                        Text("Shipping:"),
+                        Expanded(
+                          child: Text(
+                            "\$${((storeP.totalPrice) * 0.03).toStringAsFixed(2)}",
+                            style: smallAmountStyle,
+                            textAlign: TextAlign.end,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                MergeSemantics(
-                  child: Row(
-                    children: [
-                      Text("Tax:"),
-                      Expanded(
-                        child: Text(
-                          "\$4.48",
-                          style: smallAmountStyle,
-                          textAlign: TextAlign.end,
+                  const SizedBox(height: 4),
+                  MergeSemantics(
+                    child: Row(
+                      children: [
+                        Text("Tax:"),
+                        Expanded(
+                          child: Text(
+                            "\$${((storeP.totalPrice) * 0.02).toStringAsFixed(2)}",
+                            style: smallAmountStyle,
+                            textAlign: TextAlign.end,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              );
+            }),
           ),
         ),
       ],

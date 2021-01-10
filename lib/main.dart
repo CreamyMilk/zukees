@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive/hive.dart';
@@ -7,9 +9,14 @@ import 'package:zukes/providers/rent_amounts_provider.dart';
 import 'package:zukes/providers/store_provider.dart';
 import 'package:zukes/route_generator.dart';
 
+import 'models/searchModel.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (!Platform.isLinux) {
+    await Firebase.initializeApp();
+  }
+
   await Hive.initFlutter();
   await Hive.openBox('user');
 
@@ -29,6 +36,8 @@ class MyApp extends StatelessWidget {
               create: (context) => RentAmountP()),
           ChangeNotifierProvider<StoreProvider>(
               create: (context) => StoreProvider()),
+          ChangeNotifierProvider<SearchModel>(
+              create: (context) => SearchModel()),
         ],
         builder: (context, child) {
           return MaterialApp(

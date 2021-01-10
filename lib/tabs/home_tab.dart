@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:zukes/widgets/getNewAPIdata.dart';
 import 'package:zukes/widgets/user_profile_card.dart';
@@ -20,7 +22,12 @@ class HomeTab extends StatelessWidget {
                 ),
                 Text("Hello from zukes 👋"),
                 UserProfileCard(),
-                CoolGraph(firestoreKey: "building8"),
+
+                !Platform.isLinux
+                    ? CoolGraph(firestoreKey: "building8")
+                    : Container(color: Colors.blue),
+
+                //
                 SizedBox(height: 100) //Add Hive to proivde this value
               ],
             ),
