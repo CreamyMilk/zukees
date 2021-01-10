@@ -95,7 +95,7 @@ class _MatSearchBarState extends State<MatSearchBar> {
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),
-        items: model.suggestions.take(6).toList(),
+        items: model.suggestions.take(4).toList(),
         areItemsTheSame: (a, b) => a == b,
         itemBuilder: (context, animation, place, i) {
           return SizeFadeTransition(

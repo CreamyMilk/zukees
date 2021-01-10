@@ -31,7 +31,7 @@ class ProductSearchSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.40,
+        height: MediaQuery.of(context).size.height * 0.38,
         padding: EdgeInsets.only(left: 8.0, right: 8.0),
         child: Stack(
           children: [
@@ -55,7 +55,7 @@ class ProductSearchSection extends StatelessWidget {
                               fontSize: 25.0)),
                     ]),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                   Text("Categories",
                       style: TextStyle(
                           color: Colors.black,
