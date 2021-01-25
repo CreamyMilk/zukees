@@ -118,8 +118,7 @@ class TwigList extends StatelessWidget {
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
-              return apiData[index]["bill_status"] != 0 ||
-                      apiData[index]["bill_status"] != "0"
+              return apiData[index]["bill_status"] != "0"
                   ? Container(
                       padding: EdgeInsets.only(left: 12.0),
                       height: MediaQuery.of(context).size.height * 0.11,
@@ -234,96 +233,91 @@ class TwigUnPaidList extends StatelessWidget {
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
-              return apiData[index]["bill_status"] == 0 ||
-                      apiData[index]["bill_status"] == "0"
-                  ? Container(
-                      padding: EdgeInsets.only(left: 12.0),
-                      height: MediaQuery.of(context).size.height * 0.11,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              return Container(
+                  padding: EdgeInsets.only(left: 12.0),
+                  height: MediaQuery.of(context).size.height * 0.11,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(height: 4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(height: 4),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              Icon(Icons.check_circle,
+                                  size: 12, color: Colors.green),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.check_circle,
-                                      size: 12, color: Colors.green),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Tenant Name",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text("${apiData[index]["r_name"]}\n",
-                                          textAlign: TextAlign.left),
-                                      Text(" House No.",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(" ${apiData[index]["unit_no"]}",
-                                          textAlign: TextAlign.left),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("Rent",
+                                  Text("Tenant Name",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text("${apiData[index]["total_rent"]}\n"),
-                                  Text("Month",
+                                  Text("${apiData[index]["r_name"]}\n",
+                                      textAlign: TextAlign.left),
+                                  Text(" House No.",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text(" ${apiData[index]["month_name"]} ",
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              apiData[index]["bill_status"] != 0
-                                                  ? Colors.lightGreen[200]
-                                                  : Colors.red[200])),
+                                  Text(" ${apiData[index]["unit_no"]}",
+                                      textAlign: TextAlign.left),
                                 ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("--"),
-                                ],
-                              ),
-                              PopupMenuButton<String>(
-                                onSelected: (o) async {
-                                  final url =
-                                      "tel:${apiData[index]["r_contact"]}";
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return {'Contact'}.map((String choice) {
-                                    return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: Text(choice),
-                                    );
-                                  }).toList();
-                                },
                               ),
                             ],
                           ),
-                          SizedBox(height: 4),
-                          Divider(height: 1),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Rent",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              Text("${apiData[index]["total_rent"]}\n"),
+                              Text("Month",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              Text(" ${apiData[index]["month_name"]} ",
+                                  style: TextStyle(
+                                      backgroundColor:
+                                          apiData[index]["bill_status"] != 0
+                                              ? Colors.lightGreen[200]
+                                              : Colors.red[200])),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("--"),
+                            ],
+                          ),
+                          PopupMenuButton<String>(
+                            onSelected: (o) async {
+                              final url = "tel:${apiData[index]["r_contact"]}";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return {'Contact'}.map((String choice) {
+                                return PopupMenuItem<String>(
+                                  value: choice,
+                                  child: Text(choice),
+                                );
+                              }).toList();
+                            },
+                          ),
                         ],
-                      ))
-                  : null;
+                      ),
+                      SizedBox(height: 4),
+                      Divider(height: 1),
+                    ],
+                  ));
             },
           ),
         ),
