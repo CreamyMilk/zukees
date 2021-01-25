@@ -16,7 +16,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
     print('Branch $branchId');
     try {
       final response = await http.get(
-        ("http://92.222.201.138/a"),
+        ("http://92.222.201.138:9001/a"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",

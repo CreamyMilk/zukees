@@ -11,12 +11,16 @@ class BuildingProfilePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-                minRadius: 10,
-                maxRadius: 55,
-                backgroundColor: Color(0xfffe8fcfa),
-                child: Text("ON")),
+            Hero(
+              tag: "profilepic",
+              child: CircleAvatar(
+                  minRadius: 10,
+                  maxRadius: 55,
+                  backgroundColor: Color(0xfffe8fcfa),
+                  child: Text("ON")),
+            ),
             Text("Minor Descriptions")
           ],
         ),

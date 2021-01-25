@@ -72,7 +72,7 @@ class _ProductCardState extends State<ProductCard>
           return AnimatedContainer(
             duration: Duration(seconds: 1),
             height:
-                500 * _getHeight(animation.value), //Heights of product cards
+                450 * _getHeight(animation.value), //Heights of product cards
             width: 200 * _getHeight(animation.value),
             color: Colors.transparent,
             child: Stack(
@@ -109,20 +109,6 @@ class _ProductCardState extends State<ProductCard>
                               Spacer(),
                             ],
                           ),
-                          // Hero(
-                          //   tag: "button $productID",
-                          //   child: MaterialButton(
-                          //     color: Colors.red,
-                          //     onPressed: () {
-                          //       Navigator.of(context).pushNamed("/product", arguments: productID);
-                          //     },
-                          //     child: Text("Buy Now",
-                          //         style: TextStyle(
-                          //             fontSize: 14.4,
-                          //             fontFamily: 'Poppins',
-                          //             color: Colors.white)),
-                          //   ),
-                          // ),
                           SizedBox(height: 5)
                         ]),
                   ),

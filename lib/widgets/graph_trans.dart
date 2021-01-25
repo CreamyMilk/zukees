@@ -212,9 +212,9 @@ class _CoolGraphState extends State<CoolGraph> {
 
   Container _getVisualAmounts(double paid, double due) {
     const TextStyle beBold =
-        TextStyle(fontSize: 19, fontWeight: FontWeight.w500);
+        TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
     const TextStyle beGreen = TextStyle(
-        fontSize: 17, fontWeight: FontWeight.w500, color: Colors.green);
+        fontSize: 17, fontWeight: FontWeight.w400, color: Colors.green);
     const TextStyle beRed =
         TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.red);
     return Container(
