@@ -11,7 +11,7 @@ class BuildingProfilePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Hero(
               tag: "profilepic",

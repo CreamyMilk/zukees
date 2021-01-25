@@ -160,13 +160,14 @@ class BirthForm extends StatelessWidget {
       showCupertinoModalPopup(
           context: ctx,
           builder: (_) => Container(
-                height: 400,
+                height: 300,
                 color: Color.fromARGB(255, 255, 255, 255),
                 child: Column(
                   children: [
                     Container(
-                      height: 300,
+                      height: 200,
                       child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.date,
                           initialDateTime: DateTime.now(),
                           onDateTimeChanged: (val) {
                             // print(val);

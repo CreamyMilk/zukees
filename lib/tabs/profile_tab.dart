@@ -8,7 +8,7 @@ import 'package:zukes/widgets/getNewAPIdata.dart';
 class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _version = "0.0.8 Alpha";
+    String _version = "0.0.9 Alpha";
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
         child: RefreshIndicator(
@@ -25,7 +25,7 @@ class ProfileTab extends StatelessWidget {
                     TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
               ),
             ),
-            expandedHeight: 70,
+            expandedHeight: 65,
             pinned: false,
             elevation: 0.5,
           ),
@@ -138,20 +138,20 @@ class ProfileTab extends StatelessWidget {
                       onPressed: () {}),
                 ),
                 ListTile(
+                  onTap: () async {
+                    final url =
+                        "https://wa.me/254714164318?text=The%20App%20is%20quite%20nice.%20I%20would%20suggest%20you%20add%20feature ....";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
                   dense: true,
                   title: Text("Send feedback"),
                   leading: IconButton(
-                    icon: Icon(Icons.send, size: 23, color: Colors.black87),
-                    onPressed: () async {
-                      final url =
-                          "https://wa.me/254714164318?text=The%20App%20is%20quite%20nice.%20I%20would%20suggest%20you%20add%20feature ....";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                  ),
+                      icon: Icon(Icons.send, size: 23, color: Colors.black87),
+                      onPressed: () {}),
                 ),
                 Spacer(),
                 Container(
