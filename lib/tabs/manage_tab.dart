@@ -25,6 +25,7 @@ class _ManageTabState extends State<ManageTab> {
                 //PropertyManageCard(),
                 Text("Hello from managment👋\n\n"),
                 NewPropertCard(),
+                SizedBox(height: 5),
                 EmployeeManageCard(),
                 //CoolListTile(),
                 ContactAuctioner(),

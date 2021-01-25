@@ -212,20 +212,22 @@ class _CoolGraphState extends State<CoolGraph> {
 
   Container _getVisualAmounts(double paid, double due) {
     const TextStyle beBold =
-        TextStyle(fontSize: 15, fontWeight: FontWeight.w500);
-    const TextStyle beLight =
-        TextStyle(fontSize: 13, fontWeight: FontWeight.w500);
+        TextStyle(fontSize: 19, fontWeight: FontWeight.w500);
+    const TextStyle beGreen = TextStyle(
+        fontSize: 17, fontWeight: FontWeight.w500, color: Colors.green);
+    const TextStyle beRed =
+        TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: Colors.red);
     return Container(
         height: 150,
         child: ListView(children: [
           Divider(),
           ListTile(
               leading: Text("Paid", style: beBold),
-              trailing: Text("Ksh. $paid", style: beLight)),
+              trailing: Text("+Ksh. $paid", style: beGreen)),
           Divider(),
           ListTile(
               leading: Text("Due", style: beBold),
-              trailing: Text("Ksh. $due", style: beLight)),
+              trailing: Text("-Ksh. $due", style: beRed)),
         ]));
   }
 

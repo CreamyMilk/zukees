@@ -8,7 +8,7 @@ import 'package:zukes/widgets/getNewAPIdata.dart';
 class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _version = "0.0.5 Alpha";
+    String _version = "0.0.8 Alpha";
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
         child: RefreshIndicator(
@@ -25,7 +25,7 @@ class ProfileTab extends StatelessWidget {
                     TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
               ),
             ),
-            expandedHeight: 110,
+            expandedHeight: 70,
             pinned: false,
             elevation: 0.5,
           ),
@@ -35,6 +35,9 @@ class ProfileTab extends StatelessWidget {
               children: [
                 ListTile(
                   dense: true,
+                  onTap: () {
+                    Navigator.of(context).pushNamed("/buildingprofile");
+                  },
                   title: ValueListenableBuilder(
                       valueListenable: Hive.box('user').listenable(),
                       builder: (BuildContext context, box, Widget child) {
@@ -42,11 +45,14 @@ class ProfileTab extends StatelessWidget {
                       }),
                   subtitle: Text("ST.FRANCIS"),
                   trailing: Icon(Icons.qr_code),
-                  leading: CircleAvatar(
-                      minRadius: 3,
-                      maxRadius: 25,
-                      backgroundColor: Color(0xfffe8fcfa),
-                      child: Text("ON")),
+                  leading: Hero(
+                    tag: "profilepic",
+                    child: CircleAvatar(
+                        minRadius: 3,
+                        maxRadius: 25,
+                        backgroundColor: Color(0xfffe8fcfa),
+                        child: Text("ON")),
+                  ),
                 ),
                 SizedBox(height: 10),
                 Padding(
@@ -56,6 +62,9 @@ class ProfileTab extends StatelessWidget {
                           color: Colors.grey, letterSpacing: 2, fontSize: 15)),
                 ),
                 ListTile(
+                  onTap: () {
+                    Navigator.of(context).pushNamed("/buildingprofile");
+                  },
                   dense: true,
                   leading: IconButton(
                       onPressed: () {},
@@ -67,6 +76,9 @@ class ProfileTab extends StatelessWidget {
                 ),
                 ListTile(
                   dense: true,
+                  onTap: () {
+                    Navigator.of(context).pushNamed("/pastshoping");
+                  },
                   title: Text("🛍 Shopping"),
                   subtitle: Text(
                     "Past Orders ,Receipts",
@@ -80,8 +92,13 @@ class ProfileTab extends StatelessWidget {
                 ),
                 ListTile(
                   dense: true,
-                  onTap: () {
-                    print("oooo");
+                  onTap: () async {
+                    final url = "tel:+254714164318";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
                   },
                   title: Text("📞 Help"),
                   subtitle: Text(
@@ -104,6 +121,15 @@ class ProfileTab extends StatelessWidget {
                 ),
                 SizedBox(height: 2),
                 ListTile(
+                  onTap: () async {
+                    final url =
+                        "https://wa.me/254714164318?text=My%20Landloard%20app%20is%20having%20some%20issues.";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
                   dense: true,
                   title: Text("Report a bug"),
                   leading: IconButton(
@@ -118,7 +144,7 @@ class ProfileTab extends StatelessWidget {
                     icon: Icon(Icons.send, size: 23, color: Colors.black87),
                     onPressed: () async {
                       final url =
-                          "https://wa.me/254798979797?text=My%20Landloard%20app%20is%20having%20some%20issues.";
+                          "https://wa.me/254714164318?text=The%20App%20is%20quite%20nice.%20I%20would%20suggest%20you%20add%20feature ....";
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {

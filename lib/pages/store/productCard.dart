@@ -72,7 +72,7 @@ class _ProductCardState extends State<ProductCard>
           return AnimatedContainer(
             duration: Duration(seconds: 1),
             height:
-                550 * _getHeight(animation.value), //Heights of product cards
+                500 * _getHeight(animation.value), //Heights of product cards
             width: 200 * _getHeight(animation.value),
             color: Colors.transparent,
             child: Stack(

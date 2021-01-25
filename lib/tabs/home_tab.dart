@@ -26,8 +26,6 @@ class HomeTab extends StatelessWidget {
                 !Platform.isLinux
                     ? CoolGraph(firestoreKey: "building8")
                     : Container(color: Colors.blue),
-
-                //
                 SizedBox(height: 100) //Add Hive to proivde this value
               ],
             ),

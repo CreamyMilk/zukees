@@ -8,6 +8,7 @@ import 'package:zukes/pages/kraForm.dart';
 import 'package:zukes/pages/list_products.dart';
 import 'package:zukes/pages/login/termPage.dart';
 import 'package:zukes/pages/product_purchase.dart';
+import 'package:zukes/pages/profile/pastshoping.dart';
 import 'package:zukes/pages/store/shoppingCart.dart';
 import 'package:zukes/providers/counter.dart';
 import 'package:zukes/providers/kra_fromProvide.dart';
@@ -15,6 +16,8 @@ import 'package:zukes/providers/kra_fromProvide.dart';
 import 'package:zukes/providers/purchaceProvide.dart';
 import 'package:zukes/tabs/tabs_control.dart';
 import 'package:zukes/pages/all_tenants.dart';
+
+import 'pages/profile/buildinginfo.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -63,6 +66,11 @@ class RouteGenerator {
                     statusBarIconBrightness: Brightness.dark,
                     systemNavigationBarColor: Colors.white),
                 child: BaseTabView()));
+
+      case '/buildingprofile':
+        return CupertinoPageRoute(builder: (ctx) => BuildingProfilePage());
+      case '/pastshoping':
+        return CupertinoPageRoute(builder: (ctx) => PastShopping());
       case '/alltens':
         return MaterialPageRoute(
             builder: (ctx) => AllTenatsTable(branch: args));

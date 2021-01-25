@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
@@ -152,6 +153,36 @@ class BirthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hbox = Provider.of<KraFormProvider>(context);
+
+    // Show the modal that contains the CupertinoDatePicker
+    void _showDatePicker(ctx) {
+      // showCupertinoModalPopup is a built-in function of the cupertino library
+      showCupertinoModalPopup(
+          context: ctx,
+          builder: (_) => Container(
+                height: 500,
+                color: Color.fromARGB(255, 255, 255, 255),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 400,
+                      child: CupertinoDatePicker(
+                          initialDateTime: DateTime.now(),
+                          onDateTimeChanged: (val) {
+                            print(val);
+                          }),
+                    ),
+
+                    // Close the modal
+                    CupertinoButton(
+                      child: Text('OK'),
+                      onPressed: () => Navigator.of(ctx).pop(),
+                    )
+                  ],
+                ),
+              ));
+    }
+
     return Form(
       key: hbox.birthKey,
       child: Column(children: [
@@ -162,6 +193,10 @@ class BirthForm extends StatelessWidget {
         Text("Just as it appears on your National ID",
             style: TextStyle(fontSize: 12, color: Colors.grey)),
         SizedBox(height: 50),
+        CupertinoButton(
+          child: Text("From Calender"),
+          onPressed: () => _showDatePicker(context),
+        ),
         Container(
           padding: EdgeInsets.only(left: 20, right: 20),
           child:

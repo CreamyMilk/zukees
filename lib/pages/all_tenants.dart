@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AllTenatsTable extends StatefulWidget {
@@ -17,7 +16,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
     print('Branch $branchId');
     try {
       final response = await http.get(
-        ("https://kkk.i-crib.co.ke/a"),
+        ("http://92.222.201.138/a"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -36,7 +35,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text("Network Error."),
+                title: Text("Sadly a Networking Error has occured."),
                 //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
               ));
     }
@@ -166,12 +165,10 @@ class TwigList extends StatelessWidget {
                                       TextStyle(fontWeight: FontWeight.bold)),
                               Text(" ${apiData[index]["month_name"]} ",
                                   style: TextStyle(
-                                      backgroundColor: apiData[index]
-                                                  ["month_name"] ==
-                                              DateFormat('MMMM')
-                                                  .format(DateTime.now())
-                                          ? Colors.lightGreen[200]
-                                          : Colors.red[200])),
+                                      backgroundColor:
+                                          apiData[index]["bill_status"] != "0"
+                                              ? Colors.lightGreen[200]
+                                              : Colors.red[200])),
                             ],
                           ),
                           Column(
