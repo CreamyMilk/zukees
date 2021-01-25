@@ -118,7 +118,7 @@ class TwigList extends StatelessWidget {
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
-              return apiData[index]["bill_status"] == 0
+              return apiData[index]["bill_status"] != 0
                   ? Container(
                       padding: EdgeInsets.only(left: 12.0),
                       height: MediaQuery.of(context).size.height * 0.11,

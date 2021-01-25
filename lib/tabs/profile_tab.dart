@@ -25,7 +25,7 @@ class ProfileTab extends StatelessWidget {
                     TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
               ),
             ),
-            expandedHeight: 65,
+            expandedHeight: 60,
             pinned: false,
             elevation: 0.5,
           ),
