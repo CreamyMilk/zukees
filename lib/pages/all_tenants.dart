@@ -15,17 +15,17 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
   Future _getTrans(String branchId) async {
     print('Branch $branchId');
     try {
-      final response = await http.get(
-        ("http://92.222.201.138:9001/a"),
+      final response = await http.post(
+        ("http://92.222.201.138:9001/tenants"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
         },
-        // body: jsonEncode(
-        //   {
-        //     'branchId': branchId,
-        //   },
-        // ),
+        body: jsonEncode(
+          {
+            'branchid': branchId,
+          },
+        ),
       );
       var myjson = json.decode(response.body);
       //print(myjson);
@@ -67,7 +67,8 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                         future: _getTrans(widget.branch),
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
-                            return TwigList(apiData: snapshot.data);
+                            return TwigList(
+                                choice: "main", apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -76,7 +77,8 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                         future: _getTrans(widget.branch),
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
-                            return TwigUnPaidList(apiData: snapshot.data);
+                            return TwigList(
+                                choice: "notpaid", apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -85,7 +87,8 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                         future: _getTrans(widget.branch),
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
-                            return TwigList(apiData: snapshot.data);
+                            return TwigList(
+                                choice: "default", apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -103,9 +106,11 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
 
 class TwigList extends StatelessWidget {
   final List<dynamic> apiData;
+  final String choice;
   const TwigList({
     @required this.apiData,
     Key key,
+    @required this.choice,
   }) : super(key: key);
 
   @override
@@ -118,7 +123,9 @@ class TwigList extends StatelessWidget {
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
-              return apiData[index]["bill_status"] != "0"
+              return (choice == "main"
+                      ? apiData[index]["bill_status"] != 0
+                      : apiData[index]["bill_status"] == 0)
                   ? Container(
                       padding: EdgeInsets.only(left: 12.0),
                       height: MediaQuery.of(context).size.height * 0.11,
@@ -142,12 +149,12 @@ class TwigList extends StatelessWidget {
                                       Text("Tenant Name",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Text("${apiData[index]["r_name"]}\n",
+                                      Text("${apiData[index]["name"]}\n",
                                           textAlign: TextAlign.left),
                                       Text(" House No.",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
-                                      Text(" ${apiData[index]["unit_no"]}",
+                                      Text(" ${apiData[index]["unit"]}",
                                           textAlign: TextAlign.left),
                                     ],
                                   ),
@@ -161,17 +168,16 @@ class TwigList extends StatelessWidget {
                                   Text("Rent",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text("${apiData[index]["total_rent"]}\n"),
+                                  Text("${apiData[index]["rent"]}\n"),
                                   Text("Month",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text(" ${apiData[index]["month_name"]} ",
+                                  Text(" ${apiData[index]["month"]} ",
                                       style: TextStyle(
-                                          backgroundColor: apiData[index]
-                                                      ["bill_status"] !=
-                                                  "0"
-                                              ? Colors.lightGreen[200]
-                                              : Colors.red[200])),
+                                          backgroundColor:
+                                              apiData[index]["rentStatus"] != 0
+                                                  ? Colors.lightGreen[200]
+                                                  : Colors.red[200])),
                                 ],
                               ),
                               Column(
@@ -185,122 +191,7 @@ class TwigList extends StatelessWidget {
                               PopupMenuButton<String>(
                                 onSelected: (o) async {
                                   final url =
-                                      "tel:${apiData[index]["r_contact"]}";
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return {'Contact'}.map((String choice) {
-                                    return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: Text(choice),
-                                    );
-                                  }).toList();
-                                },
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 4),
-                          Divider(height: 1),
-                        ],
-                      ))
-                  : null;
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class TwigUnPaidList extends StatelessWidget {
-  final List<dynamic> apiData;
-  const TwigUnPaidList({
-    @required this.apiData,
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 0.85,
-          child: ListView.builder(
-            itemCount: apiData.length,
-            itemBuilder: (BuildContext context, int index) {
-              return apiData[index]["bill_status"] == "0"
-                  ? Container(
-                      padding: EdgeInsets.only(left: 12.0),
-                      height: MediaQuery.of(context).size.height * 0.11,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(Icons.check_circle,
-                                      size: 12, color: Colors.green),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Tenant Name",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text("${apiData[index]["r_name"]}\n",
-                                          textAlign: TextAlign.left),
-                                      Text(" House No.",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(" ${apiData[index]["unit_no"]}",
-                                          textAlign: TextAlign.left),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("Rent",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text("${apiData[index]["total_rent"]}\n"),
-                                  Text("Month",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text(" ${apiData[index]["month_name"]} ",
-                                      style: TextStyle(
-                                          backgroundColor: apiData[index]
-                                                      ["bill_status"] !=
-                                                  "0"
-                                              ? Colors.lightGreen[200]
-                                              : Colors.red[200])),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("--"),
-                                ],
-                              ),
-                              PopupMenuButton<String>(
-                                onSelected: (o) async {
-                                  final url =
-                                      "tel:${apiData[index]["r_contact"]}";
+                                      "tel:${apiData[index]["contacts"]}";
                                   if (await canLaunch(url)) {
                                     await launch(url);
                                   } else {

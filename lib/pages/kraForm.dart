@@ -170,7 +170,9 @@ class BirthForm extends StatelessWidget {
                           mode: CupertinoDatePickerMode.date,
                           initialDateTime: DateTime.now(),
                           onDateTimeChanged: (val) {
-                            // print(val);
+                            hbox.yController.text = "${val.year}";
+                            hbox.mController.text = "${val.month}";
+                            hbox.dController.text = "${val.day}";
                           }),
                     ),
 
@@ -206,7 +208,7 @@ class BirthForm extends StatelessWidget {
             Flexible(
               child: TextFormField(
                 controller: hbox.yController,
-                keyboardType: TextInputType.datetime,
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Required";
