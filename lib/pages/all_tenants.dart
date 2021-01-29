@@ -68,7 +68,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
                             return TwigList(
-                                choice: "main", apiData: snapshot.data);
+                                choice: true, apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -78,7 +78,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
                             return TwigList(
-                                choice: "notpaid", apiData: snapshot.data);
+                                choice: true, apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -88,7 +88,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
                             return TwigList(
-                                choice: "default", apiData: snapshot.data);
+                                choice: false, apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -106,7 +106,7 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
 
 class TwigList extends StatelessWidget {
   final List<dynamic> apiData;
-  final String choice;
+  final bool choice;
   const TwigList({
     @required this.apiData,
     Key key,
@@ -123,9 +123,7 @@ class TwigList extends StatelessWidget {
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
-              return (choice == "main"
-                      ? apiData[index]["rentStatus"] != 0
-                      : apiData[index]["rentStatus"] == 0)
+              return (choice
                   ? Container(
                       padding: EdgeInsets.only(left: 12.0),
                       height: MediaQuery.of(context).size.height * 0.11,
@@ -213,7 +211,7 @@ class TwigList extends StatelessWidget {
                           Divider(height: 1),
                         ],
                       ))
-                  : null;
+                  : null);
             },
           ),
         ),
