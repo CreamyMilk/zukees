@@ -8,7 +8,8 @@ class PastShopping extends StatelessWidget {
         title: Text("Past Purchases"),
       ),
       body: SafeArea(
-        child: Expanded(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
           child: ListView(
             children: [
               SizedBox(height: 10),

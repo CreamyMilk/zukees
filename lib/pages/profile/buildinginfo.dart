@@ -29,18 +29,20 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                     backgroundColor: Color(0xfffe8fcfa),
                     child: Text("ON")),
               ),
-              ListView(
-                children: [
-                  SwitchListTile(
-                      title: Text("Receive Notifications "),
-                      subtitle: Text("When a Tenant has completed payment"),
-                      value: false,
-                      onChanged: (newValue) {
-                        setState(() {
-                          accepted = newValue;
-                        });
-                      })
-                ],
+              Expanded(
+                child: ListView(
+                  children: [
+                    SwitchListTile(
+                        title: Text("Receive Notifications "),
+                        subtitle: Text("When a Tenant has completed payment"),
+                        value: false,
+                        onChanged: (newValue) {
+                          setState(() {
+                            accepted = newValue;
+                          });
+                        })
+                  ],
+                ),
               )
             ],
           ),
