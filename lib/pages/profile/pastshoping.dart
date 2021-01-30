@@ -35,26 +35,29 @@ class OrderTile extends StatelessWidget {
       },
       tileColor: Color.fromRGBO(252, 252, 252, 1),
       isThreeLine: true,
-      title: Row(
+      title: RichText(
+          text: TextSpan(
         children: [
-          Text("Order No"),
-          Text("20-2999-34",
+          TextSpan(text: "Order No"),
+          TextSpan(
+              text: "20-2999-34",
               style: TextStyle(
                   fontSize: 14, color: Color.fromRGBO(28, 28, 13, 1))),
         ],
-      ),
-      subtitle: Row(
-        children: [
-          Text(
-            "Jan 12,2020",
+      )),
+      subtitle: RichText(
+        text: TextSpan(children: [
+          TextSpan(
+            text: "Jan 12,2020",
             style: TextStyle(
                 fontSize: 12, color: Color.fromRGBO(149, 152, 154, 1)),
           ),
-          Text(" Deliverd ",
+          TextSpan(
+              text: " Deliverd ",
               style: TextStyle(
                   backgroundColor:
                       10 != 0 ? Colors.lightGreen[200] : Colors.red[200])),
-        ],
+        ]),
       ),
       leading: Container(
         color: Colors.yellow,
