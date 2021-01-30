@@ -108,8 +108,8 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
           title: Text("All Tenants👨‍💼"),
           bottom: TabBar(
             tabs: [
-              Tab(text: "All"),
-              Tab(text: "Defaulters"),
+              Tab(text: "FullyPaid"),
+              Tab(text: "InDue"),
               Tab(text: "Evictions"),
             ],
           ),
