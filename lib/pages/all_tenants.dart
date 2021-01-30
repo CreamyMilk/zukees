@@ -12,11 +12,69 @@ class AllTenatsTable extends StatefulWidget {
 }
 
 class _AllTenatsTableState extends State<AllTenatsTable> {
-  Future _getTrans(String branchId) async {
+  Future _getAllTrans(String branchId) async {
     print('Branch $branchId');
     try {
       final response = await http.post(
-        ("http://92.222.201.138:9001/tenants"),
+        ("http://92.222.201.138:9001/tenantsall"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+        },
+        body: jsonEncode(
+          {
+            'branchid': branchId,
+          },
+        ),
+      );
+      var myjson = json.decode(response.body);
+      //print(myjson);
+      //print(response.body);
+      return myjson;
+    } catch (SocketException) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Sadly a Networking Error has occured."),
+                //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
+              ));
+    }
+  }
+
+  Future _getUpaidTrans(String branchId) async {
+    print('Branch $branchId');
+    try {
+      final response = await http.post(
+        ("http://92.222.201.138:9001/tenantsdue"),
+        headers: {
+          "Accept": "application/json",
+          "content-type": "application/json",
+        },
+        body: jsonEncode(
+          {
+            'branchid': branchId,
+          },
+        ),
+      );
+      var myjson = json.decode(response.body);
+      //print(myjson);
+      //print(response.body);
+      return myjson;
+    } catch (SocketException) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("Sadly a Networking Error has occured."),
+                //       actions: [MaterialButton(color:Colors.black,onPressed:(){AppSettings.openWIFISettings();},child:Text("Turn on",style:TextStyle(color:Colors.white)))],));
+              ));
+    }
+  }
+
+  Future _getDefaulters(String branchId) async {
+    print('Branch $branchId');
+    try {
+      final response = await http.post(
+        ("http://92.222.201.138:9001/tenantsdefault"),
         headers: {
           "Accept": "application/json",
           "content-type": "application/json",
@@ -64,31 +122,28 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
                   height: MediaQuery.of(context).size.height * 0.95,
                   child: TabBarView(children: [
                     FutureBuilder(
-                        future: _getTrans(widget.branch),
+                        future: _getAllTrans(widget.branch),
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
-                            return TwigList(
-                                choice: true, apiData: snapshot.data);
+                            return TwigList(apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
                         }),
                     FutureBuilder(
-                        future: _getTrans(widget.branch),
+                        future: _getUpaidTrans(widget.branch),
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
-                            return TwigList(
-                                choice: true, apiData: snapshot.data);
+                            return TwigList(apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
                         }),
                     FutureBuilder(
-                        future: _getTrans(widget.branch),
+                        future: _getDefaulters(widget.branch),
                         builder: (context, snapshot) {
                           if (snapshot.data != null) {
-                            return TwigList(
-                                choice: false, apiData: snapshot.data);
+                            return TwigList(apiData: snapshot.data);
                           } else {
                             return Center(child: CircularProgressIndicator());
                           }
@@ -106,11 +161,10 @@ class _AllTenatsTableState extends State<AllTenatsTable> {
 
 class TwigList extends StatelessWidget {
   final List<dynamic> apiData;
-  final bool choice;
+
   const TwigList({
     @required this.apiData,
     Key key,
-    @required this.choice,
   }) : super(key: key);
 
   @override
@@ -123,95 +177,91 @@ class TwigList extends StatelessWidget {
           child: ListView.builder(
             itemCount: apiData.length,
             itemBuilder: (BuildContext context, int index) {
-              return (choice
-                  ? Container(
-                      padding: EdgeInsets.only(left: 12.0),
-                      height: MediaQuery.of(context).size.height * 0.11,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              return Container(
+                  padding: EdgeInsets.only(left: 12.0),
+                  height: MediaQuery.of(context).size.height * 0.11,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(height: 4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(height: 4),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              Icon(Icons.check_circle,
+                                  size: 12, color: Colors.green),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.check_circle,
-                                      size: 12, color: Colors.green),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Tenant Name",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text("${apiData[index]["name"]}\n",
-                                          textAlign: TextAlign.left),
-                                      Text(" House No.",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      Text(" ${apiData[index]["unit"]}",
-                                          textAlign: TextAlign.left),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("Rent",
+                                  Text("Tenant Name",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text("${apiData[index]["rent"]}\n"),
-                                  Text("Month",
+                                  Text("${apiData[index]["name"]}\n",
+                                      textAlign: TextAlign.left),
+                                  Text(" House No.",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold)),
-                                  Text(" ${apiData[index]["month"]} ",
-                                      style: TextStyle(
-                                          backgroundColor:
-                                              apiData[index]["rentStatus"] != 0
-                                                  ? Colors.lightGreen[200]
-                                                  : Colors.red[200])),
+                                  Text(" ${apiData[index]["unit"]}",
+                                      textAlign: TextAlign.left),
                                 ],
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("--"),
-                                ],
-                              ),
-                              PopupMenuButton<String>(
-                                onSelected: (o) async {
-                                  final url =
-                                      "tel:${apiData[index]["contacts"]}";
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return {'Contact'}.map((String choice) {
-                                    return PopupMenuItem<String>(
-                                      value: choice,
-                                      child: Text(choice),
-                                    );
-                                  }).toList();
-                                },
                               ),
                             ],
                           ),
-                          SizedBox(height: 4),
-                          Divider(height: 1),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("Rent",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              Text("${apiData[index]["rent"]}\n"),
+                              Text("Month",
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              Text(" ${apiData[index]["month"]} ",
+                                  style: TextStyle(
+                                      backgroundColor:
+                                          apiData[index]["rentStatus"] != 0
+                                              ? Colors.lightGreen[200]
+                                              : Colors.red[200])),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text("---"),
+                            ],
+                          ),
+                          PopupMenuButton<String>(
+                            onSelected: (o) async {
+                              final url = "tel:${apiData[index]["contacts"]}";
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return {'Contact'}.map((String choice) {
+                                return PopupMenuItem<String>(
+                                  value: choice,
+                                  child: Text(choice),
+                                );
+                              }).toList();
+                            },
+                          ),
                         ],
-                      ))
-                  : null);
+                      ),
+                      SizedBox(height: 4),
+                      Divider(height: 1),
+                    ],
+                  ));
             },
           ),
         ),
