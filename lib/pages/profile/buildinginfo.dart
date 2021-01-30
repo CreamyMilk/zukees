@@ -8,7 +8,12 @@ class BuildingProfilePage extends StatefulWidget {
 }
 
 class _BuildingProfilePageState extends State<BuildingProfilePage> {
-  bool accepted = true;
+  bool accepted;
+  @override
+  void initState() {
+    super.initState();
+    accepted = true;
+  }
 
   @override
   Widget build(BuildContext context) {
