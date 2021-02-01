@@ -66,10 +66,8 @@ class OrderTile extends StatelessWidget {
                       10 != 0 ? Colors.lightGreen[200] : Colors.red[200])),
         ]),
       ),
-      trailing: Center(
-        child: Text("Ksh 7680",
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
-      ),
+      trailing: Text("Ksh 7680",
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
     );
   }
 }

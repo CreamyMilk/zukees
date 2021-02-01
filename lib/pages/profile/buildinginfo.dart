@@ -1,4 +1,4 @@
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class BuildingProfilePage extends StatefulWidget {
@@ -14,11 +14,11 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
   @override
   void initState() async {
     super.initState();
-    final prefs = await SharedPreferences.getInstance();
-    final notif = prefs.getBool('Notifications');
-    final sms = prefs.getBool('SMS');
-    accepted = notif ?? true;
-    newterm = sms ?? false;
+    // final prefs = await SharedPreferences.getInstance();
+    // final notif = prefs.getBool('Notifications');
+    // final sms = prefs.getBool('SMS');
+    accepted = true;
+    newterm = false;
   }
 
   Widget build(BuildContext context) {
@@ -52,8 +52,9 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                           });
                         }),
                     SwitchListTile(
-                        title: Text("Receive Notifications "),
-                        subtitle: Text("When a Tenant has completed payment"),
+                        title: Text("Receive SMS "),
+                        subtitle:
+                            Text("On product delivery has completed payment"),
                         value: accepted,
                         onChanged: (newValue) {
                           setState(() {
