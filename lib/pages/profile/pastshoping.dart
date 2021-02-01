@@ -30,7 +30,10 @@ class OrderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Container(),
+      leading: Container(
+        width: 20,
+        height: 50,
+      ),
       onTap: () {
         print("Clicked ListTile");
       },

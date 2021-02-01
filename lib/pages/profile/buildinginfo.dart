@@ -21,7 +21,6 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
     newterm = sms ?? false;
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -46,26 +45,21 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                     SwitchListTile(
                         title: Text("Receive Notifications "),
                         subtitle: Text("When a Tenant has completed payment"),
-                        value: accepted,
-                        onChanged: (newValue) async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool("Notifications", newValue);
-                          setState(() {
-                            accepted = newValue;
-                          });
-                        }),
-                    SwitchListTile(
-                        title: Text("Calls on item delivert"),
-                        subtitle: Text(
-                            "Receive SMS when an item is deliverd to your premisis"),
                         value: newterm,
-                        onChanged: (newValue) async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool("SMS", newValue);
+                        onChanged: (newValue) {
                           setState(() {
                             newterm = newValue;
                           });
                         }),
+                    SwitchListTile(
+                        title: Text("Receive Notifications "),
+                        subtitle: Text("When a Tenant has completed payment"),
+                        value: accepted,
+                        onChanged: (newValue) {
+                          setState(() {
+                            accepted = newValue;
+                          });
+                        })
                   ],
                 ),
               )
