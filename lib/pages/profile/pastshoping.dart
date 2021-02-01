@@ -13,7 +13,7 @@ class PastShopping extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: ListView(
             children: [
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               OrderTile(),
               OrderTile(),
               OrderTile(),
@@ -30,6 +30,7 @@ class OrderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: Container(),
       onTap: () {
         print("Clicked ListTile");
       },
@@ -50,7 +51,7 @@ class OrderTile extends StatelessWidget {
       subtitle: RichText(
         text: TextSpan(children: [
           TextSpan(
-            text: "Jan 12,2020\s\s",
+            text: "Jan 12,2020",
             style: TextStyle(
                 fontSize: 10, color: Color.fromRGBO(149, 152, 154, 1)),
           ),

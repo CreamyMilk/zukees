@@ -15,10 +15,10 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
   void initState() async {
     super.initState();
     final prefs = await SharedPreferences.getInstance();
-    final notif = prefs.getBool('Notifications') ?? true;
-    final sms = prefs.getBool('SMS') ?? false;
-    accepted = notif;
-    newterm = sms;
+    final notif = prefs.getBool('Notifications');
+    final sms = prefs.getBool('SMS');
+    accepted = notif ?? true;
+    newterm = sms ?? false;
   }
 
   @override
@@ -50,7 +50,6 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                         onChanged: (newValue) async {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setBool("Notifications", newValue);
-
                           setState(() {
                             accepted = newValue;
                           });
