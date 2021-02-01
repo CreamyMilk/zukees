@@ -30,6 +30,7 @@ class OrderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      focusColor: Colors.green[50],
       onTap: () {
         print("Clicked ListTile");
       },
@@ -62,8 +63,8 @@ class OrderTile extends StatelessWidget {
                       10 != 0 ? Colors.lightGreen[200] : Colors.red[200])),
         ]),
       ),
-      trailing: Text("Ksh 7680",
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+      trailing: Text("Ksh 7,680",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
     );
   }
 }

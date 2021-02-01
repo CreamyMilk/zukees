@@ -1,4 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class BuildingProfilePage extends StatefulWidget {
@@ -9,20 +8,13 @@ class BuildingProfilePage extends StatefulWidget {
 }
 
 class _BuildingProfilePageState extends State<BuildingProfilePage> {
-  bool accepted = false;
-  bool newterm = false;
+  bool accepted;
+  bool newterm;
   @override
   void initState() {
     super.initState();
-    bool notif;
-    bool sms;
-    () async {
-      final prefs = await SharedPreferences.getInstance();
-      notif = prefs.getBool('Notifications') ?? true;
-      sms = prefs.getBool('SMS') ?? false;
-    }();
-    accepted = sms;
-    newterm = notif;
+    accepted = true;
+    newterm = false;
   }
 
   Widget build(BuildContext context) {
@@ -50,21 +42,16 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                         title: Text("Receive Notifications "),
                         subtitle: Text("When a Tenant has complested payment"),
                         value: newterm,
-                        onChanged: (newValue) async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool("Notifications", newValue);
+                        onChanged: (newValue) {
                           setState(() {
                             newterm = newValue;
                           });
                         }),
                     SwitchListTile(
                         title: Text("Receive SMS "),
-                        subtitle:
-                            Text("On product delivery has completed payment"),
+                        subtitle: Text("On product delivery."),
                         value: accepted,
-                        onChanged: (newValue) async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool("SMS", newValue);
+                        onChanged: (newValue) {
                           setState(() {
                             accepted = newValue;
                           });

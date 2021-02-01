@@ -25,7 +25,7 @@ class ProfileTab extends StatelessWidget {
                     TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
               ),
             ),
-            expandedHeight: 60,
+            expandedHeight: 55,
             pinned: false,
             elevation: 0.5,
           ),
@@ -49,7 +49,7 @@ class ProfileTab extends StatelessWidget {
                     tag: "profilepic",
                     child: CircleAvatar(
                         minRadius: 3,
-                        maxRadius: 20,
+                        maxRadius: 25,
                         backgroundColor: Color(0xfffe8fcfa),
                         child: Text("ON")),
                   ),
