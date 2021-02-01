@@ -8,7 +8,7 @@ import 'package:zukes/widgets/getNewAPIdata.dart';
 class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String _version = "0.0.9 Alpha";
+    String _version = "0.1.1 Alpha";
     //final MediaQueryData d = MediaQuery.of(context);
     return SafeArea(
         child: RefreshIndicator(
@@ -36,7 +36,7 @@ class ProfileTab extends StatelessWidget {
                 ListTile(
                   dense: true,
                   onTap: () {
-                    Navigator.of(context).pushNamed("/buildingprofile");
+                    print("update page click hanlder");
                   },
                   title: ValueListenableBuilder(
                       valueListenable: Hive.box('user').listenable(),
@@ -49,7 +49,7 @@ class ProfileTab extends StatelessWidget {
                     tag: "profilepic",
                     child: CircleAvatar(
                         minRadius: 3,
-                        maxRadius: 25,
+                        maxRadius: 20,
                         backgroundColor: Color(0xfffe8fcfa),
                         child: Text("ON")),
                   ),
@@ -81,7 +81,7 @@ class ProfileTab extends StatelessWidget {
                   },
                   title: Text("🛍 Shopping"),
                   subtitle: Text(
-                    "Past Orders ,Receipts",
+                    "Past Orders , Deliveries",
                     style: TextStyle(color: Colors.grey),
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, size: 10),

@@ -13,5 +13,6 @@ A new Flutter project.
 - [x] Add Counters below chart
 - [x] Switch Contacts with a profile page
 - [x] Add Tabs to the all tenatns page
-- [ ] Make a new form of checkout 
-- [ ] Turn store into a cart system
+- [x] Make a new form of checkout 
+- [x] Turn store into a cart system
+- [ ] Add payment notfications

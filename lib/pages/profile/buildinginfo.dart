@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class BuildingProfilePage extends StatefulWidget {
@@ -9,10 +10,15 @@ class BuildingProfilePage extends StatefulWidget {
 
 class _BuildingProfilePageState extends State<BuildingProfilePage> {
   bool accepted;
+  bool newterm;
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    accepted = true;
+    final prefs = await SharedPreferences.getInstance();
+    final notif = prefs.getBool('Notifications') ?? true;
+    final sms = prefs.getBool('SMS') ?? false;
+    accepted = notif;
+    newterm = sms;
   }
 
   @override
@@ -40,12 +46,27 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                     SwitchListTile(
                         title: Text("Receive Notifications "),
                         subtitle: Text("When a Tenant has completed payment"),
-                        value: false,
-                        onChanged: (newValue) {
+                        value: accepted,
+                        onChanged: (newValue) async {
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("Notifications", newValue);
+
                           setState(() {
                             accepted = newValue;
                           });
-                        })
+                        }),
+                    SwitchListTile(
+                        title: Text("Calls on item delivert"),
+                        subtitle: Text(
+                            "Receive SMS when an item is deliverd to your premisis"),
+                        value: newterm,
+                        onChanged: (newValue) async {
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("SMS", newValue);
+                          setState(() {
+                            newterm = newValue;
+                          });
+                        }),
                   ],
                 ),
               )
