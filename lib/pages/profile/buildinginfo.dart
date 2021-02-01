@@ -9,14 +9,18 @@ class BuildingProfilePage extends StatefulWidget {
 }
 
 class _BuildingProfilePageState extends State<BuildingProfilePage> {
-  bool accepted;
-  bool newterm;
+  bool accepted = false;
+  bool newterm = false;
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    final prefs = await SharedPreferences.getInstance();
-    final notif = prefs.getBool('Notifications') ?? true;
-    final sms = prefs.getBool('SMS') ?? false;
+    bool notif;
+    bool sms;
+    () async {
+      final prefs = await SharedPreferences.getInstance();
+      notif = prefs.getBool('Notifications') ?? true;
+      sms = prefs.getBool('SMS') ?? false;
+    }();
     accepted = sms;
     newterm = notif;
   }
