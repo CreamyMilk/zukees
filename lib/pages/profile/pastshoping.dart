@@ -43,7 +43,7 @@ class OrderTile extends StatelessWidget {
           text: TextSpan(
         children: [
           TextSpan(
-              text: "Order No :",
+              text: "Order No :\n",
               style: TextStyle(fontSize: 7, color: Colors.black)),
           TextSpan(
               text: "20-2999-34",
@@ -54,7 +54,7 @@ class OrderTile extends StatelessWidget {
       subtitle: RichText(
         text: TextSpan(children: [
           TextSpan(
-            text: "Jan 12,2020",
+            text: "Jan 12,2020   ",
             style: TextStyle(
                 fontSize: 10, color: Color.fromRGBO(149, 152, 154, 1)),
           ),

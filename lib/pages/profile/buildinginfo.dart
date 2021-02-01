@@ -1,4 +1,4 @@
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 class BuildingProfilePage extends StatefulWidget {
@@ -14,11 +14,11 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
   @override
   void initState() async {
     super.initState();
-    // final prefs = await SharedPreferences.getInstance();
-    // final notif = prefs.getBool('Notifications');
-    // final sms = prefs.getBool('SMS');
-    accepted = true;
-    newterm = false;
+    final prefs = await SharedPreferences.getInstance();
+    final notif = prefs.getBool('Notifications') ?? true;
+    final sms = prefs.getBool('SMS') ?? false;
+    accepted = sms;
+    newterm = notif;
   }
 
   Widget build(BuildContext context) {
@@ -44,9 +44,11 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                   children: [
                     SwitchListTile(
                         title: Text("Receive Notifications "),
-                        subtitle: Text("When a Tenant has completed payment"),
+                        subtitle: Text("When a Tenant has complested payment"),
                         value: newterm,
-                        onChanged: (newValue) {
+                        onChanged: (newValue) async {
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("Notifications", newValue);
                           setState(() {
                             newterm = newValue;
                           });
@@ -56,7 +58,9 @@ class _BuildingProfilePageState extends State<BuildingProfilePage> {
                         subtitle:
                             Text("On product delivery has completed payment"),
                         value: accepted,
-                        onChanged: (newValue) {
+                        onChanged: (newValue) async {
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setBool("SMS", newValue);
                           setState(() {
                             accepted = newValue;
                           });
