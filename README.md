@@ -1,6 +1,6 @@
 # zukes 💳
 
-A new Flutter project.
+Main money monitoring app
 
 
 ## Goals🏃‍♀️
